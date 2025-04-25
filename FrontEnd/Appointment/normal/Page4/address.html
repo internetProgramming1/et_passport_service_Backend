@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Address</title>
+  
+</head>
+<body>
+
+  <!-- Placeholder for Header -->
+  <div id="header-placeholder"></div>
+
+  <!-- Main content -->
+  <div class="container-fluid my-5 py-4">
+    <div class="row">
+  
+      <!-- Sidebar -->
+      <aside class="col-md-3 mb-4 shadow-sm h-100">
+        <ul class="list-group">
+          <a href="/Appointment/Page3/type.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Request Appointment</li>
+          </a>
+          <a href="/Appointment/Page2/Site-select.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Site Selection</li>
+          </a>
+          <a href="/Appointment/Page4/DateTime.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Date and Time</li>
+          </a>
+          <a href="personalInfo.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action active" style="background-color: #005f99; color: #eaf4f9;">Personal Information</li>
+          </a>
+          <a href="/Appointment/Page6/" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Payment</li>
+          </a>
+        </ul>
+      </aside>
+  
+      <!-- Main Content -->
+      <main class="col-md-9">
+        
+        <!-- Navigation tabs -->
+        <ul class="nav nav-tabs mb-4">
+          <li class="nav-item">
+            <a class="nav-link" href="personalInfo.html"  style="color: #005f99;">Personal Info.</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="address.html" style="background-color:#005f99; color: white; ">Address</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="familiy.html"  style="color: #005f99;">Family</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="attachment.html"  style="color: #005f99;">Attachments</a>
+          </li>
+        </ul>
+  
+        <!-- Form -->
+        <div class="card shadow-sm p-4">
+          <h4 class="mb-4">Address Information</h4>
+          <form action="#" method="POST" class="row g-3">
+  
+            <div class="col-md-6">
+              <label for="region" class="form-label">Region*</label>
+              <select id="region" name="region" class="form-select" required>
+                <option value="" disabled selected>Select your region</option>
+                <option value="addis_ababa">Addis Ababa</option>
+                <option value="afar">Afar</option>
+                <option value="amhara">Amhara</option>
+                <option value="benishangul_gumuz">Benishangul-Gumuz</option>
+                <option value="dire_dawa">Dire Dawa</option>
+                <option value="gambela">Gambela</option>
+                <option value="harari">Harari</option>
+                <option value="oromia">Oromia</option>
+                <option value="sidama">Sidama</option>
+                <option value="somali">Somali</option>
+                <option value="southern_nations">Southern Nations, Nationalities, and Peoples</option>
+                <option value="tigray">Tigray</option>
+              </select>
+            </div>
+  
+            <div class="col-md-6">
+              <label for="city" class="form-label">City*</label>
+              <input type="text" id="city" name="city" class="form-control" placeholder="Enter your city" required>
+            </div>
+  
+            <div class="col-md-6">
+              <label for="subcity" class="form-label">Subcity*</label>
+              <input type="text" id="subcity" name="subcity" class="form-control" placeholder="Enter your subcity" required>
+            </div>
+  
+            <div class="col-md-6">
+              <label for="woreda" class="form-label">Woreda*</label>
+              <input type="text" id="woreda" name="woreda" class="form-control" placeholder="Enter your woreda" required>
+            </div>
+  
+            <div class="col-md-6">
+              <label for="kebele" class="form-label">Kebele*</label>
+              <input type="text" id="kebele" name="kebele" class="form-control" placeholder="Enter your kebele" required>
+            </div>
+  
+            <div class="col-md-6">
+              <label for="house_no" class="form-label">House Number*</label>
+              <input type="text" id="house_no" name="house_no" class="form-control" placeholder="Enter your house number" required>
+            </div>
+  
+            <div class="col-md-6">
+              <label for="id_no" class="form-label">ID Number*</label>
+              <input type="text" id="id_no" name="id_no" class="form-control" placeholder="Enter your ID number" pattern="[0-9]{6,10}" title="ID number must be between 6 to 10 digits." required>
+            </div>
+  
+             <!-- Next Button -->
+             <div class="col-12 mt-3">
+                <button type="submit" class="btn btn-outline-primary btn-sm">Next</button>
+              </div>
+
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Placeholder for Footer -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Script to include header and footer -->
+  <script src="/Project/et_passport_service_Backend/FrontEnd/Head_Foot/script.js">
+  </script>
+
+</body>
+</html>

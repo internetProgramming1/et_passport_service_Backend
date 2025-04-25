@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Checking</title>
+  <title>Choose Type</title>
 </head>
 <body>
 
@@ -10,10 +10,93 @@
   <div id="header-placeholder"></div>
 
   <!-- Main content -->
-  <main>
-    <h1>Welcome to My Page</h1>
-    <p>This is the main content area.</p>
+  <main class="container my-5">
+    <div class="row g-4">
+  
+  <!-- Appointment Request Info -->
+  <div class="mt-5">
+    <div class="alert alert-info">
+      <h5 class="mb-1">Appointment Request:</h5>
+      <p class="mb-0">Individual Passport Appointment Schedule</p>
+    </div>
+  </div>
+
+      <!-- New Passport -->
+      <div class="col-12">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body row">
+            <div class="col-md-4">
+              <h4 class="card-title text-primary">New Passport Appointment</h4>
+            </div>
+            <div class="col-md-8">
+              <p class="card-text">
+                First time applicants are requested to schedule for appointment. You receive confirmation via email or SMS.
+                Print the last page which has your appointment date and time. Take the paper with you to your appointment consular.
+              </p>
+              <a href="/Appointment/Page2/Site-select.html" class="btn btn-outline-primary mt-2">Schedule Appointment</a>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Renewal Passport -->
+      <div class="col-12">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body row">
+            <div class="col-md-4">
+              <h4 class="card-title text-success">Renewal Passport</h4>
+            </div>
+            <div class="col-md-8">
+              <p class="card-text">
+                Expired, damaged or page runout (not expired) passport, applicants are requested to schedule for appointment.
+                Print the last page which has your appointment date and time.
+              </p>
+              <a href="#" class="btn btn-outline-success mt-2">Schedule Renewal</a>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Lost Passport -->
+      <div class="col-12">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body row">
+            <div class="col-md-4">
+              <h4 class="card-title text-danger">Lost Passport</h4>
+            </div>
+            <div class="col-md-8">
+              <p class="card-text">
+                Lost / Stolen passport applicants are requested to schedule for appointment. Print the last page which has
+                your appointment date and time.
+              </p>
+              <a href="#" class="btn btn-outline-danger mt-2">Report & Schedule</a>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Correction -->
+      <div class="col-12">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body row">
+            <div class="col-md-4">
+              <h4 class="card-title text-warning">Passport Info Correction</h4>
+            </div>
+            <div class="col-md-8">
+              <p class="card-text">
+                Request to correct passport data. Applicants must schedule for appointment and bring printed confirmation.
+              </p>
+              <a href="#" class="btn btn-outline-warning mt-2">Request Correction</a>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  
+  
   </main>
+  
 
   <!-- Placeholder for Footer -->
   <div id="footer-placeholder"></div>

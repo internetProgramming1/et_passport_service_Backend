@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Passport page Number</title>
+</head>
+<body>
+
+  <!-- Placeholder for Header -->
+  <div id="header-placeholder"></div>
+ 
+ <!-- Main content -->
+<div class="container-fluid my-5 py-4">
+    <div class="row">
+  
+      <!-- Sidebar -->
+      <aside class="col-md-3 mb-4">
+        <ul class="list-group shadow-sm">
+          <a href="/Appointment/Page3/type.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Request Appointment</li>
+          </a>
+          <a href="/Appointment/Page2/Site-select.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Site Selection</li>
+          </a>
+          <a href="/Appointment/Page4/DateTime.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Date and Time</li>
+          </a>
+          <a href="personalInfo.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action ">Personal Information</li>
+          </a>
+          <a href="/Appointment/Page6/" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action" style="background-color: #005f99; color: #eaf4f9;">Payment</li>
+          </a>
+        </ul>
+      </aside>
+  
+      <!-- Main Content -->
+      <main class="col-md-9">
+        <!-- Step Navigation -->
+        <ul class="nav nav-tabs mb-4">
+          <li class="nav-item">
+            <a class="nav-link" href="" style="background-color:#005f99; color: white;">Passport Page No.</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="" style="color: #005f99;">Summary</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="" style="color: #005f99;">Payment</a>
+          </li>
+        </ul>
+  
+        <!-- Form & Notes Card -->
+        <div class="card shadow-sm p-4">
+          <h4 class="mb-4">Choose Number of page Requested</h4>
+          <form action="#" method="POST" id="uploadForm">
+  <br>
+            <div class="row">
+              <!-- Upload Form -->
+              <div class="col-md-8">
+                <div class="mb-3">
+                  <label for="page-no" class="form-label">Passport Page No.*</label>
+                  <select name="page-no" id="page-no" class="form-select">
+                    <option value="" disabled selected>Select Passport Page No.</option>
+                    <option value="32">32 page</option>
+                    <option value="64">64 page</option>
+                    <option value="92">92 page</option>
+                  </select>
+                  
+                </div>
+
+              </div>
+  
+              <!-- Notes Section -->
+              <div class="col-md-4">
+                <div class="alert alert-info h-100">
+                  <h5>Note Info:</h5>
+                  <ul class="mb-0">
+                    <li>Size should be less than 1MB.</li>
+                    <li>Accepted formats: JPEG, PNG, or PDF.</li>
+                    <li>Only clear, A4 color photocopies are accepted.</li>
+                    <li>Bring original documents on appointment day.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+  
+           <!-- Next Button -->
+           <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-outline-primary btn-sm">Next</button>
+          </div>
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+
+  <!-- Placeholder for Footer -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Script to include header and footer -->
+  <script src="/Project/et_passport_service_Backend/FrontEnd/Head_Foot/script.js">
+  </script>
+
+</body>
+</html>

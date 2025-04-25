@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Choose Your Appointment</title>
+  <link rel="stylesheet" href="Styles/styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+  <!-- Placeholder for Header -->
+  <div id="header-placeholder"></div>
+
+  <!-- Main content -->
+ 
+  <main>
+    <div class="maincont">
+        <h1 class="text-center mb-4">Request Passport Appointment</h1> 
+        <div class="row main2">
+            <section class="col-md-6">
+                <p><i class="fas fa-check"></i>
+                Passport application shall be applied only by Ethiopian nationals.</p>
+                <p><i class="fas fa-check"></i>
+                New applicants who are unable to attend on the appointment date will apply again.</p>
+                <p><i class="fas fa-check"></i>
+                Using more than one passport is strictly prohibited.</p>
+                <p><i class="fas fa-check"></i>
+                An applicant should not apply for a new passport if they already have one.</p>
+                <p><i class="fas fa-check"></i>
+                When ICS needs the applicant for a further inquiry like for a photo change or any other cases, the applicant should be aware and respond accordingly. If the applicant does not respond on time, ICS is not responsible for delays in urgent passport service.</p>
+                <p><i class="fas fa-check"></i>
+                New passport applicants may be asked to bring additional documents when needed, and they should also be willing to cooperate.</p>
+            </section>
+            <section class="col-md-6">
+                <p><i class="fas fa-check"></i>
+                Urgent passport application shall only be applied to Addis Ababa, Main ICS Office.</p>
+                <p><i class="fas fa-check"></i>
+                Urgent passport applicants shall accept the responsibility for supplying, checking, and verifying the information's accuracy and correctness. Incorrect or inaccurate information may result in delays in urgent passport service.</p>
+                <p><i class="fas fa-check"></i>
+                New passport applicants shall bring a valid Kebele identity card and authenticated birth certificate at the date of appointment.</p>
+                <p><i class="fas fa-check"></i>
+                Application fees are non-refundable.</p>
+                <p><i class="fas fa-check"></i>
+                Bring your original documents including your passport during collection.</p>
+                <p><i class="fas fa-check"></i>
+                When picking up their passport, applicants must bring both the printout paper and their passport for renewal.</p>
+            </section>
+        </div>
+    </div>
+
+
+   <div class="container mt-5">
+        <form id="myForm">
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="checkbox" required>
+                <label class="form-check-label" for="checkbox">I agree to terms and conditions</label>
+            </div>
+            
+         <div id="alertContainer"></div>
+       
+    
+         <div class="main3">
+              <section>
+                <h4>Appointment Schedule</h4>
+                <button class="button" type="button" onclick="checkAgreement('appointment.html')">Start</button>
+              </section>
+            
+              <section>
+                <h4>Urgent Appointment</h4>
+                <button class="button" type="button" onclick="checkAgreement('urgent.html')">Start</button>
+              </section>
+          
+          </div>
+</form>
+</div>
+
+</main>
+
+  <!-- Placeholder for Footer -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Script to include header and footer -->
+  <script src="/Project/et_passport_service_Backend/FrontEnd/Head_Foot/script.js">
+  </script>
+
+
+
+<script>
+    function checkAgreement(redirectUrl) {
+      $('#alertContainer').empty();
+      
+      if (!$('#checkbox').is(':checked')) {
+        $('<div>')
+          .addClass('alert alert-danger mt-3')
+          .attr('role', 'alert')
+          .text('You must agree to the terms and conditions!')
+          .appendTo('#alertContainer');
+        $('#checkbox').focus();
+      } else {
+        // Proceed (you can redirect, submit form, or any logic)
+        window.location.href = redirectUrl;
+      }
+    }
+  </script>
+
+</body>
+</html>
