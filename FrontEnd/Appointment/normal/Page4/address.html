@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Address</title>
-  
+
 </head>
+
 <body>
 
   <!-- Placeholder for Header -->
@@ -13,7 +15,7 @@
   <!-- Main content -->
   <div class="container-fluid my-5 py-4">
     <div class="row">
-  
+
       <!-- Sidebar -->
       <aside class="col-md-3 mb-4 shadow-sm h-100">
         <ul class="list-group">
@@ -27,38 +29,39 @@
             <li class="list-group-item list-group-item-action">Date and Time</li>
           </a>
           <a href="personalInfo.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action active" style="background-color: #005f99; color: #eaf4f9;">Personal Information</li>
+            <li class="list-group-item list-group-item-action active"
+              style="background-color: #005f99; color: #eaf4f9;">Personal Information</li>
           </a>
           <a href="/Appointment/Page6/" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
       </aside>
-  
+
       <!-- Main Content -->
       <main class="col-md-9">
-        
+
         <!-- Navigation tabs -->
         <ul class="nav nav-tabs mb-4">
           <li class="nav-item">
-            <a class="nav-link" href="personalInfo.html"  style="color: #005f99;">Personal Info.</a>
+            <a class="nav-link" href="personalInfo.html" style="color: #005f99;">Personal Info.</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="address.html" style="background-color:#005f99; color: white; ">Address</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="familiy.html"  style="color: #005f99;">Family</a>
+            <a class="nav-link" href="familiy.html" style="color: #005f99;">Family</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="attachment.html"  style="color: #005f99;">Attachments</a>
+            <a class="nav-link" href="attachment.html" style="color: #005f99;">Attachments</a>
           </li>
         </ul>
-  
+
         <!-- Form -->
         <div class="card shadow-sm p-4">
           <h4 class="mb-4">Address Information</h4>
-          <form action="#" method="POST" class="row g-3">
-  
+          <form id="addressForm" method="POST" class="row g-3">
+
             <div class="col-md-6">
               <label for="region" class="form-label">Region*</label>
               <select id="region" name="region" class="form-select" required>
@@ -77,41 +80,46 @@
                 <option value="tigray">Tigray</option>
               </select>
             </div>
-  
+
             <div class="col-md-6">
               <label for="city" class="form-label">City*</label>
               <input type="text" id="city" name="city" class="form-control" placeholder="Enter your city" required>
             </div>
-  
+
             <div class="col-md-6">
               <label for="subcity" class="form-label">Subcity*</label>
-              <input type="text" id="subcity" name="subcity" class="form-control" placeholder="Enter your subcity" required>
+              <input type="text" id="subcity" name="subcity" class="form-control" placeholder="Enter your subcity"
+                required>
             </div>
-  
+
             <div class="col-md-6">
               <label for="woreda" class="form-label">Woreda*</label>
-              <input type="text" id="woreda" name="woreda" class="form-control" placeholder="Enter your woreda" required>
+              <input type="text" id="woreda" name="woreda" class="form-control" placeholder="Enter your woreda"
+                required>
             </div>
-  
+
             <div class="col-md-6">
               <label for="kebele" class="form-label">Kebele*</label>
-              <input type="text" id="kebele" name="kebele" class="form-control" placeholder="Enter your kebele" required>
+              <input type="text" id="kebele" name="kebele" class="form-control" placeholder="Enter your kebele"
+                required>
             </div>
-  
+
             <div class="col-md-6">
               <label for="house_no" class="form-label">House Number*</label>
-              <input type="text" id="house_no" name="house_no" class="form-control" placeholder="Enter your house number" required>
+              <input type="text" id="house_no" name="house_no" class="form-control"
+                placeholder="Enter your house number" required>
             </div>
-  
+
             <div class="col-md-6">
               <label for="id_no" class="form-label">ID Number*</label>
-              <input type="text" id="id_no" name="id_no" class="form-control" placeholder="Enter your ID number" pattern="[0-9]{6,10}" title="ID number must be between 6 to 10 digits." required>
+              <input type="text" id="id_no" name="id_no" class="form-control" placeholder="Enter your ID number"
+                pattern="[0-9]{6,10}" title="ID number must be between 6 to 10 digits." required>
             </div>
-  
-             <!-- Next Button -->
-             <div class="col-12 mt-3">
-                <button type="submit" class="btn btn-outline-primary btn-sm">Next</button>
-              </div>
+
+            <!-- Next Button -->
+            <div class="col-12 mt-3">
+              <button type="submit" class="btn btn-outline-primary btn-sm">Next</button>
+            </div>
 
           </form>
         </div>
@@ -121,10 +129,38 @@
 
   <!-- Placeholder for Footer -->
   <div id="footer-placeholder"></div>
-
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <!-- Script to include header and footer -->
   <script src="/Project/et_passport_service_Backend/FrontEnd/Head_Foot/script.js">
   </script>
 
+  <script>
+    document.querySelector("#addressForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const addressData = {
+        region: e.target.elements.region.value,
+        city: e.target.elements.city.value,
+        subcity: e.target.elements.subcity.value,
+        woreda: e.target.elements.woreda.value,
+        kebele: e.target.elements.kebele.value,
+        house_no: e.target.elements.house_no.value,
+        id_no: e.target.elements.id_no.value,
+      };
+
+      try {
+        const response = await axios.post("/backend/appointment/form-handler.php", addressData);
+        if (response.data.success) {
+          window.location.href = "/Appointment/Page6/payment.html"; // go to next step
+        } else {
+          alert(response.data.message);
+        }
+      } catch (error) {
+        alert("Failed to submit address info. Please try again.");
+      }
+    });
+  </script>
+
 </body>
+
 </html>

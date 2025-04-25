@@ -130,14 +130,15 @@
 
       try {
         // Send data to PHP to store in session
-        await axios.post("/Project/et_passport_service_Backend/BackEnd/appointment/formHandler.php", dateTime, {
+        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php", dateTime, {
           headers: {
             'Content-Type': 'application/json'
           }
         });
         // Redirect to the next page
-        window.location.href = "/page4/personalinfo.html"; // Proceed to next step
+        window.location.href = "../normal/page4/personalinfo.html"; // Proceed to next step
       } catch (error) {
+        console.error("Error saving data:", error);
         alert("Error saving data. Please try again.");
       }
     });
