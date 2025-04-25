@@ -115,6 +115,7 @@
   <!-- Script to include header and footer -->
   <script src="/Project/et_passport_service_Backend/FrontEnd/Head_Foot/script.js">
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script>
     function updatePreview() {
@@ -129,7 +130,33 @@
     });
   </script>
 
-  <script src="script.js"></script>
+  <script>
+    document.getElementById("siteSelectionForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Save form data to localStorage
+      const siteData = {
+        site: e.target.elements.site.value,
+        city: e.target.elements.city.value,
+        office: e.target.elements.office.value,
+        delivery: e.target.elements.delivery.value
+      };
+
+      try {
+        await axios.post("/backend/appointment/form-handler.php", siteData, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        // Redirect to the next step (e.g., personal-info.html)
+        window.location.href = "page3.html";
+      } catch (error) {
+        alert("Error saving data. Please try again.");
+      }
+
+    });
+
+  </script>
 
 </body>
 
