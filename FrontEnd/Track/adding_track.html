@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Placeholder for Header -->
+  <div id="header-placeholder"></div>
+
+  <!-- Main content -->
+  <main>
+    <h1>Add Tracking Information</h1>
+    <form action="http://localhost/et_passport_service_Backend/BackEnd/Track/tracking.php" method="POST">
+        <label for="tracking-id">Tracking ID:</label><br>
+        <input type="text" id="tracking-id" name="tracking-id" required><br><br>
+        
+        <label for="applicant-name">Applicant Name:</label><br>
+        <input type="text" id="applicant-name" name="applicant-name" required><br><br>
+        
+        <label for="passport-status">Status:</label><br>
+        <select id="passport-status" name="passport-status" required>
+            <option value="processing">Processing</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+        </select><br><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+  </main>
+
+  <!-- Placeholder for Footer -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Script to include header and footer -->
+  <script src="..Head_Foot/script.js"></script>
+  </script>
+
+</body>
+</html>
+
