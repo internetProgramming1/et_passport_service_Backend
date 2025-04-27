@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Checking</title>
+  <title>Sign Up</title>
 </head>
 <body>
 
@@ -13,55 +13,56 @@
   <main>
     <h1>Sign Up</h1>
     <div class="box">
-        <form id="signupForm">
-            <div class="form-group">
-                <label for="FirstName">First Name</label>
-                <input type="text" id="FirstName" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="fatherName">Father's Name</label>
-                <input type="text" id="fatherName" name="fatherName" required>
-            </div>
-            <div class="form-group">
-                <label for="grandfatherName">Grandfather's Name</label>
-                <input type="text" id="grandfatherName" name="grandfatherName" required>
-            </div>
-            <div class="form-group">
-                <label for="signupEmail">Email</label>
-                <input type="email" id="signupEmail" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="signupPassword">Password</label>
-                <input type="password" id="signupPassword" name="password" required>
-                <span id="pass"></span>
-            </div>
-            <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required>
-                <span id="password"></span>
-            </div>
-            <button type="submit">Sign Up</button>
-            <p>&nbsp&nbsp&nbsp&nbsp Already have an account? <a href="login.html" class="link">Login here</a>.</p>
-        </form>
-        <div class="info-section">
-            <h2>Why Register?</h2>
-            <ul>
-                <li>Track your passport application status online.</li>
-                <li>Receive timely updates and notifications.</li>
-                <li>Access personalized support and resources.</li>
-                <li>Enjoy a seamless and secure user experience.</li>
-            </ul>
-        </div>
+      <form id="signupForm" method="POST">
+          <div class="form-group">
+              <label for="FirstName">First Name</label>
+              <input type="text" id="FirstName" name="first_name" required>
+          </div>
+          <div class="form-group">
+              <label for="fatherName">Father's Name</label>
+              <input type="text" id="fatherName" name="father_name" required>
+          </div>
+          <div class="form-group">
+              <label for="grandfatherName">Grandfather's Name</label>
+              <input type="text" id="grandfatherName" name="grandfather_name" required>
+          </div>
+          <div class="form-group">
+              <label for="signupEmail">Email</label>
+              <input type="email" id="signupEmail" name="email" required>
+          </div>
+          <div class="form-group">
+              <label for="signupPassword">Password</label>
+              <input type="password" id="signupPassword" name="password" required>
+              <span id="pass"></span>
+          </div>
+          <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" id="confirmPassword" name="confirm_password" required>
+              <span id="password"></span>
+          </div>
+          <button type="submit">Sign Up</button>
+
+          <p>Already have an account? <a href="login.html" class="link">Login here</a>.</p>
+      </form>
+
+      <div class="info-section">
+          <h2>Why Register?</h2>
+          <ul>
+              <li>Track your passport application status online.</li>
+              <li>Receive timely updates and notifications.</li>
+              <li>Access personalized support and resources.</li>
+              <li>Enjoy a seamless and secure user experience.</li>
+          </ul>
+      </div>
     </div>
   </main>
 
   <!-- Placeholder for Footer -->
   <div id="footer-placeholder"></div>
 
-  <!-- Script to include header and footer -->
-  <script src="../FrontEnd/Head_Foot/script.js">
-   
-  </script>
-<script src="scripts.js"></script>
+  <!-- Scripts -->
+  <script src="../FrontEnd/Head_Foot/script.js"></script>
+  <script src="scripts.js"></script>
+
 </body>
 </html>
