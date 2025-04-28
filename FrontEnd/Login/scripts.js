@@ -2,90 +2,121 @@ document.addEventListener('DOMContentLoaded', () => {
     const signupForm = document.getElementById('signupForm');
     const loginForm = document.getElementById('loginForm');
 
-    signupForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+    // ------------------ Signup Form -------------------
+    if (signupForm) {
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-        const firstname = document.getElementById('FirstName').value.trim();
-        const fatherName = document.getElementById('fatherName').value.trim();
-        const grandfatherName = document.getElementById('grandfatherName').value.trim();
-        const email = document.getElementById('signupEmail').value.trim();
-        const password = document.getElementById('signupPassword').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        const confirm=document.getElementById('password');
-        const con=document.getElementById('pass');
+            const firstname = document.getElementById('FirstName').value.trim();
+            const fatherName = document.getElementById('fatherName').value.trim();
+            const grandfatherName = document.getElementById('grandfatherName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const passMessage = document.getElementById('pass');
+            const confirmMessage = document.getElementById('password');
 
-        // Basic validation
-        if (!firstname) {
-            alert('First Name is required.');
-            return;
-        }
+            // Clear previous messages
+            passMessage.innerHTML = '';
+            confirmMessage.innerHTML = '';
 
-        if (!fatherName) {
-            alert('Father\'s Name is required.');
-            return;
-        }
+            // Basic Validation
+            if (!firstname || !fatherName || !grandfatherName || !email || !password || !confirmPassword) {
+                alert('Please fill in all fields.');
+                return;
+            }
 
-        if (!grandfatherName) {
-            alert('Grandfather\'s Name is required.');
-            return;
-        }
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
 
-        if (!email) {
-            alert('Email is required.');
-            return;
-        }
+            if (password.length < 6) {
+                passMessage.innerHTML = "Password must be at least 6 characters long.";
+                return;
+            }
 
-        // Email format validation
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(email)) {
-            alert('Please enter a valid email address.');
-            return;
-        }
+            if (password !== confirmPassword) {
+                confirmMessage.innerHTML = "Passwords don't match.";
+                return;
+            }
 
-        if (!password) {
-            alert('Password is required.');
-            return;
-        }
+            // Submit signup data to backend
+            try {
+                const response = await fetch('../../BackEnd/Login/signup.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        first_name: firstname,
+                        father_name: fatherName,
+                        grandfather_name: grandfatherName,
+                        email: email,
+                        password: password
+                    })
+                });
 
-        if (password.length < 6) {
-            con.innerHTML="Password must be at least 6 characters long."
-         
-            return;
-        }
+                const data = await response.json();
 
-        if (password !== confirmPassword) {
-            confirm.innerHTML="Password don't match "
-            return;
-        }
+                if (response.ok) {
+                    alert('Signup successful!');
+                    window.location.href = 'login.html';
+                } else {
+                    alert(data.message || 'Signup failed.');
+                }
+            } catch (error) {
+                console.error('Error during signup:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+    }
 
-        // If all validations pass
-        alert('Sign up successful!');
-    });
+    // ------------------ Login Form -------------------
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
 
-        const email = document.getElementById('loginEmail').value.trim();
-        const password = document.getElementById('loginPassword').value;
+            if (!email || !password) {
+                alert('Please fill in all fields.');
+                return;
+            }
 
-        if (!email) {
-            alert('Email is required.');
-            return;
-        }
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
 
-        // Email format validation
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(email)) {
-            alert('Please enter a valid email address.');
-            return;
-        }
+            // Submit login data to backend
+            try {
+                const response = await fetch('../../BackEnd/Login/login.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
 
-        if (!password) {
-            alert('Password is required.');
-            return;
-        }
+                const data = await response.json();
 
-        // If all validations pass
-        alert('Login successful!');
-    });
+                if (response.ok) {
+                    alert('Login successful!');
+                    window.location.href = '/FrontEnd/UserProfile.html'; // Redirect after login
+                } else {
+                    alert(data.message || 'Login failed.');
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+    }
 });
