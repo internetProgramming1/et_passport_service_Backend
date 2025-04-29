@@ -111,8 +111,6 @@ try {  // the input var hold any data that are send from the front end like an a
             'data' => $_SESSION['personalInfo']
         ];
     } elseif (isset($data['addressData'])) {
-        // Address form
-        $required = ['region', 'city', 'subcity', 'woreda', 'kebele', 'house_no', 'id_no'];
 
         $_SESSION['addressData'] = [
             'region' => htmlspecialchars($data['region']),
@@ -127,7 +125,18 @@ try {  // the input var hold any data that are send from the front end like an a
         $response = [
             'success' => true,
             'message' => 'Address information saved',
-            'data' => $_SESSION['address_info']
+            'data' => $_SESSION['addressData']
+        ];
+    } elseif (isset($data['family'])) {
+        $_SESSION['family'] = [
+            'mother' => htmlspecialchars($data['mother']),
+            'father' => htmlspecialchars($data['father']),
+            'spouse' => isset($data['spouse']) ? htmlspecialchars($data['spouse']) : null
+        ];
+        $response = [
+            'success' => true,
+            'message' => 'Family Information Saved.',
+            'data' => $_SESSION['family']
         ];
     } else {
         throw new Exception("Unrecognized form data");
