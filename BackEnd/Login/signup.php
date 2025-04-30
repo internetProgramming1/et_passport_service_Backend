@@ -1,57 +1,35 @@
 <?php
+require 'db_connect.php';
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $firstName = $_POST["name"];
+    $fatherName = $_POST["fatherName"];
+    $grandfatherName = $_POST["grandfatherName"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $confirmPassword = $_POST["confirmPassword"];
 
+    if ($password !== $confirmPassword) {
+        die("Passwords do not match.");
+    }
 
-$host = "localhost";
-$username = "root";
-$password = "";   
-$dbname = "project_et_passport_db";
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
+    $sql = "INSERT INTO users (first_name, father_name, grandfather_name, email, password) 
+            VALUES (?, ?, ?, ?, ?)";
+    $stmt = $pdo->prepare($sql);
 
-$conn = new mysqli($host, $username, $password, $dbname);
-
-
-if ($conn->connect_error) {
-    die(json_encode(["status" => "error", "message" => "Database connection failed."]));
-}
-
-$data = json_decode(file_get_contents("php://input"), true);
-
-if (!$data) {
-    echo json_encode(["status" => "error", "message" => "No data received."]);
-    exit();
-}
-
-
-$firstName = $conn->real_escape_string($data['name']);
-$fatherName = $conn->real_escape_string($data['fatherName']);
-$grandfatherName = $conn->real_escape_string($data['grandfatherName']);
-$email = $conn->real_escape_string($data['email']);
-$password = $conn->real_escape_string($data['password']);
-
-
-$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-
-$checkQuery = "SELECT * FROM users WHERE email = '$email'";
-$result = $conn->query($checkQuery);
-
-if ($result->num_rows > 0) {
-    echo json_encode(["status" => "error", "message" => "Email already registered."]);
-    exit();
-}
-
-
-$sql = "INSERT INTO users (first_name, father_name, grandfather_name, email, password) 
-        VALUES ('$firstName', '$fatherName', '$grandfatherName', '$email', '$hashedPassword')";
-
-if ($conn->query($sql) === TRUE) {
-    echo json_encode(["status" => "success", "message" => "Signup successful."]);
+    try {
+        $stmt->execute([$firstName, $fatherName, $grandfatherName, $email, $hashedPassword]);
+        header("Location: login.html?success=1"); // Redirect after signup
+    } catch (PDOException $e) {
+        if ($e->getCode() == 23000) {
+            echo "Email already registered.";
+        } else {
+            echo "Error: " . $e->getMessage();
+        }
+    }
 } else {
-    echo json_encode(["status" => "error", "message" => "Signup failed."]);
+    echo "Invalid request.";
 }
-
-$conn->close();
 ?>
