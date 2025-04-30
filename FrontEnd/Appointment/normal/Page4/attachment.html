@@ -64,7 +64,7 @@
         <!-- Form & Notes Card -->
         <div class="card shadow-sm p-4">
           <h4 class="mb-4">Upload Required Documents</h4>
-          <form action="#" method="POST" enctype="multipart/form-data" id="uploadForm">
+          <form method="POST" enctype="multipart/form-data" id="uploadForm">
             <br>
             <div class="row">
               <!-- Upload Form -->
@@ -125,6 +125,99 @@
   <script src="/Project/et_passport_service_Backend/FrontEnd/Head_Foot/script.js">
   </script>
 
+  <!-- Bootstrap Bundle JS (includes Popper.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Axios   -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('uploadForm');
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // Clear previous errors
+        const errorAlert = document.getElementById('uploadErrorAlert');
+        errorAlert.classList.add('d-none');
+        errorAlert.innerHTML = '';
+
+        // Validate required files
+        const requiredFiles = [
+          'birth_certificate_front', 'birth_certificate_back',
+          'id_front', 'id_back'
+        ];
+
+        let isValid = true;
+        requiredFiles.forEach(field => {
+          const input = form.elements[field];
+          if (!input.files || input.files.length === 0) {
+            input.classList.add('is-invalid');
+            isValid = false;
+          } else {
+            input.classList.remove('is-invalid');
+            // Additional file validation
+            const file = input.files[0];
+            const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+            const maxSize = 1 * 1024 * 1024; // 1MB
+
+            if (!validTypes.includes(file.type)) {
+              errorAlert.innerHTML += `<p>Invalid file type for ${field}. Only JPG, PNG, or PDF allowed.</p>`;
+              isValid = false;
+            }
+
+            if (file.size > maxSize) {
+              errorAlert.innerHTML += `<p>File too large for ${field}. Max 1MB allowed.</p>`;
+              isValid = false;
+            }
+          }
+        });
+
+        if (!isValid) {
+          errorAlert.classList.remove('d-none');
+          errorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        try {
+          const formData = new FormData(form);
+
+          // Add any additional data you need to send
+          formData.append('document_upload', true);
+
+          const response = await axios.post('process_uploads.php', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+
+          if (response.data.success) {
+            // Redirect or show success message
+            window.location.href = '/Appointment/norma/page5/passportPage.html';
+          } else {
+            throw new Error(response.data.message || 'File upload failed');
+          }
+        } catch (error) {
+          console.error('Upload error:', error);
+          errorAlert.innerHTML = `
+            <strong>Error!</strong> ${error.response?.data?.message || error.message || 'An error occurred during upload.'}
+          `;
+          errorAlert.classList.remove('d-none');
+          errorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+
+      // Clear validation when files are selected
+      document.querySelectorAll('input[type="file"]').forEach(input => {
+        input.addEventListener('change', function () {
+          if (this.classList.contains('is-invalid')) {
+            this.classList.remove('is-invalid');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

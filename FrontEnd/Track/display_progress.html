@@ -2,40 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Checking</title>
+  <title>Tracking Progress</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body>
+<body class="container mt-5">
 
-  <!-- Placeholder for Header -->
+  <!-- Header Placeholder -->
   <div id="header-placeholder"></div>
 
-  <!-- Main content -->
-  <main>
-    <section class="progress-section">
-        <h1>Tracking Progress</h1>
-        <div class="tracking-card">
-            <div class="tracking-item">
-                <h3>Tracking ID:</h3>
-                <p id="tracking-id-display">N/A</p>
-            </div>
-            <div class="tracking-item">
-                <h3>Applicant Name:</h3>
-                <p id="applicant-name-display">N/A</p>
-            </div>
-            <div class="tracking-item">
-                <h3>Status:</h3>
-                <p id="passport-status-display">N/A</p>
-            </div>
-        </div>
-    </section>
-  </main>
+  <h1 class="mb-4">Tracking Progress</h1>
 
-  <!-- Placeholder for Footer -->
-  <div id="footer-placeholder"></div>
+  <div class="mb-3">
+    <label for="input-id" class="form-label">Enter Tracking ID:</label>
+    <input type="text" id="input-id" class="form-control" placeholder="Enter your tracking ID">
+  </div>
+  <button class="btn btn-primary" onclick="fetchProgress()">Check</button>
 
-  <!-- Script to include header and footer -->
-  <script src="../FrontEnd/Head_Foot/script.js">
-   
+  <div class="card mt-4" style="max-width: 400px;">
+    <div class="card-body">
+      <h5 class="card-title">Tracking Details</h5>
+      <p><strong>Tracking ID:</strong> <span id="tracking-id-display">N/A</span></p>
+      <p><strong>Applicant Name:</strong> <span id="applicant-name-display">N/A</span></p>
+      <p><strong>Status:</strong> <span id="passport-status-display">N/A</span></p>
+    </div>
+  </div>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder" class="mt-5"></div>
+
+  <!-- Include header and footer -->
+  <script src="../Head_Foot/script.js"></script>
+
+  <script>
+    function fetchProgress() {
+      const trackingId = document.getElementById('input-id').value.trim();
+
+      if (trackingId === "") {
+        alert("Please enter a tracking ID.");
+        return;
+      }
+
+      axios.post('http://localhost/project/et_passport_service_Backend/BackEnd/Track/display_progress.php', {
+        tracking_id: trackingId
+      })
+      .then(response => {
+        const data = response.data;
+        if (data.success) {
+          document.getElementById('tracking-id-display').textContent = data.tracking_id;
+          document.getElementById('applicant-name-display').textContent = data.applicant_name;
+          document.getElementById('passport-status-display').textContent = data.passport_status;
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        alert("Error retrieving tracking information.");
+      });
+    }
   </script>
 
 </body>

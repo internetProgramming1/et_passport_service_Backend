@@ -68,7 +68,7 @@ try {  // the input var hold any data that are send from the front end like an a
         $response = [
             'success' => true,
             'message' => 'Site selection saved',
-            'data' => $_SESSION['site_data']
+            'data' => $_SESSION['siteData']
         ];
     } elseif (isset($data['dateTime'])) {
         // Date/time form
@@ -111,8 +111,6 @@ try {  // the input var hold any data that are send from the front end like an a
             'data' => $_SESSION['personalInfo']
         ];
     } elseif (isset($data['addressData'])) {
-        // Address form
-        $required = ['region', 'city', 'subcity', 'woreda', 'kebele', 'house_no', 'id_no'];
 
         $_SESSION['addressData'] = [
             'region' => htmlspecialchars($data['region']),
@@ -127,7 +125,76 @@ try {  // the input var hold any data that are send from the front end like an a
         $response = [
             'success' => true,
             'message' => 'Address information saved',
-            'data' => $_SESSION['address_info']
+            'data' => $_SESSION['addressData']
+        ];
+    } elseif (isset($data['family'])) {
+        $_SESSION['family'] = [
+            'mother' => htmlspecialchars($data['mother']),
+            'father' => htmlspecialchars($data['father']),
+            'spouse' => isset($data['spouse']) ? htmlspecialchars($data['spouse']) : null
+        ];
+        $response = [
+            'success' => true,
+            'message' => 'Family Information Saved.',
+            'data' => $_SESSION['family']
+        ];
+        // Check if this is a document upload request
+    } elseif (isset($_POST['document_upload'])) {
+        $uploadDir = 'uploads/';
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        $allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+        $maxSize = 1 * 1024 * 1024; // 1MB
+
+        $uploadedFiles = [];
+        $requiredFields = [
+            'birth_certificate_front',
+            'birth_certificate_back',
+            'id_front',
+            'id_back'
+        ];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($_FILES[$field])) {
+                throw new Exception("Missing required file: $field");
+            }
+
+            $file = $_FILES[$field];
+
+            // Validate file
+            if ($file['error'] !== UPLOAD_ERR_OK) {
+                throw new Exception("Error uploading {$field}: " . $file['error']);
+            }
+
+            if (!in_array($file['type'], $allowedTypes)) {
+                throw new Exception("Invalid file type for {$field}. Only JPG, PNG, or PDF allowed.");
+            }
+
+            if ($file['size'] > $maxSize) {
+                throw new Exception("File too large for {$field}. Max 1MB allowed.");
+            }
+
+            // Generate unique filename
+            $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $filename = uniqid() . '_' . $field . '.' . $extension;
+            $destination = $uploadDir . $filename;
+
+            if (!move_uploaded_file($file['tmp_name'], $destination)) {
+                throw new Exception("Failed to move uploaded file: {$field}");
+            }
+
+            $uploadedFiles[$field] = $destination;
+        }
+
+        // Store in session
+        $_SESSION['documents'] = $uploadedFiles;
+
+        $response = [
+            'success' => true,
+            'message' => 'Documents uploaded successfully',
+            'data' => $uploadedFiles
         ];
     } else {
         throw new Exception("Unrecognized form data");
