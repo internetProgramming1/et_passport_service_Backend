@@ -3,11 +3,11 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
-// DB credentials (update if needed)
+
 $host = "localhost";
 $username = "root";
 $password = "";
-$dbname = "project_et_passport_db"; // This is your actual database name from phpMyAdmin
+$dbname = "project_et_passport_db"; 
 
 // Connect to database
 $conn = new mysqli($host, $username, $password, $dbname);
