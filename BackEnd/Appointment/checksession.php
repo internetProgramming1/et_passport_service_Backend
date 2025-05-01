@@ -8,11 +8,11 @@ if (
         $_SESSION['type'],
         $_SESSION['category'],
         $_SESSION['siteData'],
-        $_SESSION['appointment'],
-        $_SESSION['personalInfo'],
-        $_SESSION['addressData'],
-        $_SESSION['family'],
-        $_SESSION['documents']
+        $_SESSION['dateTime'],
+        // $_SESSION['personalInfo'],
+        // $_SESSION['addressData'],
+        // $_SESSION['family'],
+        // $_SESSION['documents']
     )
 ) {
     $response = [
@@ -22,12 +22,13 @@ if (
             'type' => $_SESSION['type'],
             'category' => $_SESSION['category'],
             'siteData' => $_SESSION['siteData'],
-            'appointment' => $_SESSION['appointment'],
-            'personalInfo' => $_SESSION['personalInfo'],
-            'addressData' => $_SESSION['addressData'],
-            'family' => $_SESSION['family'],
-            'documents' => $_SESSION['documents']
+            'dateTime' => $_SESSION['dateTime'],
+            // 'personalInfo' => $_SESSION['personalInfo'],
+            // 'addressData' => $_SESSION['addressData'],
+            // 'family' => $_SESSION['family'],
+            // 'documents' => $_SESSION['documents']
         ]
+
     ];
 } else {
     $response = [

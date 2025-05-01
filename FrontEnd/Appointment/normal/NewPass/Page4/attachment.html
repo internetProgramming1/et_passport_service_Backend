@@ -9,6 +9,8 @@
       margin-bottom: 15px;
     }
   </style>
+  <!-- Jquery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -64,6 +66,7 @@
         <!-- Form & Notes Card -->
         <div class="card shadow-sm p-4">
           <h4 class="mb-4">Upload Required Documents</h4>
+          <div id="uploadErrorAlert" class="alert alert-danger d-none mb-3"></div>
           <form method="POST" enctype="multipart/form-data" id="uploadForm">
             <br>
             <div class="row">
@@ -131,93 +134,50 @@
   <!-- Axios   -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const form = document.getElementById('uploadForm');
+    $("#uploadForm").submit(async (e) => {
+      e.preventDefault();
 
-      form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-
-        // Clear previous errors
-        const errorAlert = document.getElementById('uploadErrorAlert');
+      // Clear previous errors
+      const errorAlert = document.getElementById('uploadErrorAlert');
+      if (errorAlert) {
         errorAlert.classList.add('d-none');
         errorAlert.innerHTML = '';
+      }
 
-        // Validate required files
-        const requiredFiles = [
-          'birth_certificate_front', 'birth_certificate_back',
-          'id_front', 'id_back'
-        ];
+      // Collect form data
+      const formData = new FormData(document.getElementById('uploadForm'));
 
-        let isValid = true;
-        requiredFiles.forEach(field => {
-          const input = form.elements[field];
-          if (!input.files || input.files.length === 0) {
-            input.classList.add('is-invalid');
-            isValid = false;
-          } else {
-            input.classList.remove('is-invalid');
-            // Additional file validation
-            const file = input.files[0];
-            const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-            const maxSize = 1 * 1024 * 1024; // 1MB
-
-            if (!validTypes.includes(file.type)) {
-              errorAlert.innerHTML += `<p>Invalid file type for ${field}. Only JPG, PNG, or PDF allowed.</p>`;
-              isValid = false;
-            }
-
-            if (file.size > maxSize) {
-              errorAlert.innerHTML += `<p>File too large for ${field}. Max 1MB allowed.</p>`;
-              isValid = false;
-            }
-          }
-        });
-
-        if (!isValid) {
-          errorAlert.classList.remove('d-none');
-          errorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          return;
-        }
-
-        try {
-          const formData = new FormData(form);
-
-          // Add any additional data you need to send
-          formData.append('document_upload', true);
-
-          const response = await axios.post('process_uploads.php', formData, {
+      try {
+        const response = await axios.post(
+          'http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php',
+          formData,
+          {
             headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          });
-
-          if (response.data.success) {
-            // Redirect or show success message
-            window.location.href = '/Appointment/norma/page5/passportPage.html';
-          } else {
-            throw new Error(response.data.message || 'File upload failed');
+              'Content-Type': 'multipart/form-data',
+            },
           }
-        } catch (error) {
-          console.error('Upload error:', error);
+        );
+
+        if (response.data.success) {
+          window.location.href = '/Appointment/normal/NewPass/page5/passportPage.html';
+        } else {
+          throw new Error(response.data.message || 'Upload failed due to server validation');
+        }
+      } catch (error) {
+        console.error('Upload error:', error);
+        if (errorAlert) {
           errorAlert.innerHTML = `
             <strong>Error!</strong> ${error.response?.data?.message || error.message || 'An error occurred during upload.'}
           `;
           errorAlert.classList.remove('d-none');
           errorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-      });
-
-      // Clear validation when files are selected
-      document.querySelectorAll('input[type="file"]').forEach(input => {
-        input.addEventListener('change', function () {
-          if (this.classList.contains('is-invalid')) {
-            this.classList.remove('is-invalid');
-          }
-        });
-      });
+      }
     });
   </script>
+
 </body>
 
 </html>

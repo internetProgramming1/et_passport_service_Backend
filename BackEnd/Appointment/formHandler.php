@@ -54,9 +54,7 @@ try {  // the input var hold any data that are send from the front end like an a
             'message' => 'Type of request saved',
             'data' => $_SESSION['category']
         ];
-    } elseif (isset($data['siteData'])) {
-        // Site selection form
-        $required = ['site', 'city', 'office', 'delivery'];
+    } elseif (isset($data['site'])) {
 
         $_SESSION['siteData'] = [
             'site' => htmlspecialchars($data['site']),
@@ -70,10 +68,10 @@ try {  // the input var hold any data that are send from the front end like an a
             'message' => 'Site selection saved',
             'data' => $_SESSION['siteData']
         ];
-    } elseif (isset($data['dateTime'])) {
+    } elseif (isset($data['date'])) {
         // Date/time form
 
-        $_SESSION['appointment'] = [
+        $_SESSION['dateTime'] = [
             'date' => htmlspecialchars($data['date']),
             'time' => htmlspecialchars($data['time'])
         ];
@@ -83,7 +81,7 @@ try {  // the input var hold any data that are send from the front end like an a
             'message' => 'Appointment time saved',
             'data' => $_SESSION['appointment']
         ];
-    } elseif (isset($data['personalInfo'])) {
+    } elseif (isset($data['firstname'])) {
         $requiredFields = ['firstname', 'lastname', 'phone', 'email', 'gender', 'dob', 'birthplace', 'nationality'];
 
         // Sanitize and store the form data
@@ -110,7 +108,7 @@ try {  // the input var hold any data that are send from the front end like an a
             'message' => 'Form data saved successfully.',
             'data' => $_SESSION['personalInfo']
         ];
-    } elseif (isset($data['addressData'])) {
+    } elseif (isset($data['region'])) {
 
         $_SESSION['addressData'] = [
             'region' => htmlspecialchars($data['region']),
@@ -127,75 +125,80 @@ try {  // the input var hold any data that are send from the front end like an a
             'message' => 'Address information saved',
             'data' => $_SESSION['addressData']
         ];
-    } elseif (isset($data['family'])) {
-        $_SESSION['family'] = [
-            'mother' => htmlspecialchars($data['mother']),
-            'father' => htmlspecialchars($data['father']),
-            'spouse' => isset($data['spouse']) ? htmlspecialchars($data['spouse']) : null
+    } elseif (isset($data['mother_first_name'])) {
+
+        // Prepare family data
+        $familyData = [
+            'mother' => [
+                'first_name' => htmlspecialchars($data['mother_first_name']),
+                'father_name' => htmlspecialchars($data['mother_father_name']),
+                'grandfather_name' => htmlspecialchars($data['mother_grandfather_name'])
+            ],
+            'father' => [
+                'first_name' => htmlspecialchars($data['father_first_name']),
+                'father_name' => htmlspecialchars($data['father_father_name']),
+                'grandfather_name' => htmlspecialchars($data['father_grandfather_name'])
+            ]
         ];
+
+        // Include spouse data if available
+        if (isset($data['spouse_first_name'])) {
+            $familyData['spouse'] = [
+                'first_name' => htmlspecialchars($data['spouse_first_name']),
+                'father_name' => isset($data['spouse_father_name']) ? htmlspecialchars($data['spouse_father_name']) : null,
+                'grandfather_name' => isset($data['spouse_grandfather_name']) ? htmlspecialchars($data['spouse_grandfather_name']) : null
+            ];
+        }
+
+        // Store family data in session
+        $_SESSION['family'] = $familyData;
+
+        // Prepare response
         $response = [
             'success' => true,
             'message' => 'Family Information Saved.',
             'data' => $_SESSION['family']
         ];
-        // Check if this is a document upload request
-    } elseif (isset($_POST['document_upload'])) {
-        $uploadDir = 'uploads/';
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
+    } elseif (!empty($_FILES)) {
+        // Include the validation function (if not already included)
+        require_once 'fileupload.php';
+
+        // Call the function to validate and upload files
+        $uploadResult = validateAndUploadFiles($_FILES);
+
+        if ($uploadResult['success']) {
+            // Initialize session array if not set
+            $_SESSION['uploaded_files'] = $_SESSION['uploaded_files'] ?? [];
+
+            // Store ALL uploaded files in session (not just one)
+            foreach ($uploadResult['filePaths'] as $fieldName => $fileInfo) {
+                $_SESSION['uploaded_files'][$fieldName] = $fileInfo['stored_path'];
+
+                // For more detailed tracking:
+                /*
+                $_SESSION['uploaded_files'][$fieldName] = [
+                    'original_name' => $fileInfo['original_name'],
+                    'stored_path' => $fileInfo['stored_path'],
+                    'upload_time' => date('Y-m-d H:i:s')
+                ];
+                */
+            }
+
+            // Respond with success
+            echo json_encode([
+                'success' => true,
+                'message' => $uploadResult['message'],
+                'data' => $_SESSION['uploaded_files']
+            ]);
+        } else {
+            // Respond with error
+            echo json_encode([
+                'success' => false,
+                'message' => $uploadResult['message'],
+                'errors' => explode("\n", $uploadResult['message']) // Split errors into array
+            ]);
         }
-
-        $allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-        $maxSize = 1 * 1024 * 1024; // 1MB
-
-        $uploadedFiles = [];
-        $requiredFields = [
-            'birth_certificate_front',
-            'birth_certificate_back',
-            'id_front',
-            'id_back'
-        ];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($_FILES[$field])) {
-                throw new Exception("Missing required file: $field");
-            }
-
-            $file = $_FILES[$field];
-
-            // Validate file
-            if ($file['error'] !== UPLOAD_ERR_OK) {
-                throw new Exception("Error uploading {$field}: " . $file['error']);
-            }
-
-            if (!in_array($file['type'], $allowedTypes)) {
-                throw new Exception("Invalid file type for {$field}. Only JPG, PNG, or PDF allowed.");
-            }
-
-            if ($file['size'] > $maxSize) {
-                throw new Exception("File too large for {$field}. Max 1MB allowed.");
-            }
-
-            // Generate unique filename
-            $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-            $filename = uniqid() . '_' . $field . '.' . $extension;
-            $destination = $uploadDir . $filename;
-
-            if (!move_uploaded_file($file['tmp_name'], $destination)) {
-                throw new Exception("Failed to move uploaded file: {$field}");
-            }
-
-            $uploadedFiles[$field] = $destination;
-        }
-
-        // Store in session
-        $_SESSION['documents'] = $uploadedFiles;
-
-        $response = [
-            'success' => true,
-            'message' => 'Documents uploaded successfully',
-            'data' => $uploadedFiles
-        ];
+        exit; // Important: Stop execution after handling files
     } else {
         throw new Exception("Unrecognized form data");
     }

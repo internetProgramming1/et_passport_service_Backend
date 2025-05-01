@@ -46,7 +46,12 @@
                 <!-- Date Selection -->
 
                 <h4 class="mb-3">Select Date & Time</h4>
-
+                <!-- Error Alert Container -->
+                <div id="errorAlert" class="alert alert-danger d-none" role="alert">
+                  <ul id="errorList" class="mb-0">
+                    <!-- Errors will be inserted here -->
+                  </ul>
+                </div>
                 <div class="mb-3">
                   <label for="date" class="form-label">Select Date*</label>
                   <input type="date" id="date" name="date" class="form-control" required>
@@ -125,24 +130,39 @@
 
     document.getElementById("dateTimeForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+      // Clear previous errors
+      const errorAlert = document.getElementById('errorAlert');
+      errorAlert.classList.add('d-none');
 
-      const dateTime = {
-        date: e.target.elements.date.value,
-        time: e.target.elements.time.value
-      };
+      // Check if any required field is empty
+      const form = e.target;
+      const requiredFields = ['time', 'date'];
+      const isEmpty = requiredFields.some(field => !form.elements[field].value);
+
+      if (isEmpty) {
+        errorAlert.textContent = "All required fields must be filled";
+        errorAlert.classList.remove('d-none');
+        return; // Stop submission
+      }
+
 
       try {
+        const dateTime = {
+          date: e.target.elements.date.value,
+          time: e.target.elements.time.value
+        };
         // Send data to PHP to store in session
         await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php", dateTime, {
           headers: {
             'Content-Type': 'application/json'
-          }
+          },
+          withCredentials: true
         });
         // Redirect to the next page
-        window.location.href = "../normal/page4/personalinfo.html"; // Proceed to next step
+        window.location.href = "../NewPass/page4/personalinfo.html"; // Proceed to next step
       } catch (error) {
-        console.error("Error saving data:", error);
-        alert("Error saving data. Please try again.");
+        errorAlert.textContent = "Error saving data. Please try again.";
+        errorAlert.classList.remove('d-none');
       }
     });
   </script>
