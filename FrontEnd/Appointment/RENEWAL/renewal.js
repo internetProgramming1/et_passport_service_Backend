@@ -6,8 +6,8 @@ function hideAllForms() {
     });
   }
   
-
-
+  
+  
   function showExpiredPassportForm() {
     hideAllForms();
     document.getElementById("renewal-passport-main").style.display = "none";
@@ -24,6 +24,22 @@ function hideAllForms() {
   function showPersonalInfoForm() {
     hideAllForms();
     document.getElementById("personal-info-form").style.display = "block";
+  }
+  document.getElementById('personal-info-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+  
+    // Optionally validate personal info inputs here
+  
+    // Hide the personal info form and show the region form
+    document.getElementById("personal-info-form").style.display = "none";
+    document.getElementById('step-region').style.display = "block"; // Show the region form
+  });
+  function goToPassportInfo() {
+    // Hide the region selection form
+    document.getElementById('step-region').style.display = 'none';
+    
+    // Show the passport information form
+    document.getElementById('step-passport-info').style.display = 'block';
   }
   
   // Apply Action for each passport type (Expired, Lost, etc.)
