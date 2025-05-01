@@ -1,49 +1,25 @@
 <?php
+require 'db_connect.php';
+session_start();
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
 
-// Connect to database
-$host = "localhost";
-$username = "root"; 
-$password = "";     
-$dbname = "project_et_passport_db";
+    $sql = "SELECT * FROM users WHERE email = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
-$conn = new mysqli($host, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die(json_encode(["status" => "error", "message" => "Database connection failed."]));
-}
-
-// Receive JSON data
-$data = json_decode(file_get_contents("php://input"), true);
-
-if (!$data) {
-    echo json_encode(["status" => "error", "message" => "No data received."]);
-    exit();
-}
-
-$email = $conn->real_escape_string($data['email']);
-$password = $data['password']; 
-
-// Find user
-$sql = "SELECT * FROM users WHERE email = '$email'";
-$result = $conn->query($sql);
-
-if ($result->num_rows == 1) {
-    $user = $result->fetch_assoc();
-    
-    // Verify password
-    if (password_verify($password, $user['password'])) {
-        echo json_encode(["status" => "success", "message" => "Login successful."]);
+    if ($user && password_verify($password, $user["password"])) {
+        $_SESSION["user_id"] = $user["id"];
+        $_SESSION["email"] = $user["email"];
+        $_SESSION["name"] = $user["first_name"];
+        header("Location: dashboard.php");
     } else {
-        echo json_encode(["status" => "error", "message" => "Invalid password."]);
+        echo "Invalid credentials.";
     }
 } else {
-    echo json_encode(["status" => "error", "message" => "User not found."]);
+    echo "Invalid request.";
 }
-
-$conn->close();
 ?>
