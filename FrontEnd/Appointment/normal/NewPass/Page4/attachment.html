@@ -67,58 +67,59 @@
         <div class="card shadow-sm p-4">
           <h4 class="mb-4">Upload Required Documents</h4>
           <div id="uploadErrorAlert" class="alert alert-danger d-none mb-3"></div>
-          <form method="POST" enctype="multipart/form-data" id="uploadForm">
-            <br>
-            <div class="row">
-              <!-- Upload Form -->
-              <div class="col-md-8">
+          <div class="row">
+            <div class="col-lg-8">
+              <form method="POST" enctype="multipart/form-data" id="uploadForm">
+                <br>
+                <!-- Upload Form -->
+
                 <div class="mb-3">
                   <label for="birth_certificate_front" class="form-label">Upload Birth Certificate Front*</label>
                   <input type="file" class="form-control" id="birth_certificate_front" name="birth_certificate_front"
-                    accept=".pdf,.jpg,.jpeg,.png" required>
+                    accept=".pdf,.jpeg,.png" required>
                 </div>
                 <br>
                 <div class="mb-3">
                   <label for="birth_certificate_back" class="form-label">Upload Birth Certificate Back*</label>
                   <input type="file" class="form-control" id="birth_certificate_back" name="birth_certificate_back"
-                    accept=".pdf,.jpg,.jpeg,.png" required>
+                    accept=".pdf,.jpeg,.png" required>
                 </div>
                 <br>
                 <div class="mb-3">
                   <label for="id_front" class="form-label">Upload ID Front*</label>
-                  <input type="file" class="form-control" id="id_front" name="id_front" accept=".jpg,.jpeg,.png"
+                  <input type="file" class="form-control" id="id_front" name="id_front" accept=".png,.jpeg,.png"
                     required>
                 </div>
                 <br>
                 <div class="mb-3">
                   <label for="id_back" class="form-label">Upload ID Back*</label>
-                  <input type="file" class="form-control" id="id_back" name="id_back" accept=".jpg,.jpeg,.png" required>
+                  <input type="file" class="form-control" id="id_back" name="id_back" accept=".png,.jpeg,.pdf" required>
                 </div>
-              </div>
+                <!-- Next Button -->
+                <button type="submit" class="btn btn-outline-primary btn-sm">Next</button>
 
-              <!-- Notes Section -->
-              <div class="col-md-4">
-                <div class="alert alert-info h-100">
-                  <h5>Note Info:</h5>
-                  <ul class="mb-0">
-                    <li>Size should be less than 1MB.</li>
-                    <li>Accepted formats: JPEG, PNG, or PDF.</li>
-                    <li>Only clear, A4 color photocopies are accepted.</li>
-                    <li>Bring original documents on appointment day.</li>
-                  </ul>
-                </div>
+              </form>
+            </div>
+            <!-- Notes Section -->
+            <div class="col-lg-4 h-100">
+              <div class="alert alert-info h-100">
+                <h5>Note Info:</h5>
+                <ul class="mb-0">
+                  <li>Size should be less than 1MB.</li>
+                  <li>Accepted formats: JPEG, PNG, or PDF.</li>
+                  <li>Only clear, A4 color photocopies are accepted.</li>
+                  <li>Bring original documents on appointment day.</li>
+                </ul>
               </div>
             </div>
+          </div>
 
-            <!-- Next Button -->
-            <div class="col-12 mt-3">
-              <button type="submit" class="btn btn-outline-primary btn-sm">Next</button>
-            </div>
-          </form>
         </div>
       </main>
     </div>
+
   </div>
+
 
 
   <!-- Placeholder for Footer -->
@@ -146,22 +147,25 @@
         errorAlert.innerHTML = '';
       }
 
-      // Collect form data
-      const formData = new FormData(document.getElementById('uploadForm'));
+      const formData = new FormData();
+
+      formData.append('birth_certificate_front', $('#birth_certificate_front')[0].files[0]);
+      formData.append('birth_certificate_back', $('#birth_certificate_back')[0].files[0]);
+      formData.append('id_front', $('#id_front')[0].files[0]);
+      formData.append('id_back', $('#id_back')[0].files[0]);
 
       try {
         const response = await axios.post(
           'http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php',
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }
-        );
+          formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data' // Required for file uploads
+          },
+          withCredentials: true // Required for sessions
+        });
 
         if (response.data.success) {
-          window.location.href = '/Appointment/normal/NewPass/page5/passportPage.html';
+          window.location.href = '../page5/passportPage.html';
         } else {
           throw new Error(response.data.message || 'Upload failed due to server validation');
         }

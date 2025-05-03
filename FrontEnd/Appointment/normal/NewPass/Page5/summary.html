@@ -3,7 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Checking</title>
+    <title>Application Summary</title>
+    <script src=""></script>
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -14,102 +17,111 @@
     <div class="container py-5">
         <h2 class="mb-4 text-center">Review and Confirm Your Application</h2>
 
-        <div id="summaryContainer" class="row g-4"></div>
+        <!-- <div id="errorCont"></div> -->
+
+        <div id="summaryContainer" class="row g-4">
+            <!-- Loading indicator -->
+            <div class="col-12 text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p>Loading your application data...</p>
+            </div>
+        </div>
 
         <div class="text-center mt-4">
             <button class="btn btn-success btn-lg" onclick="confirmSubmission()">Confirm & Submit</button>
         </div>
     </div>
-
-    <script>
-        async function loadSummary() {
-            try {
-                const res = await axios.get('http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php', { withCredentials: true });
-
-                const data = res.data;
-                const container = document.getElementById('summaryContainer');
-                container.innerHTML = '';
-
-                if (!data.success) {
-                    container.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
-                    return;
-                }
-
-                const allData = data.data;
-                for (const [section, values] of Object.entries(allData)) {
-                    const col = document.createElement('div');
-                    col.className = 'col-md-6';
-
-                    const card = document.createElement('div');
-                    card.className = 'card';
-
-                    const cardBody = document.createElement('div');
-                    cardBody.className = 'card-body';
-
-                    const title = document.createElement('h5');
-                    title.className = 'card-title text-primary';
-                    title.textContent = section.replace(/([A-Z])/g, ' $1');
-
-                    const list = document.createElement('ul');
-                    list.className = 'list-group list-group-flush';
-
-                    for (const [key, value] of Object.entries(values)) {
-                        const item = document.createElement('li');
-                        item.className = 'list-group-item';
-
-                        if (section === 'documents') {
-                            const isImage = /\.(jpg|jpeg|png)$/i.test(value);
-                            item.innerHTML = `<strong>${key}:</strong><br>` +
-                                (isImage
-                                    ? `<img src="${value}" alt="${key}" class="doc-img">`
-                                    : `<a href="${value}" target="_blank" class="btn btn-sm btn-outline-secondary mt-2">View File</a>`);
-                        } else {
-                            item.innerHTML = `<strong>${key}:</strong> ${value}`;
-                        }
-
-                        list.appendChild(item);
-                    }
-
-                    cardBody.appendChild(title);
-                    card.appendChild(cardBody);
-                    card.appendChild(list);
-                    col.appendChild(card);
-                    container.appendChild(col);
-                }
-            } catch (error) {
-                console.error(error);
-                document.getElementById('summaryContainer').innerHTML =
-                    `<div class="alert alert-danger">Failed to load summary.</div>`;
-            }
-        }
-
-        async function confirmSubmission() {
-            const confirmBox = confirm("Are you sure you want to submit?");
-            if (!confirmBox) return;
-
-            try {
-                const res = await axios.post('http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/savetodb.php', {}, { withCredentials: true });
-
-                if (res.data.success) {
-                    alert("Application submitted successfully!");
-                    window.location.href = "payment.html"; // Or reload/redirect
-                } else {
-                    alert("Submission failed: " + res.data.message);
-                }
-            } catch (error) {
-                alert("Error submitting form. Please try again.");
-                console.error(error);
-            }
-        }
-
-        loadSummary();
-    </script>
     <!-- Placeholder for Footer -->
     <div id="footer-placeholder"></div>
 
     <!-- Script to include header and footer -->
     <script src="/Project/et_passport_service_Backend/FrontEnd/Head_Foot/script.js">
     </script>
+
+    <!-- Bootstrap Bundle JS (includes Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Axios   -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        // Load summary data on page load
+        window.onload = function () {
+            axios.get('http://localhost/website/project/et_passport_service_backend/BackEnd/Appointment/formHandler.php', { withCredentials: true })
+                .then(res => {
+                    if (res.data.success) {
+                        alert(res.data.message);
+                        alert(res.data.data);
+                        displaySummary(res.data.data);
+                    } else {
+                        showError("No data found in session.");
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    showError("Error loading session data.");
+                });
+        };
+
+        function displaySummary(data) {
+            const container = document.getElementById("summaryContainer");
+            container.innerHTML = ""; // Clear spinner
+
+            for (const section in data) {
+                const card = document.createElement("div");
+                card.className = "col-12";
+
+                let content = `<div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">${section.replace(/([A-Z])/g, ' $1')}</h5>
+                                </div>
+                                <div class="card-body"><ul class="list-group list-group-flush">`;
+
+                for (const key in data[section]) {
+                    if (typeof data[section][key] === 'object' && data[section][key] !== null) {
+                        content += `<li class="list-group-item">
+                                        <strong>${key}:</strong>
+                                        <ul>`;
+                        for (const subkey in data[section][key]) {
+                            content += `<li>${subkey}: ${data[section][key][subkey]}</li>`;
+                        }
+                        content += `</ul></li>`;
+                    } else {
+                        content += `<li class="list-group-item"><strong>${key}:</strong> ${data[section][key]}</li>`;
+                    }
+                }
+
+                content += "</ul></div></div>";
+                card.innerHTML = content;
+                container.appendChild(card);
+            }
+        }
+
+        function showError(message) {
+            const container = document.getElementById("summaryContainer");
+            container.innerHTML = `<div class="alert alert-danger text-center">${message}</div>`;
+        }
+
+        function confirmSubmission() {
+            axios.post('http://localhost/path/to/save_to_db.php', {}, { withCredentials: true })
+                .then(res => {
+                    if (res.data.success) {
+                        alert("✅ Your application was submitted successfully!");
+                        window.location.href = 'thankyou.html'; // Optional redirect
+                    } else {
+                        alert("❌ Submission failed: " + res.data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("❌ Error during submission.");
+                });
+        }
+    </script>
+
+
 
 </body>
 
