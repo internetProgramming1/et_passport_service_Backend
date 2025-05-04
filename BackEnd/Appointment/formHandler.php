@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 header("Content-Type: application/json");
 
 // Allow requests from http://127.0.0.1:5500
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-session_start();
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Initialize response
@@ -27,8 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'message' => 'Invalid request',
         'data' => []
     ];
-
-
 
     try {  // the input var hold any data that are send from the front end like an array 
 
@@ -219,10 +217,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     echo json_encode($response);
+
+    file_put_contents('session_data.json', json_encode($_SESSION, JSON_PRETTY_PRINT)); // Save session data to a file for debugging
+
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
     echo json_encode([
         'success' => true,
-        'message' => 'Invalid request method',
+        'message' => 'Request get successfully',
         'data' => $_SESSION
     ]);
 } else {
