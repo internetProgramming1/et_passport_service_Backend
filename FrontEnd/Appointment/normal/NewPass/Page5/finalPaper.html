@@ -103,6 +103,9 @@
                     // After saving, destroy session
                     axios.get("http://localhost/website/project/et_passport_service_backend/BackEnd/destroySession.php")
                         .then(() => console.log("Session destroyed"));
+                    setTimeout(() => {
+                        window.location.href = "#";
+                    }, 1000);
 
                 },
                 x: 10,
