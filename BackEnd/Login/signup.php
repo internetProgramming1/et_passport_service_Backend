@@ -1,35 +1,43 @@
 <?php
-require 'db_connect.php';
+include 'db_connect.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $firstName = $_POST["name"];
-    $fatherName = $_POST["fatherName"];
-    $grandfatherName = $_POST["grandfatherName"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $confirmPassword = $_POST["confirmPassword"];
+// Get POST data from form
+$name = $_POST['name'] ?? '';
+$fatherName = $_POST['fatherName'] ?? '';
+$grandfatherName = $_POST['grandfatherName'] ?? '';
+$email = $_POST['email'] ?? '';
+$password = $_POST['password'] ?? '';
+$confirmPassword = $_POST['confirmPassword'] ?? '';
 
-    if ($password !== $confirmPassword) {
-        die("Passwords do not match.");
-    }
-
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    $sql = "INSERT INTO users (first_name, father_name, grandfather_name, email, password) 
-            VALUES (?, ?, ?, ?, ?)";
-    $stmt = $pdo->prepare($sql);
-
-    try {
-        $stmt->execute([$firstName, $fatherName, $grandfatherName, $email, $hashedPassword]);
-        header("Location: login.html?success=1"); // Redirect after signup
-    } catch (PDOException $e) {
-        if ($e->getCode() == 23000) {
-            echo "Email already registered.";
-        } else {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-} else {
-    echo "Invalid request.";
+// Validate fields
+if (!$name || !$fatherName || !$grandfatherName || !$email || !$password || !$confirmPassword) {
+    echo json_encode(['error' => 'All fields are required']);
+    http_response_code(400);
+    exit;
 }
+
+// Check if passwords match
+if ($password !== $confirmPassword) {
+    echo json_encode(['error' => 'Passwords do not match']);
+    http_response_code(400);
+    exit;
+}
+
+// Hash the password
+$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+// Check if email already exists
+$stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+$stmt->execute([$email]);
+if ($stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo json_encode(['error' => 'Email already exists']);
+    http_response_code(400);
+    exit;
+}
+
+// Insert new user into the database
+$stmt = $pdo->prepare("INSERT INTO users (name, fatherName, grandfatherName, email, password) VALUES (?, ?, ?, ?, ?)");
+$stmt->execute([$name, $fatherName, $grandfatherName, $email, $hashedPassword]);
+
+echo json_encode(['message' => 'Registration successful']);
 ?>
