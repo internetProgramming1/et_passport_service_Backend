@@ -1,0 +1,374 @@
+
+ /* Global styles */
+ body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1.6;
+  background-color: #f9f9f9;
+}
+
+/* Navigation Bar */
+/*For Header */
+header{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  background-color:#fff; 
+}
+.logo{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  margin: 20px 50px;
+}
+.navigation{
+  background-color: #005f99;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  margin-bottom: 0px;
+}
+.navigation ul, .logo ul{
+  display: flex;
+  list-style: none;
+  gap: 90px;
+  font-size: larger;
+  font-weight: bolder;
+}
+.navigation ul li a,.main3 a{
+color: #eaf4f9;
+text-decoration: none;
+}
+.logo ul li a{
+  text-decoration: none;
+  color:#005f99;
+}
+h1 {
+  font: size 1px;;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+
+/* Responsive Styles */
+
+
+
+
+
+
+
+
+
+/* Before you apply */
+
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.before-apply {
+  margin-top: 80px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%; 
+  background-color: #f5f5f5;
+  
+}
+
+.image-container,
+.text-container {
+  flex: 1;
+  max-width: 50%;
+  
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.text-container {
+ 
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.text-container h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.text-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.text-container ul li {
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+.text-container ul li::before {
+  content: "✔️";
+  margin-right: 10px;
+  color: #007bff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .before-apply {
+      flex-direction: column;
+  }
+
+  .image-container,
+  .text-container {
+      max-width: 100%;
+  }
+}
+
+
+
+
+
+.line
+{
+    text-align: center ;
+    font-size: 32px;
+    font-weight: 500;
+    font-family: Helvetica, sans-serif;
+    text-transform: uppercase;
+}
+
+        /* Footer */
+        footer{
+          height: 100px;
+          text-align: center;
+          background-color: #333;
+          position: relative;
+          color: #eaf4f9;
+          padding: 20px;
+      }
+      footer p{
+          position: absolute;
+          bottom: 0;
+         left:40%;
+          
+      }
+
+  /* Content Section */
+        
+
+
+  .content {
+    padding: 3rem 2rem;
+    text-align: center;
+}
+.pdf-download {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.content h2 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.video-container {
+    width: 50%; /* Restrict video width */
+    max-width: 600px;
+    margin: 1rem auto; /* Center the video */
+    position: relative;
+    padding-bottom: 35.5%; /* Maintain 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px; /* Add rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for aesthetics */
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none; /* Remove default iframe border */
+}
+
+
+
+
+
+/* carousel-container */
+
+
+body {
+  font-family: Arial, sans-serif;
+
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-group {
+  display: flex;
+  width: 100%;
+  flex: 0 0 100%;
+  justify-content: space-around;
+}
+
+.card {
+  width: 22%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  padding: 10px;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.card h3 {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+.card p {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 10px;
+}
+.card a{
+  text-decoration: none;
+ color:  #212529;
+}
+.card a:hover{
+  text-decoration:underline;
+
+}
+.carousel-indicators {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.indicator.active {
+  background-color: #007bff;
+}
+
+@media (max-width: 768px) {
+  .carousel-track {
+    transform: translateX(0); /* Ensure correct positioning */
+  }
+
+  .carousel-group {
+    flex-wrap: nowrap;
+    flex: 0 0 100%; /* Ensure the group takes the full width */
+  }
+
+  .card {
+    flex: 0 0 100%; /* Show only one card at a time */
+    max-width: 100%; /* Ensure the card spans the full width */
+  }
+}
+
+/* Feature Section */
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.feature-card {
+  background: #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 2rem;
+  flex: 1;
+  max-width: 300px;
+  margin: 1rem;
+}
+
+.feature-card a{
+ text-decoration: none ;
+ list-style: none;
+}
+.feature-card a:hover {
+  text-decoration: underline;
+  color: #212529;
+}
+.feature-card h3 {
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: none;
+  margin-bottom: 10px;
+
+
+}
+
+.feature-card img {
+  width: 60px;
+  margin-bottom: 1rem;
+}
+.About-us
+{
+  text-align: center;
+}
+.image
+{
+height:18.9px;
+width:18.9px;
+margin-bottom: 8px;
+vertical-align: middle;
+}
