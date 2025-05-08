@@ -19,26 +19,26 @@
   <div id="header-placeholder"></div>
 
   <!-- Main content -->
-  <div class="container-fluid my-5 py-4">
+  <div class="container-fluid my-5 py-1S">
     <div class="row">
 
       <!-- Sidebar -->
-      <aside class="col-md-3 mb-4">
+      <aside class="col-md-3 mb-4 shadow-sm h-100">
         <ul class="list-group shadow-sm">
-          <a href="/Appointment/Page3/type.html" class="text-decoration-none">
+          <a href="../../page1.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="/Appointment/Page2/Site-select.html" class="text-decoration-none">
+          <a href="../page2.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Site Selection</li>
           </a>
-          <a href="/Appointment/Page4/DateTime.html" class="text-decoration-none">
+          <a href="../page3.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Date and Time</li>
           </a>
-          <a href="personalInfo.html" class="text-decoration-none">
+          <a href="../Page4/personalinfo.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action active"
               style="background-color: #005f99; color: #eaf4f9;">Personal Information</li>
           </a>
-          <a href="/Appointment/Page6/" class="text-decoration-none">
+          <a href="../Page5/passportPage.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
@@ -62,16 +62,15 @@
               style="background-color:#005f99; color: white;">Attachments</a>
           </li>
         </ul>
+        <div class="row"><!-- Form & Notes Card -->
+          <div class="col-lg-8">
 
-        <!-- Form & Notes Card -->
-        <div class="card shadow-sm p-4">
-          <h4 class="mb-4">Upload Required Documents</h4>
-          <div id="uploadErrorAlert" class="alert alert-danger d-none mb-3"></div>
-          <div class="row">
-            <div class="col-lg-8">
+            <div class="card shadow-sm p-4">
+              <h4 class="mb-4">Upload Required Documents</h4>
+              <div id="uploadErrorAlert" class="alert alert-danger d-none mb-3"></div>
+
+              <!-- Upload Form -->
               <form method="POST" enctype="multipart/form-data" id="uploadForm">
-                <br>
-                <!-- Upload Form -->
 
                 <div class="mb-3">
                   <label for="birth_certificate_front" class="form-label">Upload Birth Certificate Front*</label>
@@ -96,21 +95,23 @@
                   <input type="file" class="form-control" id="id_back" name="id_back" accept=".png,.jpeg,.pdf" required>
                 </div>
                 <!-- Next Button -->
-                <button type="submit" class="btn btn-outline-primary btn-sm">Next</button>
-
-              </form>
+                <div class="col-12 mt-3">
+                  <button type="submit" class="btn btn-outline-primary btn-sm">Next</button>
+                </div>
             </div>
-            <!-- Notes Section -->
-            <div class="col-lg-4 h-100">
-              <div class="alert alert-info h-100">
-                <h5>Note Info:</h5>
-                <ul class="mb-0">
-                  <li>Size should be less than 1MB.</li>
-                  <li>Accepted formats: JPEG, PNG, or PDF.</li>
-                  <li>Only clear, A4 color photocopies are accepted.</li>
-                  <li>Bring original documents on appointment day.</li>
-                </ul>
-              </div>
+            </form>
+          </div>
+          <!-- Notes Section -->
+          <div class="col-lg-4 h-100">
+            <div class="alert alert-info h-100">
+              <h5>Note Info:</h5>
+              <ul class="mb-0">
+                <li>Size should be less than 1MB.</li>
+                <li>Accepted formats: JPEG, PNG, or PDF.</li>
+                <li>Only clear, A4 color photocopies are accepted.</li>
+                <li>Bring original documents on appointment day.</li>
+              </ul>
+
             </div>
           </div>
 
@@ -126,7 +127,7 @@
   <div id="footer-placeholder"></div>
 
   <!-- Script to include header and footer -->
-  <script src="/Project/et_passport_service_Backend/FrontEnd/Head_Foot/script.js">
+  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
   </script>
 
   <!-- Bootstrap Bundle JS (includes Popper.js) -->
