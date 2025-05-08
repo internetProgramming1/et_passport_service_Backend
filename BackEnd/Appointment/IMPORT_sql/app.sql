@@ -36,7 +36,7 @@ CREATE TABLE applications (
     birth_certificate_back VARCHAR(255),
     id_front VARCHAR(255),
     id_back VARCHAR(255),
-    pageNo VARCHAR(50),
+    pageNo INT(3),
     application_no VARCHAR(100),
     registered_date VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
