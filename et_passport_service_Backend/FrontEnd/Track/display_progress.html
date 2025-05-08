@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tracking Progress</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="container mt-5">
+
+  <!-- Header Placeholder -->
+  <div id="header-placeholder"></div>
+
+  <h1 class="mb-4">Tracking Progress</h1>
+
+  <div class="mb-3">
+    <label for="input-id" class="form-label">Enter Tracking ID:</label>
+    <input type="text" id="input-id" class="form-control" placeholder="Enter your tracking ID">
+  </div>
+  <button class="btn btn-primary" onclick="fetchProgress()">Check</button>
+
+  <div class="card mt-4" style="max-width: 400px;">
+    <div class="card-body">
+      <h5 class="card-title">Tracking Details</h5>
+      <p><strong>Tracking ID:</strong> <span id="tracking-id-display">N/A</span></p>
+      <p><strong>Applicant Name:</strong> <span id="applicant-name-display">N/A</span></p>
+      <p><strong>Status:</strong> <span id="passport-status-display">N/A</span></p>
+    </div>
+  </div>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder" class="mt-5"></div>
+
+  <!-- Include header and footer -->
+  <script src="../Head_Foot/script.js"></script>
+
+  <script>
+    function fetchProgress() {
+      const trackingId = document.getElementById('input-id').value.trim();
+
+      if (trackingId === "") {
+        alert("Please enter a tracking ID.");
+        return;
+      }
+
+      axios.post('http://localhost/project/et_passport_service_Backend/BackEnd/Track/display_progress.php', {
+        tracking_id: trackingId
+      })
+      .then(response => {
+        const data = response.data;
+        if (data.success) {
+          document.getElementById('tracking-id-display').textContent = data.tracking_id;
+          document.getElementById('applicant-name-display').textContent = data.applicant_name;
+          document.getElementById('passport-status-display').textContent = data.passport_status;
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        alert("Error retrieving tracking information.");
+      });
+    }
+  </script>
+
+</body>
+</html>
