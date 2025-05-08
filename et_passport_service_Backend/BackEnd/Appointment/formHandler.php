@@ -18,13 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-if (!isset($_SESSION['data'])) {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Session expired or not available.'
-    ]);
-    exit;
-}
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Initialize response
@@ -203,18 +197,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'success' => true,
                     'message' => 'page no requested saved',
                     'data' => $_SESSION['pageNo']
-                ];
-            } elseif (isset($data['regDate'])) {
-                $_SESSION['Registered'] = [
-                    'regDate' => htmlspecialchars($data['regDate']),
-                    'appNo' => htmlspecialchars($data['appNo'])
-                ];
-                require 'savetodb.php';
-
-                $response = [
-                    'success' => true,
-                    'message' => 'Registered successfully',
-                    'data' => $_SESSION['Registered']
                 ];
             } else {
                 throw new Exception("Unrecognized form data");
