@@ -14,26 +14,26 @@
   <div id="header-placeholder"></div>
 
   <!-- Main content -->
-  <div class="container-fluid my-5 py-4">
+  <div class="container-fluid my-5 py-1">
     <div class="row">
 
       <!-- Sidebar -->
-      <aside class="col-md-3 mb-4 shadow-sm h-100">
+      <aside class="col-lg-3 mb-5 shadow-sm h-100">
         <ul class="list-group">
-          <a href="/Appointment/Page3/type.html" class="text-decoration-none">
+          <a href="../../page1.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="/Appointment/Page2/Site-select.html" class="text-decoration-none">
+          <a href="../page2.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Site Selection</li>
           </a>
-          <a href="/Appointment/Page4/DateTime.html" class="text-decoration-none">
+          <a href="../page3.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Date and Time</li>
           </a>
           <a href="personalInfo.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action active"
               style="background-color: #005f99; color: #eaf4f9;">Personal Information</li>
           </a>
-          <a href="/Appointment/Page6/" class="text-decoration-none">
+          <a href="../Page5/passportPage.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
@@ -61,6 +61,9 @@
         <!-- Form -->
         <div class="card shadow-sm p-4">
           <h4 class="mb-4">Address Information</h4>
+
+          <div id="errorAlert" class="alert alert-danger d-none mb-3"></div>
+
           <form id="addressForm" method="post" class="row g-3">
 
             <div class="col-md-6">
@@ -132,7 +135,7 @@
   <div id="footer-placeholder"></div>
 
   <!-- Script to include header and footer -->
-  <script src="/Project/et_passport_service_Backend/FrontEnd/Head_Foot/script.js">
+  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
   </script>
 
   <!-- script to axios -->
@@ -161,7 +164,7 @@
       let isFormValid = true;
 
       requiredFields.forEach(field => {
-        if (!formData[field]) {
+        if (!addressData[field]) {
           isFormValid = false;
         }
       });
@@ -178,7 +181,7 @@
       }
 
       try {
-        const response = await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php", addressData, {
+        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php", addressData, {
           headers: {
             'Content-Type': 'application/json'
           }
@@ -186,7 +189,13 @@
         // Redirect to the next page after successful submission
         window.location.href = "family.html";
       } catch (error) {
-        alert("Failed to submit address info. Please try again.");
+        const message = error.response?.data?.message || "Failed to submit address info. Please try again.";
+        $('<div>')
+          .addClass('alert alert-danger alert-dismissible fade show')
+          .attr('role', 'alert')
+          .html(`<strong><i class="bi bi-x-circle me-2"></i>Submission Failed:</strong> ${message}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`)
+          .appendTo('#alertContainer');
       }
     });
   </script>

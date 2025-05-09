@@ -13,7 +13,7 @@
   <div id="header-placeholder"></div>
 
   <!-- Main content -->
-  <div class="container-fluid py-4 my-5">
+  <div class="container-fluid py-1 my-5">
     <div class="row">
       <!-- Sidebar Navigation -->
       <aside class="col-md-3 mb-4 shadow-sm h-100">
@@ -21,24 +21,29 @@
           <a href="../page1.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="../page2.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action">Site Selection</li>
+          <a href="urgency.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Urgency Type</li>
           </a>
-          <a href="../page3.html" class="text-decoration-none">
+          <a href="page2.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Site
+              Selection</li>
+          </a>
+          <a href="page3.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Date and Time</li>
           </a>
-          <a href="personalInfo.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action active"
-              style="background-color: #005f99; color: #eaf4f9;">Personal Information</li>
+          <a href="Page4/personalinfo.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal
+              Information</li>
           </a>
-          <a href="/Appointment/Page6/" class="text-decoration-none">
+          <a href="Page5/pasportpage.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
       </aside>
 
+
       <!-- Main Content -->
-      <main class="col-md-9">
+      <main class="col-lg-9">
 
         <!-- Sub Navigation Tabs -->
         <ul class="nav nav-tabs mb-4">
@@ -63,11 +68,7 @@
 
           <div id="alertContainer"></div>
 
-          <div id="formAlert" class="alert alert-danger d-none alert-dismissible fade show" role="alert">
-            <strong><i class="bi bi-exclamation-triangle-fill me-2"></i>Error!</strong>
-            Please fill in all required fields before submitting.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
+
 
           <form method="post" id="myForm">
             <div class="row g-3">
@@ -184,7 +185,7 @@
   <div id="footer-placeholder"></div>
 
   <!-- Script to include header and footer -->
-  <script src="/Project/et_passport_service_Backend/FrontEnd/Head_Foot/script.js">
+  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
   </script>
 
   <!-- Bootstrap Bundle JS (includes Popper.js) -->
@@ -194,66 +195,70 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script>
-    $('#myForm').submit(async (e) => {
-      e.preventDefault(); // Always prevent default submission first
+    $('#myForm').on("submit", async (e) => {
+      e.preventDefault(); // Prevent form default submission
 
-      // Collect form data
+      // Clear previous alert
+      $('#alertContainer').empty();
+
       const personalInfo = {
-        firstname: e.target.elements.firstname.value,
-        middlename: e.target.elements.middlename.value,
-        lastname: e.target.elements.lastname.value,
-        phone: e.target.elements.phone.value,
-        email: e.target.elements.email.value,
+        firstname: e.target.elements.firstname.value.trim(),
+        middlename: e.target.elements.middlename.value.trim(),
+        lastname: e.target.elements.lastname.value.trim(),
+        phone: e.target.elements.phone.value.trim(),
+        email: e.target.elements.email.value.trim(),
         gender: e.target.elements.gender.value,
         dob: e.target.elements.dob.value,
         under18: e.target.elements.under18.value,
-        birthplace: e.target.elements.birthplace.value,
+        birthplace: e.target.elements.birthplace.value.trim(),
         adopted: e.target.elements.adopted.value,
-        birth_certificate: e.target.elements.birth_certificate.value,
+        birth_certificate: e.target.elements.birth_certificate.value.trim(),
         nationality: e.target.elements.nationality.value,
         marital_status: e.target.elements.marital_status.value,
-        occupation: e.target.elements.occupation.value
+        occupation: e.target.elements.occupation.value.trim()
       };
 
-      // Check for empty fields before submitting
+      // Required field check
       const requiredFields = ['firstname', 'lastname', 'phone', 'email', 'gender', 'dob', 'birthplace', 'nationality'];
       let isFormValid = true;
 
       requiredFields.forEach(field => {
-        if (!formData[field]) {
+        if (!personalInfo[field]) {
           isFormValid = false;
         }
       });
 
       if (!isFormValid) {
-        // Show alert if any required field is empty
         $('<div>')
-          .addClass('alert alert-danger mt-3')
+          .addClass('alert alert-danger alert-dismissible fade show')
           .attr('role', 'alert')
           .text('Please fill out all required fields before submitting.')
           .appendTo('#alertContainer');
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        return; // Prevent submission if not all required fields are filled
+        return;
       }
 
       try {
-        // Send form data to the backend using Axios
-        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php", personalInfo, {
+        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandlerUrgent.php", personalInfo, {
           headers: {
             'Content-Type': 'application/json'
           }
         });
 
-        // Redirect to the next page after successful submission
+        // Redirect on success
         window.location.href = "address.html";
+
       } catch (error) {
-        // Handle error more effectively
-        const errorMessage = error.response ? error.response.data.message : "Error saving data. Please try again.";
-        alert(errorMessage);
+        const errorMessage = error.response?.data?.message || "Error saving data. Please try again.";
+        $('<div>')
+          .addClass('alert alert-danger alert-dismissible fade show')
+          .attr('role', 'alert')
+          .html(`<strong><i class="bi bi-x-octagon me-2"></i>Submission Failed:</strong> ${errorMessage}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`)
+          .appendTo('#alertContainer');
       }
     });
   </script>
-
 
 
 </body>

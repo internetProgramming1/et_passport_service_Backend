@@ -20,7 +20,7 @@
       <div class="mt-5">
         <div class="alert alert-info">
           <h5 class="mb-1">Appointment Request:</h5>
-          <p class="mb-0">Individual Passport Appointment Schedule</p>
+          <p class="mb-0">Individual Urgent Passport Appointment Schedule</p>
         </div>
       </div>
       <form id="myForm" method="post">
@@ -40,7 +40,7 @@
                 </p>
 
                 <button class="btn btn-outline-primary mt-2" type="button" value="new" id="new"
-                  onclick="checkAgreement('NewPass/page2.html',this)">Schedule
+                  onclick="T('NewPass/urgency.html',this)">Schedule
                   Appointment</button>
 
 
@@ -63,7 +63,7 @@
                   Print the last page which has your appointment date and time.
                 </p>
                 <button class="btn btn-outline-success mt-2" type="button" value="renewal" id="renewal"
-                  onclick="checkAgreement('#',this)">Schedule Renewal</button>
+                  onclick="T('#',this)">Schedule Renewal</button>
 
 
               </div>
@@ -85,7 +85,7 @@
                   your appointment date and time.
                 </p>
                 <button class="btn btn-outline-danger mt-2" type="button" value="lost" id="lost"
-                  onclick="checkAgreement('#',this)">Report & Schedule</button>
+                  onclick="T('#',this)">Report & Schedule</button>
               </div>
             </div>
           </div>
@@ -104,7 +104,7 @@
                   confirmation.
                 </p>
                 <button class="btn btn-outline-warning mt-2" type="button" value="correction" id="correction"
-                  onclick="checkAgreement('#',this)">Request Correction</button>
+                  onclick="T('#',this)">Request Correction</button>
 
               </div>
             </div>
@@ -133,12 +133,12 @@
 
 
   <script>
-    function checkAgreement(redirectUrl, buttonElement) {
+    function T(redirectUrl, buttonElement) {
 
       const value = $(buttonElement).val();
 
       // Send the value to PHP backend using Axios POST
-      axios.post('http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php', {
+      axios.post('http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandlerUrgent.php', {
         category: value  // we will use this in the backend 
       }, {
         headers: {
