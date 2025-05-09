@@ -16,6 +16,12 @@
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,8 +45,7 @@
                     <p><strong>Registration Date:</strong> <span id="regDate"></span></p>
                     <p><strong>Appointment Type:</strong> <span id="apptType"></span></p>
                     <p><strong>Category:</strong> <span id="category"></span></p>
-                    <p><strong>Appointment Date:</strong> <span id="apptDate"></span></p>
-                    <p><strong>Appointment Time:</strong> <span id="apptTime"></span></p>
+                    <p><strong>Delivery Date:</strong> <span id="deliveryDate"></span></p>
                     <p><strong>Form Page Number:</strong> <span id="pageNo"></span></p>
                 </div>
 
@@ -48,6 +53,18 @@
                     <button class="btn btn-dark" onclick="downloadPDF()">Download as PDF</button>
                 </div>
             </div>
+            <div class=" col-md-8 alert alert-danger mt-5" role="alert">
+                <strong>N.B.:</strong> Please ensure that you make the exact payment within <strong>1 hour</strong>
+                after making the request order.
+                If you do not get any SMS or email confirmation in 2 hours after making the payment, please contact us
+                by this email address:
+                <a
+                    href="mailto:support@ethiopianpassportservices.gov.et">support@ethiopianpassportservices.gov.et</a><br>
+                Phone Number: <strong>8133</strong><br>
+                Only payment through payment order is acceptable (direct depositing and transferring a payment to the
+                account is not acceptable).
+            </div>
+
         </div>
     </div>
 
@@ -59,7 +76,7 @@
 
     <script>
         window.onload = function () {
-            axios.get('http://localhost/website/project/et_passport_service_backend/BackEnd/Appointment/formHandler.php', {
+            axios.get('http://localhost/website/project/et_passport_service_backend/BackEnd/Appointment/formHandlerUrgent.php', {
                 withCredentials: true
             })
                 .then(res => {
@@ -86,8 +103,7 @@
             document.getElementById("regDate").textContent = regDate;
             document.getElementById("apptType").textContent = data.type;
             document.getElementById("category").textContent = data.category;
-            document.getElementById("apptDate").textContent = data.dateTime.date;
-            document.getElementById("apptTime").textContent = data.dateTime.time;
+            document.getElementById("deliveryDate").textContent = data.deliveryDate;
             document.getElementById("pageNo").textContent = data.pageNo;
         }
 

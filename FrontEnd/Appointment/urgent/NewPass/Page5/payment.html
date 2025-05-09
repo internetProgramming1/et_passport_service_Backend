@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Passport page Number</title>
+    <title>Payment</title>
     <!-- Jquery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         img {
-            width: 250px;
-            height: 250px;
+            width: 100%;
+            height: 100%;
         }
 
         .payment-option {
@@ -36,25 +36,30 @@
     <div class="container-fluid my-5 py-1">
         <div class="row">
 
-            <!-- Sidebar -->
-            <aside class="col-lg-3 mb-4">
-                <ul class="list-group shadow-sm">
-                    <a href="../../page1.html" class="text-decoration-none">
+            <!-- Sidebar Navigation -->
+            <aside class="col-lg-3 mb-4 shadow-sm h-100">
+                <ul class="list-group">
+                    <a href="../page1.html" class="text-decoration-none">
                         <li class="list-group-item list-group-item-action">Request Appointment</li>
                     </a>
-                    <a href="../page2.html" class="text-decoration-none">
-                        <li class="list-group-item list-group-item-action">Site Selection</li>
+                    <a href="urgency.html" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action">Urgency Type</li>
                     </a>
-                    <a href="../page3.html" class="text-decoration-none">
+                    <a href="page2.html" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action">Site
+                            Selection</li>
+                    </a>
+                    <a href="page3.html" class="text-decoration-none">
                         <li class="list-group-item list-group-item-action">Date and Time</li>
                     </a>
-                    <a href="../Page4/personalinfo.html" class="text-decoration-none">
-                        <li class="list-group-item list-group-item-action ">Personal Information</li>
+                    <a href="Page4/personalinfo.html" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action">Personal
+                            Information</li>
                     </a>
-                    <a href="../Page5/passportPage.html" class="text-decoration-none">
+                    <a href="Page5/pasportpage.html" class="text-decoration-none">
                         <li class="list-group-item list-group-item-action"
-                            style="background-color: #005f99; color: #eaf4f9;">
-                            Payment</li>
+                            style="color: white; background-color: #005f99;">Payment
+                        </li>
                     </a>
                 </ul>
             </aside>
@@ -78,7 +83,7 @@
 
                 <!-- Form & Notes Card -->
                 <div class="row">
-                    <div class=" col-md-7">
+                    <div class="col-md-7">
 
                         <!-- Upload Form -->
                         <div class="card shadow-sm p-4">
@@ -114,7 +119,7 @@
                                 <input type="hidden" name="paymentMethod" id="selectedMethod">
 
                                 <!-- Submit Button -->
-                                <button type="submit" class="btn btn-primary mt-3">Continue</button>
+                                <button type="submit" class="btn btn-outline-primary mt-3">Continue</button>
 
                             </form>
                         </div>

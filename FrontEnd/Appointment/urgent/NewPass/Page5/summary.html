@@ -42,7 +42,7 @@
     <div id="footer-placeholder"></div>
 
     <!-- Script to include header and footer -->
-    <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
+    <script src="../../../../Head_Foot/script.js">
     </script>
 
     <!-- Bootstrap Bundle JS (includes Popper.js) -->
@@ -77,7 +77,7 @@
     <script>
         // Load summary data on page load
         window.onload = function () {
-            axios.get('http://localhost/website/project/et_passport_service_backend/BackEnd/Appointment/formHandler.php', { withCredentials: true })
+            axios.get('http://localhost/website/project/et_passport_service_backend/BackEnd/Appointment/formHandlerurgent.php', { withCredentials: true })
                 .then(res => {
                     if (res.data.success) {
                         displaySummary(res.data.data);
@@ -98,7 +98,9 @@
             // 1. Type & Category Section
             container.appendChild(createCard("Appointment Type", {
                 "Type": data.type,
-                "Category": data.category
+                "Category": data.category,
+                "Urgency Type": data.urgency,
+                "Delivery Date": data.deliveryDate
             }));
 
             // 2. Site Data Section
@@ -109,13 +111,9 @@
                 "Delivery Location": data.siteData.delivery
             }));
 
-            // 3. Appointment Date & Time
-            container.appendChild(createCard("Appointment Schedule", {
-                "Date": data.dateTime.date,
-                "Time": data.dateTime.time
-            }));
 
-            // 4. Personal Info with Full Name
+
+            // 3. Personal Info with Full Name
             const fullName = `${data.personalInfo.firstname} ${data.personalInfo.middlename} ${data.personalInfo.lastname}`;
             container.appendChild(createCard("Personal Information", {
                 "Full Name": fullName,
@@ -132,7 +130,7 @@
                 "Occupation": data.personalInfo.occupation
             }));
 
-            // 5. Address Information
+            // 4. Address Information
             container.appendChild(createCard("Address Information", {
                 "Region": data.addressData.region,
                 "City": data.addressData.city,
@@ -143,7 +141,7 @@
                 "ID No": data.addressData.id_no
             }));
 
-            // 6. Family Info
+            // 5. Family Info
             container.appendChild(createCard("Mother's Information", {
                 "First Name": data.family.mother.first_name,
                 "Father Name": data.family.mother.father_name,
@@ -162,7 +160,7 @@
                 "Grandfather Name": data.family.spouse.grandfather_name || "N/A"
             }));
 
-            // 7. Attachments
+            // 6. Attachments
             container.appendChild(createCard("Uploaded Attachments", {
                 "Birth Certificate Front": data.attachments.birth_cer_front,
                 "Birth Certificate Back": data.attachments.birth_cer_back,
@@ -170,9 +168,9 @@
                 "ID Back": data.attachments.id_back
             }));
 
-            // 8. Page Number
+            // 7. Page Number
             container.appendChild(createCard("Page Info", {
-                "Form Page Number": data.pageNo
+                "Passport Page Number": data.pageNo
             }));
         }
 
@@ -213,7 +211,7 @@
                 return;
             }
             try {
-                axios.post('http://localhost/website/project/et_passport_service_backend/BackEnd/Appointment/formHandler.php', {
+                axios.post('http://localhost/website/project/et_passport_service_backend/BackEnd/Appointment/formHandlerurgent.php', {
                     regDate: RegDate(),
                     appNo: appNo()
                 }, {
