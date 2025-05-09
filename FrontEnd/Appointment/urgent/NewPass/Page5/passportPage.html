@@ -17,24 +17,29 @@
   <div class="container-fluid my-5 py-1">
     <div class="row">
 
-      <!-- Sidebar -->
-      <aside class="col-lg-3 mb-4">
-        <ul class="list-group shadow-sm">
-          <a href="../../page1.html" class="text-decoration-none">
+      <!-- Sidebar Navigation -->
+      <aside class="col-md-3 mb-4 shadow-sm h-100">
+        <ul class="list-group">
+          <a href="../page1.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="../page2.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action">Site Selection</li>
+          <a href="urgency.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Urgency Type</li>
           </a>
-          <a href="../page3.html" class="text-decoration-none">
+          <a href="page2.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Site
+              Selection</li>
+          </a>
+          <a href="page3.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Date and Time</li>
           </a>
-          <a href="../Page4/personalinfo.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action ">Personal Information</li>
+          <a href="Page4/personalinfo.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Personal
+              Information</li>
           </a>
-          <a href="../Page5/passportPage.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action" style="background-color: #005f99; color: #eaf4f9;">
-              Payment</li>
+          <a href="Page5/pasportpage.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Payment
+            </li>
           </a>
         </ul>
       </aside>
@@ -62,7 +67,7 @@
             <!-- Upload Form -->
             <div class="card shadow-sm p-4">
               <h4 class="mb-2">Choose the Number of Passport Pages Requested </h4>
-              <div id="uploadErrorAlert" class="alert alert-danger d-none mb-3"></div>
+              <div id="uploadErrorAlert" class="alert alert-danger d-none mb-2 mt-3"></div>
               <form method="POST" id="uploadForm">
                 <br>
                 <div class="mb-3">
@@ -76,7 +81,7 @@
 
                 </div>
                 <!-- Next Button -->
-                <div class="col-12 mt-5">
+                <div class="col-12 mt-4">
                   <button type="submit" class="btn btn-outline-primary btn-sm">Next</button>
                 </div>
             </div>
@@ -84,31 +89,6 @@
 
 
           </div>
-
-          <!-- Notes Section -->
-          <div class="col-lg-5">
-            <div class="alert alert-info h-100" style="list-style: none;">
-              <li><strong>Passport Page Option Fees:</strong></li>
-              <li>
-                <hr>
-                <strong>32 pages</strong>Suitable for general use.<br>
-                <span class="ms-2">• Standard Service: <strong>600 Birr</strong></span><br>
-                <span class="ms-2">• Express/Fast Service: <strong>1,200 Birr</strong></span>
-              </li>
-              <li class="mt-2">
-                <strong>64 pages</strong>Recommended for frequent travelers.<br>
-                <span class="ms-2">• Standard Service: <strong>900 Birr</strong></span><br>
-                <span class="ms-2">• Express/Fast Service: <strong>1,800 Birr</strong></span>
-              </li>
-              <li class="mt-2">
-                <strong>92 pages</strong>Ideal for diplomatic or business use.<br>
-                <span class="ms-2">• Standard Service: <strong>2,186 Birr</strong></span><br>
-                <span class="ms-2">• Express/Fast Service: <strong>3,279 Birr</strong></span>
-              </li>
-              </ul>
-            </div>
-          </div>
-
 
 
         </div>
@@ -151,7 +131,7 @@
         }
 
         try {
-          const response = await axios.post('http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php', { pageNo: pageNo }, {
+          const response = await axios.post('http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandlerurgent.php', { pageNo: pageNo }, {
             headers: {
               'Content-Type': 'application/json' // Required for file uploads
             },

@@ -1,0 +1,67 @@
+{
+    "type": "normal",
+    "category": "new",
+    "siteData": {
+        "site": "Addis Ababa",
+        "city": "Addis Ababa",
+        "office": "ICS Main Office",
+        "delivery": "ICS Main Office"
+    },
+    "dateTime": {
+        "date": "2025-06-07",
+        "time": "04:00PM-05:00PM"
+    },
+    "personalInfo": {
+        "firstname": "abebe",
+        "middlename": "ketema",
+        "lastname": "derese",
+        "phone": "0900000000",
+        "email": "abebe@gmail.com",
+        "gender": "male",
+        "dob": "2021-08-04",
+        "under18": "above18",
+        "birthplace": "bole",
+        "adopted": "notAdopted",
+        "birth_certificate": "1234567",
+        "nationality": "ethiopia",
+        "marital_status": "single",
+        "occupation": "student"
+    },
+    "addressData": {
+        "region": "addis_ababa",
+        "city": "Addis Ababa",
+        "subcity": "bole",
+        "woreda": "11",
+        "kebele": "bole",
+        "house_no": "addis",
+        "id_no": "123456"
+    },
+    "family": {
+        "mother": {
+            "first_name": "Abebech",
+            "father_name": "ketema",
+            "grandfather_name": "derese"
+        },
+        "father": {
+            "first_name": "kebede",
+            "father_name": "solomon",
+            "grandfather_name": "solomon"
+        },
+        "spouse": {
+            "first_name": "",
+            "father_name": "",
+            "grandfather_name": ""
+        }
+    },
+    "attachments": {
+        "birth_cer_front": "6817ad28d8184_Screenshot (260).png",
+        "birth_cer_back": "6817ad28da3b7_Screenshot (263).png",
+        "id_front": "6817ad28db35c_Screenshot (259).png",
+        "id_back": "6817ad28dcc04_Screenshot (259).png"
+    },
+    "pageNo": "92",
+    "Registered": {
+        "regDate": "5\/5\/2025",
+        "appNo": "PNA5289652495"
+    }
+}

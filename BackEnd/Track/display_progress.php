@@ -1,51 +1,45 @@
 <?php
-// Set header for JSON response
+header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json");
 
+// Step 1: Get JSON input
+$data = json_decode(file_get_contents("php://input"), true);
 
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "project_et_passport_db"; 
-
-// Connect to database
-$conn = new mysqli($host, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    echo json_encode(["success" => false, "message" => "Database connection failed: " . $conn->connect_error]);
-    exit();
+if (!isset($data['tracking_id'])) {
+    echo json_encode(["success" => false, "message" => "Tracking ID is required."]);
+    exit;
 }
 
-// Read JSON input from Axios
-$input = json_decode(file_get_contents("php://input"), true);
+$tracking_id = $data['tracking_id'];
 
-// Check if tracking_id is provided
-if (!isset($input['tracking_id']) || empty($input['tracking_id'])) {
-    echo json_encode(["success" => false, "message" => "Tracking ID is missing."]);
-    exit();
+// Step 2: PDO Connection
+$host = 'localhost';
+$db = 'project_et_passport_db';
+$user = 'root';
+$pass = '';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Step 3: Prepare and Execute SQL
+    $stmt = $pdo->prepare("SELECT tracking_id, applicant_name, passport_status FROM tracking WHERE tracking_id = ?");
+    $stmt->execute([$tracking_id]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Step 4: Respond
+    if ($result) {
+        echo json_encode([
+            "success" => true,
+            "tracking_id" => $result['tracking_id'],
+            "applicant_name" => $result['applicant_name'],
+            "passport_status" => $result['passport_status']
+        ]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Tracking ID not found."]);
+    }
+
+} catch (PDOException $e) {
+    echo json_encode(["success" => false, "message" => "Database error: " . $e->getMessage()]);
 }
-
-$trackingId = $conn->real_escape_string($input['tracking_id']);
-
-// Fetch tracking info
-$sql = "SELECT tracking_id, applicant_name, passport_status FROM tracking WHERE tracking_id = '$trackingId' LIMIT 1";
-$result = $conn->query($sql);
-
-// Return data
-if ($result && $result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    echo json_encode([
-        "success" => true,
-        "tracking_id" => $row["tracking_id"],
-        "applicant_name" => $row["applicant_name"],
-        "passport_status" => $row["passport_status"]
-    ]);
-} else {
-    echo json_encode(["success" => false, "message" => "Tracking ID not found."]);
-}
-
-// Close connection
-$conn->close();
 ?>

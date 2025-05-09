@@ -29,12 +29,15 @@ CREATE TABLE applications (
     kebele VARCHAR(50),
     house_no VARCHAR(50),
     id_no VARCHAR(50),
-    mother VARCHAR(100),
-    father VARCHAR(100),
-    spouse VARCHAR(100),
+    mother TEXT,
+    father TEXT,
+    spouse TEXT,
     birth_certificate_front VARCHAR(255),
     birth_certificate_back VARCHAR(255),
     id_front VARCHAR(255),
     id_back VARCHAR(255),
+    pageNo INT(3),
+    application_no VARCHAR(100),
+    registered_date VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

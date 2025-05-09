@@ -1,5 +1,4 @@
-
-
+፲፫, [5/4/2025 5:44 PM]
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,21 +29,15 @@
         </div>
 
         <div class="note-section" id="lost-note">
-            <h5>Replacement for Lost Passport</h5>
-            <p>If your passport is lost, you will need to apply for a replacement. You will be required to submit some additional documents.</p>
-            <button class="btn btn-danger apply-btn" onclick="showReplacementForm()">Apply</button>
+          <h5>Replacement for Lost Passport</h5>
+          <p>If your passport is lost, you will need to apply for a replacement. You will be required to submit some additional documents.</p>
+          <button class="btn btn-danger apply-btn" onclick="window.location.href='lost.html'">Apply</button>
         </div>
 
         <div class="note-section" id="valid-note">
             <h5>Replacement for Valid Passport</h5>
-            <p>If your passport is still valid but you need a replacement, you can apply for a new one. Please follow the instructions carefully.</p>
-            <button class="btn btn-warning apply-btn" onclick="showReplacementValidForm()">Apply</button>
-        </div>
-
-        <div class="note-section" id="damaged-note">
-            <h5>Damaged Passport</h5>
-            <p>If your passport is damaged but not expired, you will need to replace it. Ensure that you have the necessary documents for verification.</p>
-            <button class="btn btn-info apply-btn" onclick="showDamagedPassportForm()">Apply</button>
+            <p>If your passport is still valid but you need a correction, you can apply for a new one. Please follow the instructions carefully.</p>
+            <button class="btn btn-danger apply-btn" onclick="window.location.href='correct.html'">Apply</button>
         </div>
             
           </section>
@@ -63,8 +56,25 @@
             </form>
           </section>
         
-      
-          <section id="delivery-date-form" style="display:none;">
+
+
+
+  
+          <section id="lost-passport-form" style="display:none;">
+            <h2>Expired Passport Renewal</h2>
+            <form>
+              <label for="city">Select City:</label>
+              <select id="city"><option>City 1</option></select>
+        
+              <label for="officer">Select Officer:</label>
+              <select id="officer"><option>Officer 1</option></select>
+        
+              <button type="button" onclick="showDeliveryDateForm()">Next</button>
+            </form>
+          </section>
+
+
+<section id="delivery-date-form" style="display:none;">
             <h2>Select Delivery Date</h2>
             <form>
               <p class="alert alert-info">Estimated Delivery Date: <strong>May 30, 2025</strong></p>
@@ -144,7 +154,7 @@
                     <div class="col-md-4">
                       <label for="gender" class="form-label">Gender</label>
                       <select class="form-select" id="gender">
-                        <option>Male</option>
+                         <option>Male</option>
                         <option>Female</option>
                         <option>Other</option>
                       </select>
@@ -235,7 +245,8 @@
         </select>
       </div>
 
-      <!-- Old passport number -->
+፲፫, [5/4/2025 5:44 PM]
+<!-- Old passport number -->
       <div class="mb-3">
         <label for="old-passport-number" class="form-label">Old Passport Number</label>
         <input type="text" class="form-control" id="old-passport-number" required>
