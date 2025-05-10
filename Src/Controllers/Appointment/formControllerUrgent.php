@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Initialize response
     $response = [
@@ -85,6 +86,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'message' => 'Type of request saved',
                     'data' => $_SESSION['category']
                 ];
+            } elseif (isset($data['urgency'])) {
+                // then the urgency of the request [normal, urgent]
+                $_SESSION['urgency'] = $data['urgency'];
+                $response = [
+                    'success' => true,
+                    'message' => 'Urgency of request saved',
+                    'data' => $_SESSION['urgency']
+                ];
             } elseif (isset($data['site'])) {
 
                 $_SESSION['siteData'] = [
@@ -99,18 +108,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'message' => 'Site selection saved',
                     'data' => $_SESSION['siteData']
                 ];
-            } elseif (isset($data['date'])) {
+            } elseif (isset($data['deliveryDate'])) {
                 // Date/time form
 
-                $_SESSION['dateTime'] = [
-                    'date' => htmlspecialchars($data['date']),
-                    'time' => htmlspecialchars($data['time'])
-                ];
+                $_SESSION['deliveryDate'] = $data['deliveryDate'];
 
                 $response = [
                     'success' => true,
                     'message' => 'Appointment time saved',
-                    'data' => $_SESSION['dateTime']
+                    'data' => $_SESSION['deliveryDate']
                 ];
             } elseif (isset($data['firstname'])) {
                 $requiredFields = ['firstname', 'lastname', 'phone', 'email', 'gender', 'dob', 'birthplace', 'nationality'];
@@ -229,7 +235,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     echo json_encode($response);
 
-    file_put_contents('session_data.json', json_encode($_SESSION, JSON_PRETTY_PRINT)); // Save session data to a file for debugging
+    file_put_contents('session_urgent.json', json_encode($_SESSION, JSON_PRETTY_PRINT)); // Save session data to a file for debugging
 
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
     echo json_encode([

@@ -22,23 +22,27 @@
   <div class="container-fluid my-5 py-1S">
     <div class="row">
 
-      <!-- Sidebar -->
+      <!-- Sidebar Navigation -->
       <aside class="col-md-3 mb-4 shadow-sm h-100">
-        <ul class="list-group shadow-sm">
-          <a href="../../page1.html" class="text-decoration-none">
+        <ul class="list-group">
+          <a href="../page1.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="../page2.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action">Site Selection</li>
+          <a href="urgency.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Urgency Type</li>
           </a>
-          <a href="../page3.html" class="text-decoration-none">
+          <a href="page2.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Site
+              Selection</li>
+          </a>
+          <a href="page3.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Date and Time</li>
           </a>
-          <a href="../Page4/personalinfo.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action active"
-              style="background-color: #005f99; color: #eaf4f9;">Personal Information</li>
+          <a href="Page4/personalinfo.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal
+              Information</li>
           </a>
-          <a href="../Page5/passportPage.html" class="text-decoration-none">
+          <a href="Page5/pasportpage.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
@@ -101,9 +105,8 @@
             </div>
             </form>
           </div>
-          <br>
           <!-- Notes Section -->
-          <div class="col-lg-4 h-100 mt-3">
+          <div class="col-lg-4 h-100">
             <div class="alert alert-info h-100">
               <h5>Note Info:</h5>
               <ul class="mb-0">
@@ -158,7 +161,7 @@
 
       try {
         const response = await axios.post(
-          'http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php',
+          'http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandlerurgent.php',
           formData, {
           headers: {
             'Content-Type': 'multipart/form-data' // Required for file uploads

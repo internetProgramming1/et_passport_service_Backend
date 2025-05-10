@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
   <title>Tracking Progress</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
+
 <body class="container mt-5">
 
   <div id="header-placeholder"></div>
@@ -43,21 +47,22 @@
       axios.post('http://localhost/project/et_passport_service_Backend/BackEnd/Track/display_progress.php', {
         tracking_id: trackingId
       })
-      .then(response => {
-        const data = response.data;
-        if (data.success) {
-          document.getElementById('tracking-id-display').textContent = data.tracking_id;
-          document.getElementById('applicant-name-display').textContent = data.applicant_name;
-          document.getElementById('passport-status-display').textContent = data.passport_status;
-        } else {
-          alert(data.message);
-        }
-      })
-      .catch(error => {
-        console.error(error);
-        alert("Error retrieving tracking information.");
-      });
+        .then(response => {
+          const data = response.data;
+          if (data.success) {
+            document.getElementById('tracking-id-display').textContent = data.tracking_id;
+            document.getElementById('applicant-name-display').textContent = data.applicant_name;
+            document.getElementById('passport-status-display').textContent = data.passport_status;
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          alert("Error retrieving tracking information.");
+        });
     }
   </script>
 </body>
+
 </html>

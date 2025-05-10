@@ -19,10 +19,13 @@
   <div class="container-fluid py-4 my-5">
     <div class="row">
       <!-- Sidebar Navigation -->
-      <aside class="col-lg-3 mb-4 shadow-sm h-100">
+      <aside class="col-md-3 mb-4 shadow-sm h-100">
         <ul class="list-group">
           <a href="../page1.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
+          </a>
+          <a href="urgency.html" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Urgency Type</li>
           </a>
           <a href="page2.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Site
@@ -34,17 +37,17 @@
           <a href="Page4/personalinfo.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Personal Information</li>
           </a>
-          <a href="Page5/passportPage.html" class="text-decoration-none">
+          <a href="Page5/pasportpage.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
       </aside>
 
       <!-- Main content area with form and preview -->
-      <main class="col-lg-9">
+      <main class="col-md-9">
         <div class="row">
           <!-- Form Area -->
-          <div class="col-lg-8 mb-4 ">
+          <div class="col-md-8 mb-4 ">
             <div class="card p-4 shadow-sm">
               <form id="siteSelectionForm" method="post">
                 <h4 class="mb-3">Site Selection</h4>
@@ -59,9 +62,6 @@
                   <select id="site" name="site" class="form-select" required>
                     <option value="" disabled selected>Select Site</option>
                     <option value="Addis Ababa">Addis Ababa</option>
-                    <option value="Bahir Dar">Bahir Dar</option>
-                    <option value="Hawassa">Hawassa</option>
-                    <option value="Mekelle">Mekelle</option>
                   </select>
                 </div>
 
@@ -70,12 +70,8 @@
                   <select id="city" name="city" class="form-select" required>
                     <option value="" disabled selected>Select City</option>
                     <option value="Addis Ababa">Addis Ababa</option>
-                    <option value="Bahir Dar">Bahir Dar</option>
-                    <option value="Hawassa">Hawassa</option>
-                    <option value="Mekelle">Mekelle</option>
                   </select>
                 </div>
-
                 <div class="mb-3">
                   <label for="office" class="form-label">Office*</label>
                   <select id="office" name="office" class="form-select" required>
@@ -99,7 +95,7 @@
           </div>
 
           <!-- Site Preview Area -->
-          <div class="col-lg-4 ">
+          <div class="col-md-4 ">
             <div class="card bg-light p-3 h-auto shadow-sm">
               <h5 class="mb-3">Site Preview</h5>
               <p><strong>Site:</strong> <span id="preview-site">-</span></p>
@@ -118,7 +114,7 @@
   <div id="footer-placeholder"></div>
 
   <!-- Script to include header and footer -->
-  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
+  <script src="../../../Head_Foot/script.js">
   </script>
 
   <!-- Bootstrap Bundle JS (includes Popper.js) -->
@@ -169,7 +165,7 @@
           delivery: form.elements.delivery.value
         };
 
-        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php", siteData, {
+        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandlerUrgent.php", siteData, {
           headers: {
             'Content-Type': 'application/json'
           },
