@@ -1,43 +1,4 @@
 {
-    "addressData": {
-        "region": "addis_ababa",
-        "city": "Addis Ababa",
-        "subcity": "bole",
-        "woreda": "11",
-        "kebele": "bole",
-        "house_no": "addis",
-        "id_no": "123456"
-    },
-    "category": "correction",
-    "attachments": {
-        "birth_cer_front": "681de7281a1ed_Screenshot (261).png",
-        "birth_cer_back": "681de7281a67a_Screenshot (183).png",
-        "id_front": "681de7281ab50_Screenshot (262).png",
-        "id_back": "681de7281af0c_Screenshot (262).png"
-    },
-    "type": "urgent",
-    "urgency": "5days",
-    "siteData": {
-        "site": "Addis Ababa",
-        "city": "Addis Ababa",
-        "office": "ICS Main Office",
-        "delivery": "ICS Main Office"
-    },
     "deliveryDate": "Thu May 15 2025",
-    "personalInfo": {
-        "firstname": "abebe",
-        "middlename": "ketema",
-        "lastname": "derese",
-        "phone": "0900000000",
-        "email": "abebe@gmail.com",
-        "gender": "female",
-        "dob": "1995-01-03",
-        "under18": "above18",
-        "birthplace": "bole",
-        "adopted": "notAdopted",
-        "birth_certificate": "1234567",
-        "nationality": "ethiopia",
-        "marital_status": "single",
-        "occupation": "student"
-    }
+    "urgency": "2days"
 }
