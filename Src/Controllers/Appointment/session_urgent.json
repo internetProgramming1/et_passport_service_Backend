@@ -1,4 +1,10 @@
 {
     "deliveryDate": "Thu May 15 2025",
-    "urgency": "2days"
+    "urgency": "2days",
+    "siteData": {
+        "site": "Addis Ababa",
+        "city": "Addis Ababa",
+        "office": "ICS Main Office",
+        "delivery": "ICS Main Office"
+    }
 }

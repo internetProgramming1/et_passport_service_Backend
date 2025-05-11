@@ -14,30 +14,33 @@
 
 
   <!-- Main content -->
-  <div class="container-fluid py-4 my-5">
+  <div class="container-fluid py-1 my-5">
     <div class="row">
       <!-- Sidebar -->
       <!-- Sidebar Navigation -->
-      <aside class="col-md-3 mb-4 shadow-sm h-100">
+      <aside class="col-lg-3 mb-4 shadow-sm h-100">
         <ul class="list-group">
-          <a href="../page1.html" class="text-decoration-none">
+          <a href="../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="urgency.html" class="text-decoration-none">
+          <a href="urgency.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Urgency Type</li>
           </a>
-          <a href="page2.html" class="text-decoration-none">
+          <a href="./serviceType.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Service Type</li>
+          </a>
+          <a href="page2.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Site
               Selection</li>
           </a>
-          <a href="page3.html" class="text-decoration-none">
+          <a href="page3.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Date and
               Time</li>
           </a>
-          <a href="Page4/personalinfo.html" class="text-decoration-none">
+          <a href="Page4/personalinfo.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Personal Information</li>
           </a>
-          <a href="Page5/pasportpage.html" class="text-decoration-none">
+          <a href="Page5/pasportpage.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
@@ -52,11 +55,12 @@
           </div>
 
           <!-- Display Area -->
-          <div class="col-md-8  alert alert-info mx-3" id="dateTime"></div>
-
+          <div class="col-lg-8 h-100">
+            <div class="alert alert-info" id="dateTime"></div>
+          </div>
 
           <!-- Submit Button -->
-          <div class="col-md-8 mt-3">
+          <div class="col-sm-8 mt-3">
             <button onclick="goToNext()" class="btn btn-outline-primary">Next</button>
           </div>
         </div>
@@ -69,9 +73,6 @@
 
   <?php include __DIR__ . '/../../../../../Front/footer.html' ?>
 
-
-  <!-- Bootstrap Bundle JS (includes Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Axios   -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -114,9 +115,12 @@
           <h6>${deliveryDate}</h6>
         </div>
       `;
-      axios.post('http://localhost/website/project/et_passport_service_backend/BackEnd/Appointment/formHandlerUrgent.php', {
+      axios.post('http://localhost/website/project/et_passport_service_backend/BackEnd/Appointment/formControllerUrgent.php', {
           deliveryDate: deliveryDate
         }, {
+          headers: {
+            'Content-Type': 'application/json'
+          },
           withCredentials: true
         })
         .then(res => {

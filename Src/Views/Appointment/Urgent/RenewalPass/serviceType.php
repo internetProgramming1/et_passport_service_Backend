@@ -106,34 +106,37 @@
 
       // Clear previous errors
       const errorAlert = document.getElementById('errorAlert');
+      const errorList = document.getElementById('errorList');
+      errorList.innerHTML = '';
       errorAlert.classList.add('d-none');
 
-      // Check if any required field is empty
       const form = e.target;
-      const requiredFields = ['serviceType'];
-      const isEmpty = requiredFields.some(field => !form.elements[field].value);
+      const serviceType = form.elements['serviceType'].value;
 
-      if (isEmpty) {
-        errorAlert.textContent = "You must select the service type";
+      if (!serviceType) {
+        errorList.innerHTML = '<li>You must select the service type.</li>';
         errorAlert.classList.remove('d-none');
-        return; // Stop submission
+        return;
       }
+
       try {
         await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formControllerUrgent.php", {
-          serviceType: form.elements.serviceType.value
+          serviceType: serviceType
         }, {
           headers: {
             'Content-Type': 'application/json'
           },
           withCredentials: true
         });
-        window.location.href = "page2.html";
+
+        window.location.href = "page2.php";
       } catch (error) {
-        errorAlert.textContent = "Error saving data. Please try again.";
+        errorList.innerHTML = '<li>Error saving data. Please try again.</li>';
         errorAlert.classList.remove('d-none');
       }
     });
   </script>
+
 </body>
 
 </html>

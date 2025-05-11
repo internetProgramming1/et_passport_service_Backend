@@ -17,24 +17,27 @@
         <div class="row">
 
             <!-- Sidebar Navigation -->
-            <aside class="col-md-3 mb-4 shadow-sm h-100">
+            <aside class="col-lg-3 mb-4 shadow-sm h-100">
                 <ul class="list-group">
                     <a href="../page1.php" class="text-decoration-none">
                         <li class="list-group-item list-group-item-action">Request Appointment</li>
                     </a>
-                    <a href="../urgency.php" class="text-decoration-none">
+                    <a href="urgency.php" class="text-decoration-none">
                         <li class="list-group-item list-group-item-action">Urgency Type</li>
+                    </a>
+                    <a href="./serviceType.php" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action">Service Type</li>
                     </a>
                     <a href="../page2.php" class="text-decoration-none">
                         <li class="list-group-item list-group-item-action">Site
                             Selection</li>
                     </a>
                     <a href="../page3.php" class="text-decoration-none">
-                        <li class="list-group-item list-group-item-action">Date and Time</li>
+                        <li class="list-group-item list-group-item-action">Date and
+                            Time</li>
                     </a>
-                    <a href="../Page4/personalinfo.php" class="text-decoration-none">
-                        <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal
-                            Information</li>
+                    <a href="./passInfo.php" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal Information</li>
                     </a>
                     <a href="../Page5/pasportpage.php" class="text-decoration-none">
                         <li class="list-group-item list-group-item-action">Payment</li>

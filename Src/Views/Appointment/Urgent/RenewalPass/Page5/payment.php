@@ -63,35 +63,49 @@
 
     <div class="container-fluid my-4 py-2">
         <div class="row">
-            <!-- Sidebar Navigation -->
-            <aside class="col-md-3 mb-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <!-- Your existing sidebar items -->
-                        </ul>
-                    </div>
-                </div>
+            <aside class="col-lg-3 mb-4 shadow-sm h-100">
+                <ul class="list-group">
+                    <a href="../page1.php" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action">Request Appointment</li>
+                    </a>
+                    <a href="urgency.php" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action">Urgency Type</li>
+                    </a>
+                    <a href="./serviceType.php" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action">Service Type</li>
+                    </a>
+                    <a href="../page2.php" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action">Site
+                            Selection</li>
+                    </a>
+                    <a href="../page3.php" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action">Date and
+                            Time</li>
+                    </a>
+                    <a href="../Page4/personalinfo.php" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal Information</li>
+                    </a>
+                    <a href="./passportPage.php" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action">Payment</li>
+                    </a>
+                </ul>
             </aside>
 
             <!-- Main Content -->
             <main class="col-lg-9">
                 <!-- Step Navigation -->
-                <div class="card shadow-sm mb-4">
-                    <div class="card-body">
-                        <ul class="nav nav-tabs nav-justified">
-                            <li class="nav-item">
-                                <a class="nav-link" href="passportPage.html">Passport Page No.</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="summary.html">Summary</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="payment.html">Payment</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                <ul class="nav nav-tabs mb-4">
+                    <li class="nav-item">
+                        <a href="./passportPage.php" class="nav-link" style="color: #005f99;">Passport Page
+                            No.</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./summary.php" style="color: #005f99;">Summary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./payment.php" style="background-color:#005f99; color: white;">Payment</a>
+                    </li>
+                </ul>
 
                 <!-- Form & Notes -->
                 <div class="row">
@@ -145,8 +159,8 @@
 
                                     <input type="hidden" name="paymentMethod" id="selectedMethod" required>
 
-                                    <div class="d-grid gap-2 mt-4">
-                                        <button type="submit" class="btn btn-primary btn-lg">
+                                    <div class="col-12 mt-4">
+                                        <button type="submit" class="btn btn-outline-primary ">
                                             Continue to Payment <i class="bi bi-arrow-right ms-2"></i>
                                         </button>
                                     </div>
@@ -171,7 +185,20 @@
                                         </h2>
                                         <div id="cbeBranch" class="accordion-collapse collapse show" data-bs-parent="#instructionsAccordion">
                                             <div class="accordion-body">
-                                                <!-- Your existing instructions -->
+                                                <ul class="mb-3">
+                                                    <li>Visit any Commercial Bank of Ethiopia (CBE) branch.</li>
+                                                    <li>Inform the cashier you are paying for a specific service (mention the service name).
+                                                    </li>
+                                                    <li>Provide the following details:
+                                                        <ul>
+                                                            <li>Application or Reference Number</li>
+                                                            <li>Full Name and Phone Number</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>Pay the required amount in cash or from your account.</li>
+                                                    <li>Keep the receipt which contains the Transaction Reference Number.</li>
+                                                    <li>This number may be required online to confirm your payment.</li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -185,7 +212,20 @@
                                         </h2>
                                         <div id="telebirr" class="accordion-collapse collapse" data-bs-parent="#instructionsAccordion">
                                             <div class="accordion-body">
-                                                <!-- Your existing instructions -->
+                                                <ul class="mb-3">
+                                                    <li>Open the Telebirr app or dial <strong>*127#</strong>.</li>
+                                                    <li>Select "Pay Bills" or "Merchant Payment".</li>
+                                                    <li>Choose the correct organization/institution.</li>
+                                                    <li>Enter:
+                                                        <ul>
+                                                            <li>Reference Number (Application Number)</li>
+                                                            <li>Amount to pay</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>Confirm payment with your PIN.</li>
+                                                    <li>Save or screenshot the Transaction ID for your records.</li>
+                                                    <li>You may also receive an SMS confirmation.</li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -199,7 +239,17 @@
                                         </h2>
                                         <div id="cbeMobile" class="accordion-collapse collapse" data-bs-parent="#instructionsAccordion">
                                             <div class="accordion-body">
-                                                <!-- Your existing instructions -->
+                                                <ul class="mb-3">
+                                                    <li>Login to the CBE Mobile App.</li>
+                                                    <li>Select "Payment" and choose the appropriate bill or merchant.</li>
+                                                    <li>Enter:
+                                                        <ul>
+                                                            <li>Application or Reference Number</li>
+                                                            <li>Amount to pay</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>Confirm and enter your PIN to complete the payment.</li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -214,8 +264,7 @@
 
     <?php include __DIR__ . '/../../../../../../Front/footer.html' ?>
 
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
