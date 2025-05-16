@@ -4,234 +4,406 @@
 <head>
     <meta charset="UTF-8">
     <title>Application Summary</title>
-    <script src=""></script>
-    <!-- Jquery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .summary-card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background-color: #005f99;
+            color: white;
+            font-weight: 600;
+        }
+
+        .list-group-item {
+            padding: 12px 20px;
+        }
+
+        .confirmation-check {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .attachment-icon {
+            color: #005f99;
+            font-size: 1.2rem;
+        }
+    </style>
 </head>
 
 <body>
-
-    <!-- Placeholder for Header -->
-    <div id="header-placeholder"></div>
+    <?php include __DIR__ . '/../../../../../../Front/header.html' ?>
 
     <div class="container py-5">
-        <h2 class="mb-5 text-center">Review and Confirm Your Application</h2>
+        <h2 class="mb-5 text-center"><i class="fas fa-clipboard-check me-2"></i>Review and Confirm Your Application</h2>
 
-        <!-- <div id="errorCont"></div> -->
+        <div id="errorCont" class="alert alert-danger d-none"></div>
 
         <div id="summaryContainer" class="row g-4">
             <!-- Loading indicator -->
-            <div class="col-12 text-center">
-                <div class="spinner-border text-primary" role="status">
+            <div class="col-12 text-center py-5">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-                <p>Loading your application data...</p>
+                <p class="mt-3">Loading your application details...</p>
             </div>
         </div>
-        <br>
-        <hr>
-        <P class="mt-4 "><b>Please make sure these details exactly match the identity document.</b></P>
-        <label for="Check">
-            <input required type="checkbox" name="Check" id="Check"> Confirm Applicant Details.
-        </label>
+
+        <div class="confirmation-check">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" required id="Check">
+                <label class="form-check-label" for="Check">
+                    <strong>I confirm that all information provided matches my identity documents exactly.</strong>
+                </label>
+            </div>
+        </div>
+
         <div class="text-center mt-4">
-            <button class="btn btn-success btn-lg" onclick="confirmSubmission()">Confirm & Submit</button>
+            <button id="submitBtn" class="btn btn-success btn-lg px-5" onclick="confirmSubmission()">
+                <i class="fas fa-paper-plane me-2"></i>Confirm & Submit Application
+            </button>
         </div>
     </div>
-    <!-- Placeholder for Footer -->
-    <div id="footer-placeholder"></div>
 
-    <!-- Script to include header and footer -->
-    <script src="../../../../Head_Foot/script.js">
-    </script>
+    <?php include __DIR__ . '/../../../../../../Front/footer.html' ?>
 
-    <!-- Bootstrap Bundle JS (includes Popper.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Axios   -->
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-
-        const RegDate = () => {
-            let date = new Date();
-            let day = date.getDate();
-            let month = date.getMonth() + 1;
-            let year = date.getFullYear();
-
-            // Combine into a string
-            let formattedDate = `${day}/${month}/${year}`;
-            return formattedDate;
-        }
-        const appNo = () => {
-            let appno = "PNA"
-            for (let i = 0; i < 10; i++) {
-                rand = Math.random() * 10;
-                round = Math.round(rand);
-                appno = appno + round;
-            }
-            return appno;
-        }
-    </script>
-
-    <script>
-        // Load summary data on page load
-        window.onload = function () {
-            axios.get('http://localhost/website/project/et_passport_service_backend/BackEnd/Appointment/formHandlerurgent.php', { withCredentials: true })
-                .then(res => {
-                    if (res.data.success) {
-                        displaySummary(res.data.data);
-                    } else {
-                        showError("No data found in session.");
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    showError("Error loading session data.");
-                });
+        // Utility functions
+        const formatDate = (dateString) => {
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            return new Date(dateString).toLocaleDateString('en-US', options);
         };
+
+        const generateAppNo = () => {
+            return "PUA" + Math.floor(1000000000 + Math.random() * 9000000000);
+        };
+
+        // Main application logic
+        document.addEventListener('DOMContentLoaded', () => {
+            loadApplicationData();
+        });
+
+        async function loadApplicationData() {
+            try {
+                const response = await axios.get(
+                    'http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formControllerUrgent.php', {
+                        withCredentials: true
+                    }
+                );
+
+                if (response.data.success) {
+                    displaySummary(response.data.data);
+                } else {
+                    showError("No application data found. Please start a new application.");
+                }
+            } catch (error) {
+                console.error("Error loading application:", error);
+                showError("Failed to load application data. Please try again later.");
+            }
+        }
 
         function displaySummary(data) {
             const container = document.getElementById("summaryContainer");
-            container.innerHTML = ""; // Clear loading spinner
+            container.innerHTML = "";
 
-            // 1. Type & Category Section
-            container.appendChild(createCard("Appointment Type", {
-                "Type": data.type,
-                "Category": data.category,
-                "Urgency Type": data.urgency,
-                "Delivery Date": data.deliveryDate
-            }));
+            // 1. Application Overview
+            container.appendChild(createCard("Application Overview", [{
+                    label: "Application Type",
+                    value: data.type.toUpperCase(),
+                    icon: "fa-file-alt"
+                },
+                {
+                    label: "Category",
+                    value: data.category.toUpperCase(),
+                    icon: "fa-tag"
+                },
+                {
+                    label: "Processing Time",
+                    value: data.urgency === "2days" ? "2 Working Days" : "5 Working Days",
+                    icon: "fa-clock"
+                },
 
-            // 2. Site Data Section
-            container.appendChild(createCard("Site Information", {
-                "Site": data.siteData.site,
-                "City": data.siteData.city,
-                "Office": data.siteData.office,
-                "Delivery Location": data.siteData.delivery
-            }));
+                {
+                    label: "Estimated Delivery",
+                    value: formatDate(data.deliveryDate),
+                    icon: "fa-calendar-check"
+                }
+            ]));
 
+            // 2. Location Information
+            container.appendChild(createCard("Location Information", [{
+                    label: "Application Site",
+                    value: data.siteData.site,
+                    icon: "fa-map-marker-alt"
+                },
+                {
+                    label: "City",
+                    value: data.siteData.city,
+                    icon: "fa-city"
+                },
+                {
+                    label: "Processing Office",
+                    value: data.siteData.office,
+                    icon: "fa-building"
+                },
+                {
+                    label: "Delivery Location",
+                    value: data.siteData.delivery,
+                    icon: "fa-truck"
+                }
+            ]));
 
-
-            // 3. Personal Info with Full Name
+            // 3. Personal Information
             const fullName = `${data.personalInfo.firstname} ${data.personalInfo.middlename} ${data.personalInfo.lastname}`;
-            container.appendChild(createCard("Personal Information", {
-                "Full Name": fullName,
-                "Phone": data.personalInfo.phone,
-                "Email": data.personalInfo.email,
-                "Gender": data.personalInfo.gender,
-                "Date of Birth": data.personalInfo.dob,
-                "Under 18 Status": data.personalInfo.under18,
-                "Birthplace": data.personalInfo.birthplace,
-                "Adoption Status": data.personalInfo.adopted,
-                "Birth Certificate No": data.personalInfo.birth_certificate,
-                "Nationality": data.personalInfo.nationality,
-                "Marital Status": data.personalInfo.marital_status,
-                "Occupation": data.personalInfo.occupation
-            }));
+            container.appendChild(createCard("Personal Information", [{
+                    label: "Full Name",
+                    value: fullName,
+                    icon: "fa-user"
+                },
+                {
+                    label: "Phone Number",
+                    value: data.personalInfo.phone,
+                    icon: "fa-phone"
+                },
+                {
+                    label: "Email Address",
+                    value: data.personalInfo.email,
+                    icon: "fa-envelope"
+                },
+                {
+                    label: "Gender",
+                    value: data.personalInfo.gender,
+                    icon: "fa-venus-mars"
+                },
+                {
+                    label: "Date of Birth",
+                    value: formatDate(data.personalInfo.dob),
+                    icon: "fa-birthday-cake"
+                },
+                {
+                    label: "Birthplace",
+                    value: data.personalInfo.birthplace,
+                    icon: "fa-home"
+                },
+                {
+                    label: "Nationality",
+                    value: data.personalInfo.nationality,
+                    icon: "fa-flag"
+                }
+            ]));
 
             // 4. Address Information
-            container.appendChild(createCard("Address Information", {
-                "Region": data.addressData.region,
-                "City": data.addressData.city,
-                "Subcity": data.addressData.subcity,
-                "Woreda": data.addressData.woreda,
-                "Kebele": data.addressData.kebele,
-                "House No": data.addressData.house_no,
-                "ID No": data.addressData.id_no
-            }));
+            container.appendChild(createCard("Address Information", [{
+                    label: "Region",
+                    value: data.addressData.region,
+                    icon: "fa-map"
+                },
+                {
+                    label: "City",
+                    value: data.addressData.city,
+                    icon: "fa-city"
+                },
+                {
+                    label: "Subcity",
+                    value: data.addressData.subcity,
+                    icon: "fa-map-pin"
+                },
+                {
+                    label: "Woreda",
+                    value: data.addressData.woreda,
+                    icon: "fa-location-arrow"
+                },
+                {
+                    label: "Kebele",
+                    value: data.addressData.kebele,
+                    icon: "fa-house-user"
+                },
+                {
+                    label: "House Number",
+                    value: data.addressData.house_no,
+                    icon: "fa-home"
+                },
+                {
+                    label: "ID Number",
+                    value: data.addressData.id_no,
+                    icon: "fa-id-card"
+                }
+            ]));
 
-            // 5. Family Info
-            container.appendChild(createCard("Mother's Information", {
-                "First Name": data.family.mother.first_name,
-                "Father Name": data.family.mother.father_name,
-                "Grandfather Name": data.family.mother.grandfather_name
-            }));
-
-            container.appendChild(createCard("Father's Information", {
-                "First Name": data.family.father.first_name,
-                "Father Name": data.family.father.father_name,
-                "Grandfather Name": data.family.father.grandfather_name
-            }));
-
-            container.appendChild(createCard("Spouse's Information", {
-                "First Name": data.family.spouse.first_name || "N/A",
-                "Father Name": data.family.spouse.father_name || "N/A",
-                "Grandfather Name": data.family.spouse.grandfather_name || "N/A"
-            }));
-
-            // 6. Attachments
-            container.appendChild(createCard("Uploaded Attachments", {
-                "Birth Certificate Front": data.attachments.birth_cer_front,
-                "Birth Certificate Back": data.attachments.birth_cer_back,
-                "ID Front": data.attachments.id_front,
-                "ID Back": data.attachments.id_back
-            }));
-
-            // 7. Page Number
-            container.appendChild(createCard("Page Info", {
-                "Passport Page Number": data.pageNo
-            }));
-        }
-
-        // Reusable card creator function
-        function createCard(title, fields) {
-            const card = document.createElement("div");
-            card.className = "col-lg-4";
-
-            let content = `<div class="card">
-                    <div class="card-header" style="background-color:#005f99; color: white;">
-                        <h5 class="mb-0">${title}</h5>
+            // 5. Family Information
+            const familyCard = document.createElement("div");
+            familyCard.className = "col-lg-6";
+            familyCard.innerHTML = `
+                <div class="card summary-card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-users me-2"></i>Family Information</h5>
                     </div>
                     <div class="card-body">
-                        <ul class="list-group list-group-flush">`;
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6><i class="fas fa-female me-2"></i>Mother's Information</h6>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><strong>First Name:</strong> ${data.family.mother.first_name}</li>
+                                    <li class="list-group-item"><strong>Father's Name:</strong> ${data.family.mother.father_name}</li>
+                                    <li class="list-group-item"><strong>Grandfather's Name:</strong> ${data.family.mother.grandfather_name}</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6><i class="fas fa-male me-2"></i>Father's Information</h6>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><strong>First Name:</strong> ${data.family.father.first_name}</li>
+                                    <li class="list-group-item"><strong>Father's Name:</strong> ${data.family.father.father_name}</li>
+                                    <li class="list-group-item"><strong>Grandfather's Name:</strong> ${data.family.father.grandfather_name}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            container.appendChild(familyCard);
 
-            for (const key in fields) {
-                content += `<li class="list-group-item"><strong>${key}:</strong> ${fields[key]}</li>`;
+            // 6. Passport Information
+            if (data.PassportInfo) {
+                container.appendChild(createCard("Passport Information", [{
+                        label: "Previous Passport No",
+                        value: data.PassportInfo.old_passport_number,
+                        icon: "fa-passport"
+                    },
+                    {
+                        label: "Issue Date",
+                        value: formatDate(data.PassportInfo.old_issue_date),
+                        icon: "fa-calendar-plus"
+                    },
+                    {
+                        label: "Expiry Date",
+                        value: formatDate(data.PassportInfo.old_expiry_date),
+                        icon: "fa-calendar-times"
+                    },
+                    {
+                        label: "Correction Needed",
+                        value: data.PassportInfo.has_correction === "1" ? "Yes" : "No",
+                        icon: "fa-exclamation-circle"
+                    },
+                    {
+                        label: "Correction Type",
+                        value: data.PassportInfo.has_correction === "1" ? data.PassportInfo.correction_type : "N/A",
+                        icon: "fa-edit"
+                    }
+                ]));
             }
 
-            content += `</ul>
-                </div>
-            </div>`;
+            // 7. Attachments
+            const attachmentsContent = Object.entries(data.attachments).map(([key, value]) => {
+                const label = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                return {
+                    label,
+                    value: `<div class="attachment-item">
+                                <i class="fas fa-paperclip attachment-icon"></i>
+                                <span>${value}</span>
+                            </div>`,
+                    icon: "fa-paperclip"
+                };
+            });
+            container.appendChild(createCard("Uploaded Documents", attachmentsContent));
+        }
 
+        function createCard(title, items) {
+            const card = document.createElement("div");
+            card.className = "col-lg-6";
+
+            let content = `<div class="card summary-card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas ${items[0].icon} me-2"></i>${title}</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">`;
+
+            items.forEach(item => {
+                content += `<li class="list-group-item">
+                    <strong>${item.label}:</strong> ${item.value}
+                </li>`;
+            });
+
+            content += `</ul></div></div>`;
             card.innerHTML = content;
             return card;
         }
 
-
         function showError(message) {
-            const container = document.getElementById("summaryContainer");
-            container.innerHTML = `<div class="alert alert-danger text-center">${message}</div>`;
+            const errorBox = document.getElementById("errorCont");
+            errorBox.textContent = message;
+            errorBox.classList.remove("d-none");
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
 
-        function confirmSubmission() {
+        async function confirmSubmission() {
             const checkbox = document.getElementById("Check");
             if (!checkbox.checked) {
-                alert("⚠️ Please confirm your application details by checking the box.");
+                showError("Please confirm that all details match your identity documents by checking the box.");
                 return;
             }
-            try {
-                axios.post('http://localhost/website/project/et_passport_service_backend/BackEnd/Appointment/formHandlerurgent.php', {
-                    regDate: RegDate(),
-                    appNo: appNo()
-                }, {
-                    withCredentials: true,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                alert("✅ Your application was submitted successfully!");
-                window.location.href = 'payment.html';
-            } catch (err) {
-                alert("there is error")
-                alert("❌ Submission failed: " + res.data.message);
-            }
 
+            const submitBtn = document.getElementById("submitBtn");
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...';
+
+            try {
+                const response = await axios.post(
+                    'http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formControllerUrgent.php', {
+
+                        registrationDate: new Date().toISOString().split('T')[0],
+                        applicationNumber: generateAppNo()
+                    }, {
+                        withCredentials: true,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
+
+                if (response.data.success) {
+                    window.location.href = 'payment.php';
+                } else {
+                    showError(response.data.message || "Submission failed. Please try again.");
+                }
+            } catch (error) {
+                console.error("Submission error:", error);
+                showError("An error occurred during submission. Please try again later.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Confirm & Submit Application';
+            }
         }
     </script>
-
-
-
 </body>
 
 </html>

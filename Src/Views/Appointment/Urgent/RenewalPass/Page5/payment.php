@@ -83,10 +83,10 @@
                             Time</li>
                     </a>
                     <a href="../Page4/personalinfo.php" class="text-decoration-none">
-                        <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal Information</li>
+                        <li class="list-group-item list-group-item-action">Personal Information</li>
                     </a>
                     <a href="./passportPage.php" class="text-decoration-none">
-                        <li class="list-group-item list-group-item-action">Payment</li>
+                        <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Payment</li>
                     </a>
                 </ul>
             </aside>
@@ -308,31 +308,21 @@
                 `);
 
                 try {
-                    const response = await axios.post('/path/to/paymentController.php', {
-                        paymentMethod: method
-                    }, {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        withCredentials: true
-                    });
+                    const paymentMethod = method; // This should be defined earlier in your code
 
-                    if (response.data.success) {
-                        // Redirect to payment gateway or confirmation
-                        if (response.data.redirectUrl) {
-                            window.location.href = response.data.redirectUrl;
-                        } else {
-                            window.location.href = 'finalPaper.php';
-                        }
-                    } else {
-                        throw new Error(response.data.message || 'Payment processing failed');
-                    }
+                    // Store in sessionStorage to pass to next page
+                    sessionStorage.setItem('selectedPaymentMethod', paymentMethod);
+
+                    // Redirect directly to next page
+                    window.location.href = 'finalPaper.php';
+
                 } catch (error) {
-                    console.error('Payment error:', error);
+                    console.error('Error:', error);
                     errorAlert.removeClass('d-none').html(`
-                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                        ${error.response?.data?.message || 'An error occurred. Please try again.'}
-                    `);
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        An error occurred. Please try again.
+    `);
+
 
                     // Scroll to error
                     $('html, body').animate({

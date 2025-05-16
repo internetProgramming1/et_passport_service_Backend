@@ -19,7 +19,7 @@
   <div class="container-fluid py-4 my-5">
     <div class="row">
       <!-- Sidebar Navigation -->
-      <aside class="col-md-3 mb-4 shadow-sm h-100">
+      <aside class="col-lg-3 mb-4 shadow-sm h-100">
         <ul class="list-group">
           <a href="../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
@@ -27,12 +27,11 @@
           <a href="./urgency.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Urgency Type</li>
           </a>
-          <a href="./serviceType.php">
-            <li class="list-group-item list-group-item-action"
-              style="color: white; background-color: #005f99;">Service Type</li>
+          <a href="./serviceType.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Service Type</li>
           </a>
-          <a href="./page2.php" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action">Site Selection</li>
+          <a href="./page2.php">
+            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Site Selection</li>
           </a>
           <a href="./page3.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Date and Time</li>
@@ -50,7 +49,7 @@
       <main class="col-lg-9">
         <div class="row">
           <!-- Form Area -->
-          <div class="col-md-8 mb-4 ">
+          <div class="col-lg-8 mb-4 ">
             <div class="card p-4 shadow-sm">
               <form id="siteSelectionForm" method="post">
                 <h4 class="mb-3">Site Selection</h4>

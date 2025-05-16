@@ -103,11 +103,11 @@
               <div class="col-md-6">
                 <label class="form-label d-block">Gender*</label>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" id="male" value="male" required>
+                  <input class="form-check-input" type="radio" name="gender" id="male" value="Male" required>
                   <label class="form-check-label" for="male">Male</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" id="female" value="female" required>
+                  <input class="form-check-input" type="radio" name="gender" id="female" value="Female" required>
                   <label class="form-check-label" for="female">Female</label>
                 </div>
               </div>
@@ -141,7 +141,7 @@
                   <label class="form-check-label" for="adopted-yes">Yes</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="adopted" id="adopted-no" value="notAdopted"
+                  <input class="form-check-input" type="radio" name="adopted" id="adopted-no" value="Not Adopted"
                     required>
                   <label class="form-check-label" for="adopted-no">No</label>
                 </div>
@@ -155,7 +155,7 @@
               <div class="col-md-6">
                 <label for="nationality" class="form-label">Nationality*</label>
                 <select class="form-select" id="nationality" name="nationality" required>
-                  <option value="ethiopia" selected>Ethiopia</option>
+                  <option value="Ethiopian" selected>Ethiopian</option>
                 </select>
               </div>
 
@@ -163,10 +163,10 @@
                 <label for="marital-status" class="form-label">Marital Status*</label>
                 <select class="form-select" id="marital-status" name="marital_status" required>
                   <option value="" disabled selected>Select your marital status</option>
-                  <option value="single">Single</option>
-                  <option value="married">Married</option>
-                  <option value="divorced">Divorced</option>
-                  <option value="widowed">Widowed</option>
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Divorced">Divorced</option>
+                  <option value="Widowed">Widowed</option>
                 </select>
               </div>
 

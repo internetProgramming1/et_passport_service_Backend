@@ -91,9 +91,9 @@
                             <label for="correctionType" class="form-label">Correction Type*</label>
                             <select class="form-select" id="correctionType" required>
                                 <option disabled value="">Select correction type</option>
-                                <option value="name">Name Correction</option>
-                                <option value="dob">Date of Birth Correction</option>
-                                <option value="gender">Gender Correction</option>
+                                <option value="Name">Name Correction</option>
+                                <option value="Date of Birth">Date of Birth Correction</option>
+                                <option value="Gender">Gender Correction</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </div>
@@ -148,7 +148,7 @@
             }
 
             try {
-                await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/passportInfoController.php", passportData, {
+                await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formControllerUrgent.php", passportData, {
                     headers: {
                         'Content-Type': 'application/json'
                     }

@@ -10,8 +10,7 @@
 
 <body>
 
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <?php include __DIR__ . '/../../../../../../Front/header.html' ?>
 
   <!-- Main content -->
   <div class="container-fluid my-5 py-1">
@@ -20,26 +19,25 @@
       <!-- Sidebar Navigation -->
       <aside class="col-md-3 mb-4 shadow-sm h-100">
         <ul class="list-group">
-          <a href="../page1.html" class="text-decoration-none">
+          <a href="../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="urgency.html" class="text-decoration-none">
+          <a href="../urgency.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Urgency Type</li>
           </a>
-          <a href="page2.html" class="text-decoration-none">
+          <a href="../page2.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Site
               Selection</li>
           </a>
-          <a href="page3.html" class="text-decoration-none">
+          <a href="../page3.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Date and Time</li>
           </a>
-          <a href="Page4/personalinfo.html" class="text-decoration-none">
+          <a href="../Page4/personalinfo.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Personal
               Information</li>
           </a>
-          <a href="Page5/pasportpage.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Payment
-            </li>
+          <a href="pasportpage.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Payment</li>
           </a>
         </ul>
       </aside>
@@ -49,14 +47,14 @@
         <!-- Step Navigation -->
         <ul class="nav nav-tabs mb-4">
           <li class="nav-item">
-            <a href="passportPage.html" class="nav-link" style="background-color:#005f99; color: white;">Passport Page
+            <a href="./passportPage.php" class="nav-link" style="background-color:#005f99; color: white;">Passport Page
               No.</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="summary.html" style="color: #005f99;">Summary</a>
+            <a class="nav-link" href="./summary.php" style="color: #005f99;">Summary</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="payment.html" style="color: #005f99;">Payment</a>
+            <a class="nav-link" href="./payment.php" style="color: #005f99;">Payment</a>
           </li>
         </ul>
 
@@ -97,22 +95,14 @@
   </div>
 
 
-  <!-- Placeholder for Footer -->
-  <div id="footer-placeholder"></div>
-
-  <!-- Script to include header and footer -->
-  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
-  </script>
-
-  <!-- Bootstrap Bundle JS (includes Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <?php include __DIR__ . '/../../../../../../Front/footer.html' ?>
 
   <!-- Axios   -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
   <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
       $("#uploadForm").submit(async (e) => {
         e.preventDefault();
 
@@ -131,7 +121,9 @@
         }
 
         try {
-          const response = await axios.post('http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandlerurgent.php', { pageNo: pageNo }, {
+          const response = await axios.post('http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formControllerUrgent.php', {
+            pageNo: pageNo
+          }, {
             headers: {
               'Content-Type': 'application/json' // Required for file uploads
             },
@@ -139,7 +131,7 @@
           });
 
           if (response.data.success) {
-            window.location.href = '../page5/summary.html';
+            window.location.href = '../page5/summary.php';
           } else {
             alert('Upload failed due to server validation: ' + response.data.message);
             throw new Error(response.data.message || 'Upload failed due to server validation');

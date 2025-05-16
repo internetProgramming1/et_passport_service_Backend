@@ -150,8 +150,6 @@
 
     <?php include __DIR__ . '/../../../Front/footer.html' ?>
 
-    <!-- Bootstrap Bundle JS (includes Popper.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Axios   -->
 

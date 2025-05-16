@@ -17,24 +17,27 @@
         <div class="row">
 
             <!-- Sidebar Navigation -->
-            <aside class="col-md-3 mb-4 shadow-sm h-100">
+            <aside class="col-lg-3 mb-4 shadow-sm h-100">
                 <ul class="list-group">
                     <a href="../page1.php" class="text-decoration-none">
                         <li class="list-group-item list-group-item-action">Request Appointment</li>
                     </a>
-                    <a href="../urgency.php" class="text-decoration-none">
+                    <a href="urgency.php" class="text-decoration-none">
                         <li class="list-group-item list-group-item-action">Urgency Type</li>
+                    </a>
+                    <a href="./serviceType.php" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action">Service Type</li>
                     </a>
                     <a href="../page2.php" class="text-decoration-none">
                         <li class="list-group-item list-group-item-action">Site
                             Selection</li>
                     </a>
                     <a href="../page3.php" class="text-decoration-none">
-                        <li class="list-group-item list-group-item-action">Date and Time</li>
+                        <li class="list-group-item list-group-item-action">Date and
+                            Time</li>
                     </a>
-                    <a href="../Page4/personalinfo.php" class="text-decoration-none">
-                        <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal
-                            Information</li>
+                    <a href="./passInfo.php" class="text-decoration-none">
+                        <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal Information</li>
                     </a>
                     <a href="../Page5/pasportpage.php" class="text-decoration-none">
                         <li class="list-group-item list-group-item-action">Payment</li>
@@ -87,14 +90,24 @@
                             <input type="date" class="form-control" id="expiryDate" required>
                         </div>
 
-                        <div class="mb-3 col-md-6">
+                        <!-- Correction Checkbox and Conditional Field -->
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="correction" name="hasCorrection">
+                                <label class="form-check-label" style="color: #005f99;" for="correction">
+                                    Does your old passport have a correction?
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- This div will only show when checkbox is checked -->
+                        <div id="correctionFields" class="mb-3 col-md-6" style="display: none;">
                             <label for="correctionType" class="form-label">Correction Type*</label>
-                            <select class="form-select" id="correctionType" required>
-                                <option disabled value="">Select correction type</option>
-                                <option value="name">Name Correction</option>
-                                <option value="dob">Date of Birth Correction</option>
-                                <option value="gender">Gender Correction</option>
-                                <!-- Add more options as needed -->
+                            <select class="form-select" id="correctionType" name="correctionType" required>
+                                <option disabled selected value="">Select correction type</option>
+                                <option value="Name">Name Correction</option>
+                                <option value="Date of Birth">Date of Birth Correction</option>
+                                <option value="Gender">Gender Correction</option>
                             </select>
                         </div>
 
@@ -115,52 +128,64 @@
 
 
     <script>
-        $("#passportForm").submit(async (e) => {
+        // Show/hide correction fields based on checkbox
+        document.getElementById('correction').addEventListener('change', function() {
+            const correctionFields = document.getElementById('correctionFields');
+            correctionFields.style.display = this.checked ? 'block' : 'none';
+
+            // Make correction type required only if checkbox is checked
+            document.getElementById('correctionType').required = this.checked;
+        });
+
+        // Form submission
+        document.getElementById("passportForm").addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const passportData = {
-                old_passport_number: e.target.elements.oldPassportNumber.value,
-                old_issue_date: e.target.elements.issueDate.value,
-                old_expiry_date: e.target.elements.expiryDate.value,
-                correction_type: e.target.elements.correctionType.value
+            const form = e.target;
+            const formData = {
+                old_passport_number: form.elements.oldPassportNumber.value,
+                old_issue_date: form.elements.issueDate.value,
+                old_expiry_date: form.elements.expiryDate.value,
+                has_correction: form.elements.hasCorrection.checked,
+                correction_type: form.elements.hasCorrection.checked ? form.elements.correctionType.value : null
             };
 
-            // Required fields to validate
-            const requiredFields = ['old_issue_date', 'old_expiry_date', 'correction_type', 'correction_type'];
-            let isFormValid = true;
-
-            requiredFields.forEach(field => {
-                if (!passportData[field]) {
-                    isFormValid = false;
-                }
-            });
-
-            if (!isFormValid) {
-                // Show alert if required fields are empty
-                $('#errorAlert')
-                    .removeClass("d-none")
-                    .text("Please fill out all required fields before submitting.");
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+            // Validate required fields
+            const requiredFields = ['old_passport_number', 'old_issue_date', 'old_expiry_date'];
+            if (formData.has_correction && !formData.correction_type) {
+                showError("Please select a correction type");
                 return;
             }
 
             try {
-                await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/passportInfoController.php", passportData, {
-                    headers: {
-                        'Content-Type': 'application/json'
+                const response = await axios.post(
+                    "http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formControllerUrgent.php",
+                    formData, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
                     }
-                });
-                window.location.href = "attachment.php";
+                );
+
+                if (response.data.success) {
+                    window.location.href = "attachment.php";
+                } else {
+                    showError(response.data.message || "Submission failed");
+                }
             } catch (error) {
-                const message = error.response?.data?.message || "Failed to submit passport info. Please try again.";
-                $('#errorAlert')
-                    .removeClass("d-none")
-                    .html(`<strong>Submission Failed:</strong> ${message}`);
+                showError(error.response?.data?.message || "Network error. Please try again.");
             }
         });
+
+        function showError(message) {
+            const errorAlert = document.getElementById('errorAlert');
+            errorAlert.textContent = message;
+            errorAlert.classList.remove('d-none');
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
     </script>
 
 

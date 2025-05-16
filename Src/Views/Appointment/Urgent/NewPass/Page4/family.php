@@ -10,8 +10,7 @@
 
 <body>
 
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <?php include __DIR__ . '/../../../../../../Front/header.html' ?>
 
   <!-- Main content -->
   <div class="container-fluid my-5 py-1">
@@ -20,24 +19,21 @@
       <!-- Sidebar Navigation -->
       <aside class="col-md-3 mb-4 shadow-sm h-100">
         <ul class="list-group">
-          <a href="../page1.html" class="text-decoration-none">
+          <a href="../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="urgency.html" class="text-decoration-none">
+          <a href="../urgency.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Urgency Type</li>
           </a>
-          <a href="page2.html" class="text-decoration-none">
+          <a href="../page2.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Site
               Selection</li>
           </a>
-          <a href="page3.html" class="text-decoration-none">
+          <a href="../page3.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Date and Time</li>
           </a>
-          <a href="Page4/personalinfo.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal
-              Information</li>
-          </a>
-          <a href="Page5/pasportpage.html" class="text-decoration-none">
+
+          <a href="../Page5/pasportpage.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
@@ -49,16 +45,17 @@
         <!-- Navigation Pills -->
         <ul class="nav nav-tabs mb-4">
           <li class="nav-item">
-            <a class="nav-link" style="color: #005f99;" href="personalInfo.html">Personal Info.</a>
+            <a class="nav-link" style="color: #005f99;" href="./personalinfo.php">Personal Info.</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" style="color: #005f99;" href="address.html">Address</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" style="background-color: #005f99; color: white;" href="familiy.html">Family</a>
+            <a class="nav-link active" style="background-color: #005f99; color: white;" href="./family.php">Family</a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" style="color: #005f99;" href="attachment.html">Attachments</a>
+            <a class="nav-link" style="color: #005f99;" href="./attachment.php">Attachments</a>
           </li>
         </ul>
 
@@ -135,22 +132,15 @@
     </div>
   </div>
 
-  <!-- Placeholder for Footer -->
-  <div id="footer-placeholder"></div>
+  <?php include __DIR__ . '/../../../../../../Front/footer.html' ?>
 
-  <!-- Script to include header and footer -->
-  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
-  </script>
-
-  <!-- Bootstrap Bundle JS (includes Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script>
-    $(document).ready(function () {
-      $('#familyInfoForm').on('submit', async function (e) {
+    $(document).ready(function() {
+      $('#familyInfoForm').on('submit', async function(e) {
         e.preventDefault();
 
         const form = this; // The form element
@@ -180,7 +170,10 @@
         if (!isValid) {
           errorAlert.textContent = "Please fill all required fields marked with *";
           errorAlert.classList.remove('d-none');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
           return;
         }
 
@@ -199,7 +192,7 @@
           };
 
           // Send data to server
-          const response = await axios.post('http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandlerurgent.php', familyInfo, {
+          const response = await axios.post('http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formControllerUrgent.php', familyInfo, {
             headers: {
               'Content-Type': 'application/json'
             },
@@ -207,7 +200,7 @@
           });
 
           if (response.data.success) {
-            window.location.href = "attachment.html";
+            window.location.href = "attachment.php"; // Redirect to the next page
           } else {
             throw new Error(response.data.message || 'Form submission failed');
           }
@@ -218,7 +211,10 @@
             'An error occurred while submitting the form.';
           errorAlert.innerHTML = `<strong>Error!</strong> ${errorMessage}`;
           errorAlert.classList.remove('d-none');
-          errorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          errorAlert.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
         }
       });
 

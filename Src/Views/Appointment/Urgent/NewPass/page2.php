@@ -6,20 +6,20 @@
   <title>Site Selection</title>
   <style>
 
-
   </style>
 </head>
 
 <body>
 
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <!-- Load header -->
+
+  <?php include __DIR__ . '/../../../../../Front/Header.html'; ?>
 
   <!-- Main content -->
   <div class="container-fluid py-4 my-5">
     <div class="row">
       <!-- Sidebar Navigation -->
-      <aside class="col-md-3 mb-4 shadow-sm h-100">
+      <aside class="col-lg-3 mb-4 shadow-sm h-100">
         <ul class="list-group">
           <a href="../page1.html" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
@@ -44,7 +44,7 @@
       </aside>
 
       <!-- Main content area with form and preview -->
-      <main class="col-md-9">
+      <main class="col-lg-9">
         <div class="row">
           <!-- Form Area -->
           <div class="col-md-8 mb-4 ">
@@ -95,7 +95,7 @@
           </div>
 
           <!-- Site Preview Area -->
-          <div class="col-md-4 ">
+          <div class="col-lg-4 ">
             <div class="card bg-light p-3 h-auto shadow-sm">
               <h5 class="mb-3">Site Preview</h5>
               <p><strong>Site:</strong> <span id="preview-site">-</span></p>
@@ -110,13 +110,9 @@
   </div>
 
 
-  <!-- Placeholder for Footer -->
-  <div id="footer-placeholder"></div>
+  <?php include __DIR__ . '/../../../../../Front/footer.html' ?>
 
-  <!-- Script to include header and footer -->
-  <script src="../../../Head_Foot/script.js">
-  </script>
-
+  =
   <!-- Bootstrap Bundle JS (includes Popper.js) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -165,13 +161,13 @@
           delivery: form.elements.delivery.value
         };
 
-        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandlerUrgent.php", siteData, {
+        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formControllerUrgent.php", siteData, {
           headers: {
             'Content-Type': 'application/json'
           },
           withCredentials: true
         });
-        window.location.href = "page3.html";
+        window.location.href = "page3.php";
       } catch (error) {
         errorAlert.textContent = "Error saving data. Please try again.";
         errorAlert.classList.remove('d-none');

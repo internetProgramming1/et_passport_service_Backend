@@ -37,10 +37,10 @@
               Time</li>
           </a>
           <a href="../Page4/personalinfo.php" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal Information</li>
+            <li class="list-group-item list-group-item-action">Personal Information</li>
           </a>
           <a href="./passportPage.php" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action">Payment</li>
+            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Payment</li>
           </a>
         </ul>
       </aside>

@@ -82,14 +82,14 @@
               <form method="POST" enctype="multipart/form-data" id="uploadForm">
 
                 <div class="mb-3">
-                  <label for="birth_certificate_front" class="form-label">Upload Birth Certificate Front*</label>
-                  <input type="file" class="form-control" id="birth_certificate_front" name="birth_certificate_front"
+                  <label for="old_Passport" class="form-label">Upload Old Passport*</label>
+                  <input type="file" class="form-control" id="old_Passport" name="old_Passport"
                     accept=".pdf,.jpeg,.png" required>
                 </div>
                 <br>
                 <div class="mb-3">
-                  <label for="birth_certificate_back" class="form-label">Upload Birth Certificate Back*</label>
-                  <input type="file" class="form-control" id="birth_certificate_back" name="birth_certificate_back"
+                  <label for="photo" class="form-label">Upload Passport Size Photo*</label>
+                  <input type="file" class="form-control" id="photo" name="photo"
                     accept=".pdf,.jpeg,.png" required>
                 </div>
                 <br>
@@ -151,8 +151,8 @@
 
       const formData = new FormData();
 
-      formData.append('birth_certificate_front', $('#birth_certificate_front')[0].files[0]);
-      formData.append('birth_certificate_back', $('#birth_certificate_back')[0].files[0]);
+      formData.append('old_Passport', $('#old_Passport')[0].files[0]);
+      formData.append('photo', $('#photo')[0].files[0]);
       formData.append('id_front', $('#id_front')[0].files[0]);
       formData.append('id_back', $('#id_back')[0].files[0]);
 

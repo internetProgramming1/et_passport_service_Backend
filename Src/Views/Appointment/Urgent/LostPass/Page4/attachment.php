@@ -22,26 +22,27 @@
     <div class="row">
 
       <!-- Sidebar Navigation -->
-      <aside class="col-md-3 mb-4 shadow-sm h-100">
+      <aside class="col-lg-3 mb-4 shadow-sm h-100">
         <ul class="list-group">
           <a href="../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="../urgency.php" class="text-decoration-none">
+          <a href="urgency.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Urgency Type</li>
           </a>
+
           <a href="../page2.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Site
               Selection</li>
           </a>
           <a href="../page3.php" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action">Date and Time</li>
+            <li class="list-group-item list-group-item-action">Date and
+              Time</li>
           </a>
-          <a href="../Page4/personalinfo.php" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal
-              Information</li>
+          <a href="./personalinfo.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal Information</li>
           </a>
-          <a href="../Page5/pasportpage.php" class="text-decoration-none">
+          <a href="../Page5/passportPage.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
@@ -79,15 +80,20 @@
               <form method="POST" enctype="multipart/form-data" id="uploadForm">
 
                 <div class="mb-3">
-                  <label for="birth_certificate_front" class="form-label">Upload Birth Certificate Front*</label>
-                  <input type="file" class="form-control" id="birth_certificate_front" name="birth_certificate_front"
+                  <label for="old_Passport" class="form-label">Upload Old Passport*</label>
+                  <input type="file" class="form-control" id="old_Passport" name="old_Passport"
                     accept=".pdf,.jpeg,.png" required>
                 </div>
                 <br>
                 <div class="mb-3">
-                  <label for="birth_certificate_back" class="form-label">Upload Birth Certificate Back*</label>
-                  <input type="file" class="form-control" id="birth_certificate_back" name="birth_certificate_back"
+                  <label for="photo" class="form-label">Upload Passport Size Photo*</label>
+                  <input type="file" class="form-control" id="photo" name="photo"
                     accept=".pdf,.jpeg,.png" required>
+                </div>
+                <br>
+                <div class="mb-3">
+                  <label for="police" class="form-label">Police Assurance Paper For you Lost*</label>
+                  <input type="file" class="form-control" id="police" name="police" accept=".png,.jpeg,.png" required>
                 </div>
                 <br>
                 <div class="mb-3">
@@ -100,6 +106,7 @@
                   <label for="id_back" class="form-label">Upload ID Back*</label>
                   <input type="file" class="form-control" id="id_back" name="id_back" accept=".png,.jpeg,.pdf" required>
                 </div>
+                <br>
                 <!-- Next Button -->
                 <div class="col-12 mt-3">
                   <button type="submit" class="btn btn-outline-primary btn-sm">Next</button>
@@ -108,7 +115,7 @@
             </form>
           </div>
           <!-- Notes Section -->
-          <div class="col-lg-4 h-100">
+          <div class="col-lg-4 h-100 mt-3">
             <div class="alert alert-info h-100">
               <h5>Note Info:</h5>
               <ul class="mb-0">
@@ -148,8 +155,9 @@
 
       const formData = new FormData();
 
-      formData.append('birth_certificate_front', $('#birth_certificate_front')[0].files[0]);
-      formData.append('birth_certificate_back', $('#birth_certificate_back')[0].files[0]);
+      formData.append('old_Passport', $('#old_Passport')[0].files[0]);
+      formData.append('photo', $('#photo')[0].files[0]);
+      formData.append('police', $('#police')[0].files[0]);
       formData.append('id_front', $('#id_front')[0].files[0]);
       formData.append('id_back', $('#id_back')[0].files[0]);
 

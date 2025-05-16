@@ -10,8 +10,8 @@
 
 <body>
 
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <?php include __DIR__ . '/../../../../../../Front/header.html' ?>
+
 
   <!-- Main content -->
   <div class="container-fluid my-5 py-1">
@@ -20,24 +20,24 @@
       <!-- Sidebar Navigation -->
       <aside class="col-md-3 mb-4 shadow-sm h-100">
         <ul class="list-group">
-          <a href="../page1.html" class="text-decoration-none">
+          <a href="../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="urgency.html" class="text-decoration-none">
+          <a href="../urgency.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Urgency Type</li>
           </a>
-          <a href="page2.html" class="text-decoration-none">
+          <a href="../page2.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Site
               Selection</li>
           </a>
-          <a href="page3.html" class="text-decoration-none">
+          <a href="../page3.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Date and Time</li>
           </a>
-          <a href="Page4/personalinfo.html" class="text-decoration-none">
+          <a href="../Page4/personalinfo.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal
               Information</li>
           </a>
-          <a href="Page5/pasportpage.html" class="text-decoration-none">
+          <a href="../Page5/pasportpage.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
@@ -49,16 +49,17 @@
         <!-- Navigation tabs -->
         <ul class="nav nav-tabs mb-4">
           <li class="nav-item">
-            <a class="nav-link" href="personalInfo.html" style="color: #005f99;">Personal Info.</a>
+            <a class="nav-link" href="./personalinfo.php" style="color: #005f99;">Personal Info.</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="address.html" style="background-color:#005f99; color: white; ">Address</a>
+            <a class="nav-link active" href="./address.php" style="background-color:#005f99; color: white; ">Address</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="family.html" style="color: #005f99;">Family</a>
+            <a class="nav-link" href="./family.php" style="color: #005f99;">Family</a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="attachment.html" style="color: #005f99;">Attachments</a>
+            <a class="nav-link" href="attachment.php" style="color: #005f99;">Attachments</a>
           </li>
         </ul>
 
@@ -74,17 +75,17 @@
               <label for="region" class="form-label">Region*</label>
               <select id="region" name="region" class="form-select" required>
                 <option value="" disabled selected>Select your region</option>
-                <option value="addis_ababa">Addis Ababa</option>
-                <option value="afar">Afar</option>
-                <option value="amhara">Amhara</option>
-                <option value="benishangul_gumuz">Benishangul-Gumuz</option>
-                <option value="dire_dawa">Dire Dawa</option>
-                <option value="gambela">Gambela</option>
-                <option value="harari">Harari</option>
-                <option value="oromia">Oromia</option>
-                <option value="sidama">Sidama</option>
-                <option value="somali">Somali</option>
-                <option value="southern_nations">Southern Nations, Nationalities, and Peoples</option>
+                <option value="Addis Ababa">Addis Ababa</option>
+                <option value="Afar">Afar</option>
+                <option value="Amhara">Amhara</option>
+                <option value="Benishangul Gumuz">Benishangul-Gumuz</option>
+                <option value="Dire Dawa">Dire Dawa</option>
+                <option value="Gambela">Gambela</option>
+                <option value="Harari">Harari</option>
+                <option value="Oromia">Oromia</option>
+                <option value="Sidama">Sidama</option>
+                <option value="Somali">Somali</option>
+                <option value="Southern Nations">Southern Nations, Nationalities, and Peoples</option>
                 <option value="tigray">Tigray</option>
               </select>
             </div>
@@ -135,18 +136,11 @@
     </div>
   </div>
 
-  <!-- Placeholder for Footer -->
-  <div id="footer-placeholder"></div>
-
-  <!-- Script to include header and footer -->
-  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
-  </script>
+  <?php include __DIR__ . '/../../../../../../Front/footer.html' ?>
 
   <!-- script to axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <!-- Bootstrap Bundle JS (includes Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 
   <script>
@@ -180,18 +174,21 @@
           .attr('role', 'alert')
           .text('Please fill out all required fields before submitting.')
           .appendTo('#alertContainer');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
         return; // Prevent submission if not all required fields are filled
       }
 
       try {
-        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandlerUrgent.php", addressData, {
+        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formControllerUrgent.php", addressData, {
           headers: {
             'Content-Type': 'application/json'
           }
         });
         // Redirect to the next page after successful submission
-        window.location.href = "family.html";
+        window.location.href = "family.php";
       } catch (error) {
         const message = error.response?.data?.message || "Failed to submit address info. Please try again.";
         $('<div>')
