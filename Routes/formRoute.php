@@ -8,12 +8,15 @@ switch ($request) {
         include __DIR__ . '/../Src/Views/Appointment/choose.php';
         break;
 
-    case '/normal/page1':
+    case '/standard/page1':
         include __DIR__ . '/../Src/Views/Appointment/Normal/page1.php';
         break;
 
     case '/normal/page2':
         include __DIR__ . '/../Src/Views/Appointment/Normal/page2.php';
+        break;
+    case '/normal/page2':
+        include __DIR__ . '/../Src/Views/Appointment/Normal/page3.php';
         break;
 
     case '/urgent/page1':

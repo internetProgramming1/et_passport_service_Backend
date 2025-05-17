@@ -133,7 +133,7 @@
                     <section>
                         <h4>Appointment Schedule</h4>
                         <button class="button" id="normbtn" type="button" value="standard"
-                            onclick="checkAgreement('standard/page1',this)">Start</button>
+                            onclick="checkAgreement('standard/chooseCategory',this)">Start</button>
                     </section>
 
                     <section>
