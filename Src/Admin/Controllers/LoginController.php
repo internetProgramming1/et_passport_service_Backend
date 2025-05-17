@@ -1,78 +1,51 @@
 <?php
 namespace Admin\Controllers;
 
-use PDO;
+use Admin\Models\Admin;
 
 class LoginController
 {
     public function showLoginForm()
     {
-        $error = $_SESSION['error'] ?? '';
-        unset($_SESSION['error']);
-        include __DIR__ . '/../../../../views/login.php';
+        // Check if already logged in
+        if (!empty($_SESSION['admin_id'])) {
+            $this->redirect('/admin/dashboard');
+        }
+        
+        include __DIR__ . '/../../Views/auth/login.php';
     }
 
     public function login()
     {
-        session_start();
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirect('/admin/login');
+        }
 
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
-        $loginAs = $_POST['login_as'] ?? '';
 
-        if (!$username || !$password || !$loginAs) {
-            $_SESSION['error'] = "Please fill all fields.";
-            header('Location: /admin/login');
-            exit;
-        }
+        $admin = Admin::authenticate($username, $password);
 
-        // Connect to DB (use your DatabaseConfig class or PDO directly)
-        $pdo = \DatabaseConfig::getDatabaseConnection();
-
-        if ($loginAs === 'admin') {
-            $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = ?");
-            $stmt->execute([$username]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['admin_id'] = $user['admin_id'];
-                $_SESSION['admin_username'] = $user['username'];
-                header('Location: /admin/dashboard');
-                exit;
-            } else {
-                $_SESSION['error'] = "Invalid admin username or password.";
-                header('Location: /admin/login');
-                exit;
-            }
-
-        } elseif ($loginAs === 'customer') {
-            $stmt = $pdo->prepare("SELECT * FROM customers WHERE username = ?");
-            $stmt->execute([$username]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['customer_id'] = $user['id'];
-                $_SESSION['customer_username'] = $user['username'];
-                header('Location: /customer/dashboard');
-                exit;
-            } else {
-                $_SESSION['error'] = "Invalid customer username or password.";
-                header('Location: /admin/login');
-                exit;
-            }
-
+        if ($admin) {
+            $_SESSION['admin_id'] = $admin['id'];
+            $_SESSION['admin_type'] = $admin['type'];
+            $this->redirect('/admin/dashboard');
         } else {
-            $_SESSION['error'] = "Invalid login type selected.";
-            header('Location: /admin/login');
-            exit;
+            $error = "Invalid username or password";
+            include __DIR__ . '/../../Views/auth/login.php';
         }
     }
 
     public function logout()
     {
-        session_start();
         session_destroy();
-        header('Location: /admin/login');
+        $this->redirect('/admin/login');
+    }
+
+    private function redirect($path)
+    {
+        $base = '/project/et_passport_service_Backend/Public';
+        header("Location: $base$path");
         exit;
     }
 }

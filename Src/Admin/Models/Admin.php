@@ -1,33 +1,25 @@
 <?php
 namespace Admin\Models;
 
-use PDO;
-use Exception;
-
 class Admin
 {
-    private $pdo;
-
-    public function __construct()
+    public static function authenticate($username, $password)
     {
-        // Use your DatabaseConfig class to get PDO connection
-        $this->pdo = \DatabaseConfig::getDatabaseConnection();
-    }
+        // Temporary hardcoded admin - replace with database later
+        $admins = [
+            'admin' => [
+                'id' => 1,
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'type' => 'super'
+            ]
+        ];
 
-    /**
-     * Get admin record by username
-     *
-     * @param string $username
-     * @return array|null
-     */
-    public function getAdminByUsername(string $username): ?array
-    {
-        $sql = "SELECT * FROM admins WHERE username = :username LIMIT 1";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['username' => $username]);
+        if (isset($admins[$username])) {
+            if (password_verify($password, $admins[$username]['password'])) {
+                return $admins[$username];
+            }
+        }
 
-        $admin = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $admin ?: null;
+        return false;
     }
 }
