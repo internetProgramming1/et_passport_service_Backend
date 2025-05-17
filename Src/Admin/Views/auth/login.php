@@ -1,4 +1,8 @@
-<?php include ROOT_PATH . '/FrontEnd/Head_Foot/header.html'; ?>
+<?php
+// login.php
+
+include __DIR__ . '/../../../../FrontEnd/Head_Foot/header.html';
+?>
 
 <main>
     <h1>Admin Login</h1>
@@ -17,4 +21,6 @@
     <?php endif; ?>
 </main>
 
-<?php include ROOT_PATH . '/FrontEnd/Head_Foot/footer.html'; ?>
+<?php
+include __DIR__ . '/../../../../FrontEnd/Head_Foot/footer.html';
+?>
