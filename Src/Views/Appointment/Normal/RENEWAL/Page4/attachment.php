@@ -15,30 +15,33 @@
 
 <body>
 
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <?php include __DIR__ . '/../../../../../../Front/header.html' ?>
 
   <!-- Main content -->
   <div class="container-fluid my-5 py-1S">
     <div class="row">
 
-      <!-- Sidebar -->
-      <aside class="col-md-3 mb-4 shadow-sm h-100">
-        <ul class="list-group shadow-sm">
-          <a href="../../page1.html" class="text-decoration-none">
+      <!-- Sidebar Navigation -->
+      <aside class="col-lg-3 mb-4 shadow-sm h-100">
+        <ul class="list-group">
+          <a href="../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="../page2.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action">Site Selection</li>
+          <a href="./serviceType.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Service Type</li>
           </a>
-          <a href="../page3.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action">Date and Time</li>
+          <a href="../page2.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Site
+              Selection</li>
           </a>
-          <a href="../Page4/personalinfo.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action active"
-              style="background-color: #005f99; color: #eaf4f9;">Personal Information</li>
+          <a href="../page3.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Date and
+              Time</li>
           </a>
-          <a href="../Page5/passportPage.html" class="text-decoration-none">
+          <a href="./personalinfo.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal Information</li>
+          </a>
+          <a href="../Page5/passportPage.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
@@ -49,19 +52,22 @@
         <!-- Step Navigation -->
         <ul class="nav nav-tabs mb-4">
           <li class="nav-item">
-            <a class="nav-link" href="personalInfo.html" style="color: #005f99;">Personal Info.</a>
+            <a class="nav-link" href="./personalinfo.php" style="color: #005f99;">Personal Info.</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="address.html" style="color: #005f99;">Address</a>
+            <a class="nav-link " href="./address.php" style="color: #005f99;">Address</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="family.html" style="color: #005f99;">Family</a>
+            <a class="nav-link" href="./family.php" style="color: #005f99;">Family</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="attachment.html"
-              style="background-color:#005f99; color: white;">Attachments</a>
+            <a class="nav-link" href="./passInfo.php" style="color: #005f99;">Passport Info</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="attachment.php" style="background-color:#005f99; color: white;">Attachments</a>
           </li>
         </ul>
+
         <div class="row"><!-- Form & Notes Card -->
           <div class="col-lg-8">
 
@@ -73,14 +79,14 @@
               <form method="POST" enctype="multipart/form-data" id="uploadForm">
 
                 <div class="mb-3">
-                  <label for="birth_certificate_front" class="form-label">Upload Birth Certificate Front*</label>
-                  <input type="file" class="form-control" id="birth_certificate_front" name="birth_certificate_front"
+                  <label for="old_Passport" class="form-label">Upload Old Passport*</label>
+                  <input type="file" class="form-control" id="old_Passport" name="old_Passport"
                     accept=".pdf,.jpeg,.png" required>
                 </div>
                 <br>
                 <div class="mb-3">
-                  <label for="birth_certificate_back" class="form-label">Upload Birth Certificate Back*</label>
-                  <input type="file" class="form-control" id="birth_certificate_back" name="birth_certificate_back"
+                  <label for="photo" class="form-label">Upload Passport Size Photo*</label>
+                  <input type="file" class="form-control" id="photo" name="photo"
                     accept=".pdf,.jpeg,.png" required>
                 </div>
                 <br>
@@ -101,7 +107,6 @@
             </div>
             </form>
           </div>
-          <br>
           <!-- Notes Section -->
           <div class="col-lg-4 h-100 mt-3">
             <div class="alert alert-info h-100">
@@ -123,16 +128,8 @@
   </div>
 
 
+  <?php include __DIR__ . '/../../../../../../Front/footer.html' ?>
 
-  <!-- Placeholder for Footer -->
-  <div id="footer-placeholder"></div>
-
-  <!-- Script to include header and footer -->
-  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
-  </script>
-
-  <!-- Bootstrap Bundle JS (includes Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Axios   -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -151,23 +148,23 @@
 
       const formData = new FormData();
 
-      formData.append('birth_certificate_front', $('#birth_certificate_front')[0].files[0]);
-      formData.append('birth_certificate_back', $('#birth_certificate_back')[0].files[0]);
+      formData.append('old_Passport', $('#old_Passport')[0].files[0]);
+      formData.append('photo', $('#photo')[0].files[0]);
       formData.append('id_front', $('#id_front')[0].files[0]);
       formData.append('id_back', $('#id_back')[0].files[0]);
 
       try {
         const response = await axios.post(
-          'http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php',
+          'http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formControllerUrgent.php',
           formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data' // Required for file uploads
-          },
-          withCredentials: true // Required for sessions
-        });
+            headers: {
+              'Content-Type': 'multipart/form-data' // Required for file uploads
+            },
+            withCredentials: true // Required for sessions
+          });
 
         if (response.data.success) {
-          window.location.href = '../page5/passportPage.html';
+          window.location.href = '../page5/passportPage.php';
         } else {
           throw new Error(response.data.message || 'Upload failed due to server validation');
         }
@@ -178,7 +175,10 @@
             <strong>Error!</strong> ${error.response?.data?.message || error.message || 'An error occurred during upload.'}
           `;
           errorAlert.classList.remove('d-none');
-          errorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          errorAlert.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
         }
       }
     });

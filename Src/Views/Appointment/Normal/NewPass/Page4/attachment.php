@@ -15,8 +15,7 @@
 
 <body>
 
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <?php include __DIR__ . '/../../../../../../Front/Header.html' ?>
 
   <!-- Main content -->
   <div class="container-fluid my-5 py-1S">
@@ -25,20 +24,20 @@
       <!-- Sidebar -->
       <aside class="col-md-3 mb-4 shadow-sm h-100">
         <ul class="list-group shadow-sm">
-          <a href="../../page1.html" class="text-decoration-none">
+          <a href="../../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="../page2.html" class="text-decoration-none">
+          <a href="../page2.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Site Selection</li>
           </a>
-          <a href="../page3.html" class="text-decoration-none">
+          <a href="../page3.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Date and Time</li>
           </a>
-          <a href="../Page4/personalinfo.html" class="text-decoration-none">
+          <a href="../Page4/personalinfo.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action active"
               style="background-color: #005f99; color: #eaf4f9;">Personal Information</li>
           </a>
-          <a href="../Page5/passportPage.html" class="text-decoration-none">
+          <a href="../Page5/passportPage.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
@@ -49,16 +48,16 @@
         <!-- Step Navigation -->
         <ul class="nav nav-tabs mb-4">
           <li class="nav-item">
-            <a class="nav-link" href="personalInfo.html" style="color: #005f99;">Personal Info.</a>
+            <a class="nav-link" href="personalInfo.php" style="color: #005f99;">Personal Info.</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="address.html" style="color: #005f99;">Address</a>
+            <a class="nav-link" href="address.php" style="color: #005f99;">Address</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="family.html" style="color: #005f99;">Family</a>
+            <a class="nav-link" href="family.php" style="color: #005f99;">Family</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="attachment.html"
+            <a class="nav-link active" href="attachment.php"
               style="background-color:#005f99; color: white;">Attachments</a>
           </li>
         </ul>
@@ -123,16 +122,7 @@
   </div>
 
 
-
-  <!-- Placeholder for Footer -->
-  <div id="footer-placeholder"></div>
-
-  <!-- Script to include header and footer -->
-  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
-  </script>
-
-  <!-- Bootstrap Bundle JS (includes Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <?php include __DIR__ . '/../../../../../../Front/Footer.html' ?>
 
   <!-- Axios   -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -158,16 +148,16 @@
 
       try {
         const response = await axios.post(
-          'http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php',
+          'http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php',
           formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data' // Required for file uploads
-          },
-          withCredentials: true // Required for sessions
-        });
+            headers: {
+              'Content-Type': 'multipart/form-data' // Required for file uploads
+            },
+            withCredentials: true // Required for sessions
+          });
 
         if (response.data.success) {
-          window.location.href = '../page5/passportPage.html';
+          window.location.href = '../page5/passportPage.php';
         } else {
           throw new Error(response.data.message || 'Upload failed due to server validation');
         }
@@ -178,7 +168,10 @@
             <strong>Error!</strong> ${error.response?.data?.message || error.message || 'An error occurred during upload.'}
           `;
           errorAlert.classList.remove('d-none');
-          errorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          errorAlert.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
         }
       }
     });

@@ -9,29 +9,35 @@
 
 <body>
 
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <!-- Load header -->
+
+
+  <?php include __DIR__ . '/../../../../../../Front/header.html' ?>
 
   <!-- Main content -->
   <div class="container-fluid py-1 my-5">
     <div class="row">
       <!-- Sidebar Navigation -->
-      <aside class="col-lg-3 mb-4 shadow-sm h-100">
+      <aside class="col-md-3 mb-4 shadow-sm h-100">
         <ul class="list-group">
-          <a href="../../page1.html" class="text-decoration-none">
+          <a href="../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="../page2.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action">Site Selection</li>
+          <a href="../serviceType.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Service Type</li>
           </a>
-          <a href="../page3.html" class="text-decoration-none">
+          <a href="../page2.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Site
+              Selection</li>
+          </a>
+          <a href="../page3.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Date and Time</li>
           </a>
-          <a href="personalInfo.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action active"
-              style="background-color: #005f99; color: #eaf4f9;">Personal Information</li>
+          <a href="../Page4/personalinfo.php" class="text-decoration-none">
+            <li class="list-group-item" style="color: white; background-color: #005f99;">Personal
+              Information</li>
           </a>
-          <a href="../Page5/passportPage.html" class="text-decoration-none">
+          <a href="../Page5/pasportpage.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
@@ -44,16 +50,19 @@
         <ul class="nav nav-tabs mb-4">
           <li class="nav-item">
             <a class="nav-link active" style="background-color: #005f99; color: white;"
-              href="personalInfo.html">Personal Info.</a>
+              href="personalInfo.php">Personal Info.</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="address.html" style="color: #005f99;">Address</a>
+            <a class="nav-link" href="address.php" style="color: #005f99;">Address</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="family.html" style="color: #005f99;">Family</a>
+            <a class="nav-link" href="family.php" style="color: #005f99;">Family</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="attachment.html" style="color: #005f99;">Attachments</a>
+            <a class="nav-link active" href="./passInfo.php" style="color: #005f99; ">Passport Info</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="attachment.php" style="color: #005f99;">Attachments</a>
           </li>
         </ul>
 
@@ -176,15 +185,8 @@
   </div>
 
 
-  <!-- Placeholder for Footer -->
-  <div id="footer-placeholder"></div>
+  <?php include __DIR__ . '/../../../../../../Front/footer.html' ?>
 
-  <!-- Script to include header and footer -->
-  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
-  </script>
-
-  <!-- Bootstrap Bundle JS (includes Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Axios   -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -229,19 +231,22 @@
           .attr('role', 'alert')
           .text('Please fill out all required fields before submitting.')
           .appendTo('#alertContainer');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
         return;
       }
 
       try {
-        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php", personalInfo, {
+        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formcontroller.php", personalInfo, {
           headers: {
             'Content-Type': 'application/json'
           }
         });
 
         // Redirect on success
-        window.location.href = "address.html";
+        window.location.href = "address.php";
 
       } catch (error) {
         const errorMessage = error.response?.data?.message || "Error saving data. Please try again.";

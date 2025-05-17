@@ -77,7 +77,8 @@
                         <p><strong>Registration Date:</strong> <span id="regDate"></span></p>
                         <p><strong>Application Type:</strong> <span id="apptType"></span></p>
                         <p><strong>Category:</strong> <span id="category"></span></p>
-                        <p><strong>Processing Time:</strong> <span id="urgencyType"></span></p>
+                        <p><strong>Appointment Date:</strong> <span id="date"></span></p>
+                        <p><strong>Appointment Time:</strong> <span id="time"></span></p>
 
                     </div>
 
@@ -85,11 +86,6 @@
                         <h5>Location Information</h5>
                         <p><strong>Processing Office:</strong> <span id="processingOffice"></span></p>
                         <p><strong>Delivery Location:</strong> <span id="deliveryLocation"></span></p>
-                    </div>
-
-                    <div class="summary-item">
-                        <h5>Timeline</h5>
-                        <p><strong>Estimated Delivery Date:</strong> <span id="deliveryDate" class="fw-bold"></span></p>
                     </div>
 
                     <div class="summary-item">
@@ -141,7 +137,7 @@
         async function loadApplicationData() {
             try {
                 const response = await axios.get(
-                    'http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formControllerUrgent.php', {
+                    'http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php', {
                         withCredentials: true
                     }
                 );
@@ -180,15 +176,15 @@
             document.getElementById("regDate").textContent = data.Registered.registrationDate;
             document.getElementById("apptType").textContent = data.type ? data.type.charAt(0).toUpperCase() + data.type.slice(1) : 'N/A';
             document.getElementById("category").textContent = data.category || 'N/A';
-            document.getElementById("urgencyType").textContent = data.urgency === '2days' ? '2 Working Days' : '5 Working Days';
+            document.getElementById("date").textContent = data.dateTime.date || 'N/A';
+            document.getElementById("time").textContent = data.dateTime.time || 'N/A';
+
 
 
             // Location Information
             document.getElementById("processingOffice").textContent = data.siteData?.office || 'N/A';
             document.getElementById("deliveryLocation").textContent = data.siteData?.delivery || 'N/A';
 
-            // Timeline
-            document.getElementById("deliveryDate").textContent = formatDate(data.deliveryDate);
 
             // Payment Information
             document.getElementById("paymentMethod").textContent = paymentMethod;

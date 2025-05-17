@@ -22,9 +22,6 @@
           <a href="../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="./urgency.php" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action">Urgency Type</li>
-          </a>
           <a href="./serviceType.php">
             <li class="list-group-item list-group-item-action"
               style="color: white; background-color: #005f99;">Service Type</li>
@@ -119,7 +116,7 @@
         return; // Stop submission
       }
       try {
-        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formControllerUrgent.php", {
+        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php", {
           serviceType: form.elements.serviceType.value
         }, {
           headers: {
@@ -127,7 +124,7 @@
           },
           withCredentials: true
         });
-        window.location.href = "page2.html";
+        window.location.href = "page2.php";
       } catch (error) {
         errorAlert.textContent = "Error saving data. Please try again.";
         errorAlert.classList.remove('d-none');

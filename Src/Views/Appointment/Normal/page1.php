@@ -64,7 +64,7 @@
                   Print the last page which has your appointment date and time.
                 </p>
                 <button class="btn btn-outline-success mt-2" type="button" value="renewal" id="renewal"
-                  onclick="checkAgreement('#',this)">Schedule Renewal</button>
+                  onclick="checkAgreement('RENEWAL/serviceType.php',this)">Schedule Renewal</button>
 
 
               </div>
@@ -86,7 +86,7 @@
                   your appointment date and time.
                 </p>
                 <button class="btn btn-outline-danger mt-2" type="button" value="lost" id="lost"
-                  onclick="checkAgreement('#',this)">Report & Schedule</button>
+                  onclick="checkAgreement('LostPass/page2.php',this)">Report & Schedule</button>
               </div>
             </div>
           </div>
@@ -105,7 +105,7 @@
                   confirmation.
                 </p>
                 <button class="btn btn-outline-warning mt-2" type="button" value="correction" id="correction"
-                  onclick="checkAgreement('#',this)">Request Correction</button>
+                  onclick="checkAgreement('correction/page2.php',this)">Request Correction</button>
 
               </div>
             </div>
@@ -122,9 +122,6 @@
 
   <?php include __DIR__ . '/../../../../Front/footer.html' ?>
 
-
-  <!-- Bootstrap Bundle JS (includes Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Axios   -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

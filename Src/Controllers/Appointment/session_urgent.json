@@ -1,91 +1,43 @@
 {
-    "type": "urgent",
+    "type": "standard",
     "category": "renewal",
-    "urgency": "5days",
-    "serviceType": "Page Runout",
+    "serviceType": "Expire",
     "siteData": {
-        "site": "Addis Ababa",
+        "site": "Bahir Dar",
         "city": "Addis Ababa",
         "office": "ICS Main Office",
         "delivery": "ICS Main Office"
     },
-    "deliveryDate": "2025-05-23",
+    "dateTime": {
+        "date": "2025-05-24",
+        "time": "08:00AM-09:00AM"
+    },
     "personalInfo": {
-        "firstname": "Nahomi",
-        "middlename": "Abebe",
-        "lastname": "Weldeyes",
-        "phone": "0799999999",
-        "email": "na@gmail.com",
-        "gender": "Female",
-        "dob": "2022-03-18",
+        "firstname": "1",
+        "middlename": "2",
+        "lastname": "3",
+        "phone": "0900000000",
+        "email": "abebe@gmail.com",
+        "gender": "female",
+        "dob": "2025-05-10",
         "under18": "above18",
         "birthplace": "Addis Ababa",
-        "adopted": "Not Adopted",
+        "adopted": "notAdopted",
         "birth_certificate": "1234567",
-        "nationality": "Ethiopian",
-        "marital_status": "Single",
-        "occupation": "Student"
-    },
-    "addressData": {
-        "region": "Addis Ababa",
-        "city": "Addis Ababa",
-        "subcity": "Bole",
-        "woreda": "11",
-        "kebele": "Bole",
-        "house_no": "Addis",
-        "id_no": "123456"
-    },
-    "family": {
-        "mother": {
-            "first_name": "Abebech",
-            "father_name": "Gobena",
-            "grandfather_name": "Derese"
-        },
-        "father": {
-            "first_name": "Kebede",
-            "father_name": "Solomon",
-            "grandfather_name": "Solomon"
-        },
-        "spouse": {
-            "first_name": "",
-            "father_name": "",
-            "grandfather_name": ""
-        }
+        "nationality": "ethiopia",
+        "marital_status": "married",
+        "occupation": "student"
     },
     "PassportInfo": {
         "old_passport_number": "123456",
-        "old_issue_date": "2025-05-25",
+        "old_issue_date": "2025-05-30",
         "old_expiry_date": "2025-05-10",
         "has_correction": "1",
         "correction_type": "Name"
     },
-    "attachmentsSaving": {
-        "old_Passport": {
-            "name": "68284fbd427ea_instagram.png",
-            "tmp_name": "C:\\xampp\\tmp\\php4252.tmp"
-        },
-        "photo": {
-            "name": "68284fbd44b9b_choose.png",
-            "tmp_name": "C:\\xampp\\tmp\\php4263.tmp"
-        },
-        "id_front": {
-            "name": "68284fbd46501_pngegg (15).png",
-            "tmp_name": "C:\\xampp\\tmp\\php42A2.tmp"
-        },
-        "id_back": {
-            "name": "68284fbd4728f_pngegg (12).png",
-            "tmp_name": "C:\\xampp\\tmp\\php42B3.tmp"
-        }
-    },
-    "attachments": {
-        "old_Passport": "68284fbd427ea_instagram.png",
-        "photo": "68284fbd44b9b_choose.png",
-        "id_front": "68284fbd46501_pngegg (15).png",
-        "id_back": "68284fbd4728f_pngegg (12).png"
-    },
-    "pageNo": "32",
+    "pageNo": "64",
     "Registered": {
         "registrationDate": "2025-05-17",
-        "applicationNumber": "PUA9685343598"
+        "applicationNumber": "PSA4159433450"
     }
 }
