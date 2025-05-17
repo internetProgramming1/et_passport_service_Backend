@@ -387,9 +387,10 @@
                 );
 
                 if (response.data.success) {
+                    alert("Data saved correctly");
                     window.location.href = 'payment.php';
                 } else {
-                    showError(response.data.message || "Submission failed. Please try again.");
+                    showError(response.data.message);
                 }
             } catch (error) {
                 console.error("Submission error:", error);

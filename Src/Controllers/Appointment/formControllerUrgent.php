@@ -28,19 +28,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'data' => []
     ];
 
-    try {  // the input var hold any data that are send from the front end like an array 
+    try {  // the input var hold any data that are send from the front end like an array
 
         if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'multipart/form-data') !== false) {
             require 'FileUpload.php'; // Include your file upload handling code
             if (isset($_FILES['birth_certificate_front']) && isset($_FILES['birth_certificate_back']) && isset($_FILES['id_front']) && isset($_FILES['id_back'])) {
                 $file = $_FILES['birth_certificate_front'];
                 $bcf = fileProcessing($file);
+
+                $_SESSION['attachmentsSaving']['birth_certificate_front'] = [
+                    'name' => $bcf,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $file = $_FILES['birth_certificate_back'];
                 $bcb = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['birth_certificate_back'] = [
+                    'name' => $bcb,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $file = $_FILES['id_front'];
                 $idf = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['id_front'] = [
+                    'name' => $idf,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $file = $_FILES['id_back'];
                 $idb = fileProcessing($file);
+
+                $_SESSION['attachmentsSaving']['id_back'] = [
+                    'name' => $idb,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $_SESSION['attachments'] = [
                     'birth_cer_front' => $bcf,
                     'birth_cer_back' => $bcb,
@@ -54,12 +72,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_FILES['old_Passport']) && isset($_FILES['photo']) && isset($_FILES['id_front']) && isset($_FILES['id_back'])) {
                 $file = $_FILES['old_Passport'];
                 $oldP = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['old_Passport'] = [
+                    'name' => $oldP,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $file = $_FILES['photo'];
                 $photo = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['photo'] = [
+                    'name' => $photo,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $file = $_FILES['id_front'];
                 $idf = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['id_front'] = [
+                    'name' => $idf,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $file = $_FILES['id_back'];
                 $idb = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['id_back'] = [
+                    'name' => $idb,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $_SESSION['attachments'] = [
                     'old_Passport' => $oldP,
                     'photo' => $photo,
@@ -70,14 +104,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_FILES['police']) && isset($_FILES['old_Passport']) && isset($_FILES['photo']) && isset($_FILES['id_front']) && isset($_FILES['id_back'])) {
                 $file = $_FILES['police'];
                 $police = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['police'] = [
+                    'name' => $police,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $file = $_FILES['old_Passport'];
                 $oldP = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['old_Passport'] = [
+                    'name' => $oldP,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $file = $_FILES['photo'];
                 $photo = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['photo'] = [
+                    'name' => $photo,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $file = $_FILES['id_front'];
                 $idf = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['id_front'] = [
+                    'name' => $idf,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
+
                 $file = $_FILES['id_back'];
                 $idb = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['id_back'] = [
+                    'name' => $idb,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $_SESSION['attachments'] = [
                     'old_Passport' => $oldP,
                     'photo' => $photo,
@@ -221,8 +276,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (isset($data['spouse_first_name'])) {
                     $familyData['spouse'] = [
                         'first_name' => htmlspecialchars($data['spouse_first_name']),
-                        'father_name' => isset($data['spouse_father_name']) ? htmlspecialchars($data['spouse_father_name']) : null,
-                        'grandfather_name' => isset($data['spouse_grandfather_name']) ? htmlspecialchars($data['spouse_grandfather_name']) : null
+                        'father_name' => htmlspecialchars($data['spouse_father_name']),
+                        'grandfather_name' => htmlspecialchars($data['spouse_grandfather_name'])
                     ];
                 }
 
@@ -260,11 +315,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'registrationDate' => htmlspecialchars($data['registrationDate']),
                     'applicationNumber' => htmlspecialchars($data['applicationNumber'])
                 ];
-                $response = [
-                    'success' => true,
-                    'message' => 'Registered successfully',
-                    'data' => $_SESSION['Registered']
-                ];
+                require_once __DIR__ . '/../../Models/saveToDbU.php';
+                $saved = false;
+                switch ($_SESSION['category']) {
+                    case 'new':
+                        $saved = saveUrgentNewApplication($_SESSION);
+                        break;
+                    case 'lost':
+                        $saved = saveUrgentLostApplication($_SESSION);
+                        break;
+                    case 'renewal':
+                        $saved = saveUrgentRenewalApplication($_SESSION);
+                        break;
+                    case 'correction':
+                        $saved = saveUrgentCorrectionApplication($_SESSION);
+                        break;
+                }
+                if ($saved == false) {
+                    $response = [
+                        'success' => false,
+                        'message' => 'Registration Failed',
+                    ];
+                } else {
+                    $response = [
+                        'success' => true,
+                        'message' => 'Registered successfully',
+                        'data' => $_SESSION['Registered']
+                    ];
+                }
             } else {
                 throw new Exception("Unrecognized form data");
             }
