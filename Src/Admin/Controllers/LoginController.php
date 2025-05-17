@@ -5,18 +5,11 @@ use PDO;
 
 class LoginController
 {
-    private $pdo;
-
-    public function __construct()
+    public function showLoginForm()
     {
-        // Get PDO instance from your DatabaseConfig helper or create here
-        $this->pdo = \getDatabaseConnection();
-    }
-
-    public function showLoginForm($error = null)
-    {
-        // Pass $error if any
-        include __DIR__ . '/../Views/auth/login.php';
+        $error = $_SESSION['error'] ?? '';
+        unset($_SESSION['error']);
+        include __DIR__ . '/../../../../views/login.php';
     }
 
     public function login()
@@ -28,48 +21,57 @@ class LoginController
         $loginAs = $_POST['login_as'] ?? '';
 
         if (!$username || !$password || !$loginAs) {
-            $this->showLoginForm('All fields are required.');
-            return;
+            $_SESSION['error'] = "Please fill all fields.";
+            header('Location: /admin/login');
+            exit;
         }
+
+        // Connect to DB (use your DatabaseConfig class or PDO directly)
+        $pdo = \DatabaseConfig::getDatabaseConnection();
 
         if ($loginAs === 'admin') {
-            $table = 'admins';  // Replace with your actual admin table name
-        } elseif ($loginAs === 'customer') {
-            $table = 'customers';  // Replace with your actual customer table name
-        } else {
-            $this->showLoginForm('Invalid login type selected.');
-            return;
-        }
+            $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = ?");
+            $stmt->execute([$username]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Prepare query
-        $stmt = $this->pdo->prepare("SELECT * FROM $table WHERE username = :username LIMIT 1");
-        $stmt->execute(['username' => $username]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user && password_verify($password, $user['password'])) {
-            // Password matches
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_type'] = $loginAs;
-
-            if ($loginAs === 'admin') {
-                $_SESSION['admin_id'] = $user['id'];
+            if ($user && password_verify($password, $user['password'])) {
+                $_SESSION['admin_id'] = $user['admin_id'];
+                $_SESSION['admin_username'] = $user['username'];
                 header('Location: /admin/dashboard');
+                exit;
             } else {
-                $_SESSION['customer_id'] = $user['id'];
-                header('Location: /customer/dashboard'); // Adjust route accordingly
+                $_SESSION['error'] = "Invalid admin username or password.";
+                header('Location: /admin/login');
+                exit;
             }
-            exit;
+
+        } elseif ($loginAs === 'customer') {
+            $stmt = $pdo->prepare("SELECT * FROM customers WHERE username = ?");
+            $stmt->execute([$username]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user && password_verify($password, $user['password'])) {
+                $_SESSION['customer_id'] = $user['id'];
+                $_SESSION['customer_username'] = $user['username'];
+                header('Location: /customer/dashboard');
+                exit;
+            } else {
+                $_SESSION['error'] = "Invalid customer username or password.";
+                header('Location: /admin/login');
+                exit;
+            }
+
         } else {
-            $this->showLoginForm('Invalid username or password.');
+            $_SESSION['error'] = "Invalid login type selected.";
+            header('Location: /admin/login');
+            exit;
         }
     }
 
     public function logout()
     {
         session_start();
-        session_unset();
         session_destroy();
-
         header('Location: /admin/login');
         exit;
     }
