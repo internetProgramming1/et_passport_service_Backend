@@ -1,10 +1,10 @@
 <?php
 
 session_start([
-    'cookie_lifetime' => 86400, 
-    'cookie_secure' => true,    
-    'cookie_httponly' => true,  
-    'cookie_samesite' => 'Lax' 
+    'cookie_lifetime' => 86400,
+    'cookie_secure' => true,
+    'cookie_httponly' => true,
+    'cookie_samesite' => 'Lax'
 ]);
 
 // Autoload dependencies
@@ -19,7 +19,7 @@ use Admin\Controllers\DashboardController;
 try {
     $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
     $dotenv->load();
-    $dotenv->required(['DB_HOST', 'DB_NAME', 'DB_USER']); // Add required env vars
+    $dotenv->required(['DB_HOST', 'DB_DATABASE', 'DB_USERNAME']); // Add required env vars
 } catch (Exception $e) {
     die('Environment configuration error: ' . $e->getMessage());
 }
@@ -31,11 +31,13 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 try {
     switch ($uri) {
         case '/':
-            include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
+            include __DIR__ . '/../Front/header.html';
             echo "<main><h1>Welcome to the Passport Service</h1></main>";
-            include __DIR__ . '/../FrontEnd/Head_Foot/footer.html';
+            include __DIR__ . '/../Front/footer.html';
             break;
-
+        case '/start-application':
+            include __DIR__ . '/../Src/Views/Appointment/choose.php';
+            break;
         case '/admin/login':
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 (new LoginController())->showLoginForm();
