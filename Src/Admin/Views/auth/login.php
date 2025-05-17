@@ -1,37 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Login</title>
-</head>
-<body>
+<?php
+// login.php
 
-    <!-- Shared Header -->
-    <div id="header-placeholder"></div>
+include __DIR__ . '/../../../../FrontEnd/Head_Foot/header.html';
+?>
 
-    <!-- Admin Login Form -->
-    <main>
-        <h2>Admin Login</h2>
+<main>
+    <h1>Admin Login</h1>
+    <form action="/admin/login" method="POST">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br><br>
 
-        <?php if (!empty($error)): ?>
-            <p style="color: red;"><?= htmlspecialchars($error) ?></p>
-        <?php endif; ?>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
 
-        <form method="post" action="/admin/login">
-            <label>Username:</label><br>
-            <input type="text" name="username" required><br><br>
+        <button type="submit">Login</button>
+    </form>
 
-            <label>Password:</label><br>
-            <input type="password" name="password" required><br><br>
+    <?php if (!empty($error)): ?>
+        <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
+    <?php endif; ?>
+</main>
 
-            <button type="submit">Login</button>
-        </form>
-    </main>
-
-    <!-- Shared Footer -->
-    <div id="footer-placeholder"></div>
-
-    <!-- Header/Footer Script -->
-    <script src="/FrontEnd/Head_Foot/script.js"></script>
-</body>
-</html>
+<?php
+include __DIR__ . '/../../../../FrontEnd/Head_Foot/footer.html';
+?>
