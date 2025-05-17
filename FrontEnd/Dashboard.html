@@ -18,7 +18,7 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-size: 1rem;
+      font-size: 0.9rem; /* slightly smaller base font */
     }
 
     nav.sidebar {
@@ -51,13 +51,13 @@
     }
 
     nav.sidebar .nav-link .bi {
-      font-size: 1.2rem;
-      margin-right: 8px;
+      font-size: 1.1rem;
+      margin-right: 6px;
       vertical-align: middle;
     }
 
     nav.sidebar h6 {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       letter-spacing: 0.05em;
       margin-top: 1rem;
       margin-bottom: 0.5rem;
@@ -65,7 +65,7 @@
     }
 
     main {
-      font-size: 1.05rem;
+      font-size: 1rem;
       transition: margin-left 0.3s ease-in-out;
     }
 
@@ -106,6 +106,37 @@
         border-radius: 4px;
         font-size: 1.25rem;
       }
+    }
+
+    /* Smaller and compact dashboard cards */
+    .card.bg-primary { background-color: #a0b9f7 !important; color: #1a2a6c !important; }
+    .card.bg-warning { background-color: #f7e3a0 !important; color: #7a6c1a !important; }
+    .card.bg-success { background-color: #a0f7b3 !important; color: #1a6c36 !important; }
+    .card.bg-secondary { background-color: #cfcfcf !important; color: #555555 !important; }
+    .card.bg-danger { background-color: #f7a0a0 !important; color: #6c1a1a !important; }
+
+    .card {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
+    .card .card-title {
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+    .card .card-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    /* Reduce gap between cards */
+    .row.g-3 > .col {
+      margin-bottom: 0.75rem;
+    }
+
+    /* Smaller canvas for chart */
+    #applicationChart {
+      height: 180px !important;
     }
   </style>
 </head>
@@ -169,44 +200,44 @@
             <h2 class="text-primary">Dashboard</h2>
 
             <!-- Analytics Cards -->
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mb-4">
+            <div class="row row-cols-1 row-cols-md-3 g-2 mb-4">
               <div class="col">
-                <div class="card text-white bg-primary shadow-sm h-100">
+                <div class="card bg-primary shadow-sm h-100 text-white">
                   <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-person-check-fill me-2"></i>Registered Users</h5>
-                    <p class="card-text display-6 fw-bold">2,354</p>
+                    <p class="card-text">2,354</p>
                   </div>
                 </div>
               </div>
               <div class="col">
-                <div class="card text-dark bg-warning shadow-sm h-100">
+                <div class="card bg-warning shadow-sm h-100 text-dark">
                   <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-hourglass-split me-2"></i>Pending</h5>
-                    <p class="card-text display-6 fw-bold">648</p>
+                    <p class="card-text">648</p>
                   </div>
                 </div>
               </div>
               <div class="col">
-                <div class="card text-white bg-success shadow-sm h-100">
+                <div class="card bg-success shadow-sm h-100 text-white">
                   <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-check-circle-fill me-2"></i>Approved</h5>
-                    <p class="card-text display-6 fw-bold">1,422</p>
+                    <p class="card-text">1,422</p>
                   </div>
                 </div>
               </div>
               <div class="col">
-                <div class="card text-white bg-secondary shadow-sm h-100">
+                <div class="card bg-secondary shadow-sm h-100 text-white">
                   <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-person-dash-fill me-2"></i>Waiting</h5>
-                    <p class="card-text display-6 fw-bold">210</p>
+                    <p class="card-text">210</p>
                   </div>
                 </div>
               </div>
               <div class="col">
-                <div class="card text-white bg-danger shadow-sm h-100">
+                <div class="card bg-danger shadow-sm h-100 text-white">
                   <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-x-circle-fill me-2"></i>Rejected</h5>
-                    <p class="card-text display-6 fw-bold">74</p>
+                    <p class="card-text">74</p>
                   </div>
                 </div>
               </div>
@@ -216,7 +247,7 @@
             <div class="card mt-3 shadow-sm">
               <div class="card-body">
                 <h5 class="card-title text-primary">Application Status Overview</h5>
-                <canvas id="applicationChart" height="100"></canvas>
+                <canvas id="applicationChart"></canvas>
               </div>
             </div>
           </section>
@@ -242,7 +273,7 @@
       }
     });
 
-    // Chart.js
+    // Chart.js with muted pastel colors
     const ctx = document.getElementById('applicationChart').getContext('2d');
     new Chart(ctx, {
       type: 'bar',
@@ -251,13 +282,20 @@
         datasets: [{
           label: 'Applications',
           data: [2354, 648, 1422, 74, 210],
-          backgroundColor: ['#0a53be', '#9c9c9c', '#146c43', '#b02a37', '#565e64'],
+          backgroundColor: [
+            '#a0b9f7', // muted blue
+            '#d3d3d3', // soft grey
+            '#a0f7b3', // muted green
+            '#f7a0a0', // muted red
+            '#cfcfcf'  // muted light grey
+          ],
           borderRadius: 6,
           borderSkipped: false
         }]
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
           y: {
             beginAtZero: true,
