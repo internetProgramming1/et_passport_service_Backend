@@ -19,20 +19,45 @@ use Admin\Controllers\DashboardController;
 try {
     $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
     $dotenv->load();
-    $dotenv->required(['DB_HOST', 'DB_NAME', 'DB_USER']); // Add required env vars
+    $dotenv->required(['DB_HOST', 'DB_DATABASE', 'DB_USERNAME']);
 } catch (Exception $e) {
     die('Environment configuration error: ' . $e->getMessage());
 }
 
-// Get path
+// Get current URI
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Simple router with better error handling
+// Normalize base path (e.g., /project/et_passport_service_Backend/Public)
+$basePath = '/project/et_passport_service_Backend/Public';
+$relativeUri = str_replace($basePath, '', $uri);
+
 try {
-    switch ($uri) {
+    switch ($relativeUri) {
         case '/':
             include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
-            echo "<main><h1>Welcome to the Passport Service</h1></main>";
+            echo <<<HTML
+
+            <style>
+main {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+</style>
+
+<main>
+    <h1>Welcome to the Passport Service</h1>
+    <p>Please choose your login type:</p>
+    <ul>
+        <li><a href="/project/et_passport_service_Backend/Public/admin/login">Admin Login</a></li>
+        <li><a href="/project/et_passport_service_Backend/Public/customer/login">Customer Login</a></li>
+    </ul>
+</main>
+HTML;
             include __DIR__ . '/../FrontEnd/Head_Foot/footer.html';
             break;
 
@@ -43,7 +68,7 @@ try {
                 (new LoginController())->login();
             } else {
                 http_response_code(405);
-                die('Method Not Allowed');
+                echo "Method Not Allowed";
             }
             break;
 
@@ -52,12 +77,16 @@ try {
             break;
 
         case '/admin/dashboard':
-            // Check if admin is logged in
             if (empty($_SESSION['admin_id'])) {
-                header('Location: /admin/login');
+                header('Location: /project/et_passport_service_Backend/Public/admin/login');
                 exit;
             }
             (new DashboardController())->index();
+            break;
+
+        // Placeholder for future customer routes
+        case '/customer/login':
+            echo "<h1>Customer login form coming soon</h1>";
             break;
 
         default:

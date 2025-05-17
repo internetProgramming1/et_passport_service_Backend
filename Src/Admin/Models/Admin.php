@@ -1,38 +1,33 @@
 <?php
 namespace Admin\Models;
 
+use PDO;
+use Exception;
+
 class Admin
 {
-    public static function authenticate($username, $password)
+    private $pdo;
+
+    public function __construct()
     {
-        // Define hardcoded admin credentials using array()
-        $admins = array(
-            'new_admin' => array(
-                'id' => 1,
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // hash for "password123"
-                'type' => 'new'
-            ),
-            'renewal_admin' => array(
-                'id' => 2,
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // hash for "password123"
-                'type' => 'renewal'
-            )
-        );
+        // Use your DatabaseConfig class to get PDO connection
+        $this->pdo = \DatabaseConfig::getDatabaseConnection();
+    }
 
-        // Check if the username exists
-        if (!array_key_exists($username, $admins)) {
-            return false;
-        }
+    /**
+     * Get admin record by username
+     *
+     * @param string $username
+     * @return array|null
+     */
+    public function getAdminByUsername(string $username): ?array
+    {
+        $sql = "SELECT * FROM admins WHERE username = :username LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['username' => $username]);
 
-        // Verify the password
-        if (password_verify($password, $admins[$username]['password'])) {
-            return array(
-                'id' => $admins[$username]['id'],
-                'username' => $username,
-                'type' => $admins[$username]['type']
-            );
-        }
+        $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return false;
+        return $admin ?: null;
     }
 }

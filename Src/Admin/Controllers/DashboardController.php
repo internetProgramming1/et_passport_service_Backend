@@ -1,27 +1,27 @@
 <?php
-
 namespace Admin\Controllers;
 
 class DashboardController
 {
     public function index()
     {
-        // Start session if not already started
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        session_start();
 
-        // Check if admin is logged in
-        if (!isset($_SESSION['admin_id'])) {
+        if (empty($_SESSION['user_type'])) {
+            // Redirect to login if no user type is set
             header('Location: /admin/login');
             exit;
         }
 
-        // Get admin details from session
-        $adminName = $_SESSION['admin_username'] ?? 'Unknown';
-        $adminType = $_SESSION['admin_type'] ?? 'Unknown';
-
-        // Load dashboard view
-        include __DIR__ . '/../Views/dashboard.php';
+        if ($_SESSION['user_type'] === 'admin') {
+            include __DIR__ . '/../Views/dashboard_admin.php';
+        } elseif ($_SESSION['user_type'] === 'customer') {
+            include __DIR__ . '/../Views/dashboard_customer.php';
+        } else {
+            // Unknown user type: show error or redirect
+            http_response_code(403);
+            echo 'Access Denied';
+            exit;
+        }
     }
 }

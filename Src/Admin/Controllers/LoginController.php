@@ -1,67 +1,75 @@
 <?php
 namespace Admin\Controllers;
 
-use Admin\Models\Admin;
+use PDO;
 
 class LoginController
 {
-    public function showLoginForm()
-    {
-        // Start session if not already started
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        
-        // Check if already logged in
-        if (isset($_SESSION['admin_id'])) {
-            header('Location: /admin/dashboard');
-            exit;
-        }
+    private $pdo;
 
-        include __DIR__ . '/../../Views/auth/login.php';
+    public function __construct()
+    {
+        // Get PDO instance from your DatabaseConfig helper or create here
+        $this->pdo = \getDatabaseConnection();
+    }
+
+    public function showLoginForm($error = null)
+    {
+        // Pass $error if any
+        include __DIR__ . '/../Views/auth/login.php';
     }
 
     public function login()
     {
-        // Start session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+        session_start();
+
+        $username = $_POST['username'] ?? '';
+        $password = $_POST['password'] ?? '';
+        $loginAs = $_POST['login_as'] ?? '';
+
+        if (!$username || !$password || !$loginAs) {
+            $this->showLoginForm('All fields are required.');
+            return;
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'] ?? '';
-            $password = $_POST['password'] ?? '';
+        if ($loginAs === 'admin') {
+            $table = 'admins';  // Replace with your actual admin table name
+        } elseif ($loginAs === 'customer') {
+            $table = 'customers';  // Replace with your actual customer table name
+        } else {
+            $this->showLoginForm('Invalid login type selected.');
+            return;
+        }
 
-            $admin = Admin::authenticate($username, $password);
+        // Prepare query
+        $stmt = $this->pdo->prepare("SELECT * FROM $table WHERE username = :username LIMIT 1");
+        $stmt->execute(['username' => $username]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($admin) {
-                $_SESSION['admin_id'] = $admin['id'];
-                $_SESSION['admin_type'] = $admin['type'];
-                $_SESSION['admin_username'] = $admin['username'];
+        if ($user && password_verify($password, $user['password'])) {
+            // Password matches
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_type'] = $loginAs;
 
+            if ($loginAs === 'admin') {
+                $_SESSION['admin_id'] = $user['id'];
                 header('Location: /admin/dashboard');
-                exit;
             } else {
-                $error = "Invalid credentials";
-                include __DIR__ . '/../../Views/auth/login.php';
+                $_SESSION['customer_id'] = $user['id'];
+                header('Location: /customer/dashboard'); // Adjust route accordingly
             }
+            exit;
+        } else {
+            $this->showLoginForm('Invalid username or password.');
         }
     }
 
     public function logout()
     {
-        // Start session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        
-        // Unset all session variables
-        $_SESSION = array();
-        
-        // Destroy the session
+        session_start();
+        session_unset();
         session_destroy();
-        
-        // Redirect to login page
+
         header('Location: /admin/login');
         exit;
     }
