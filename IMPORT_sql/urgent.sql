@@ -225,7 +225,7 @@ CREATE TABLE Urgent_Correction_Application (
 CREATE TABLE Urgent_New_Application (
     id INT AUTO_INCREMENT PRIMARY KEY,
     -- Application Type
-     application_type VARCHAR(50) NOT NULL,
+    application_type VARCHAR(50) NOT NULL,
     category VARCHAR(50) NOT NULL,
     urgency VARCHAR(50) NOT NULL,
     

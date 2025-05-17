@@ -31,29 +31,115 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'multipart/form-data') !== false) {
             require 'FileUpload.php'; // Include your file upload handling code
-            if (isset($_FILES['birth_certificate_front'])) {
+            if (isset($_FILES['birth_certificate_front']) && isset($_FILES['birth_certificate_back']) && isset($_FILES['id_front']) && isset($_FILES['id_back'])) {
                 $file = $_FILES['birth_certificate_front'];
                 $bcf = fileProcessing($file);
-            }
-            if (isset($_FILES['birth_certificate_back'])) {
+
+                $_SESSION['attachmentsSaving']['birth_certificate_front'] = [
+                    'name' => $bcf,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $file = $_FILES['birth_certificate_back'];
                 $bcb = fileProcessing($file);
-            }
-            if (isset($_FILES['id_front'])) {
+                $_SESSION['attachmentsSaving']['birth_certificate_back'] = [
+                    'name' => $bcb,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $file = $_FILES['id_front'];
                 $idf = fileProcessing($file);
-            }
-            if (isset($_FILES['id_back'])) {
+                $_SESSION['attachmentsSaving']['id_front'] = [
+                    'name' => $idf,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
                 $file = $_FILES['id_back'];
                 $idb = fileProcessing($file);
-            }
-            $_SESSION['attachments'] = [
-                'birth_cer_front' => $bcf,
-                'birth_cer_back' => $bcb,
-                'id_front' => $idf,
-                'id_back' => $idb
-            ];
 
+                $_SESSION['attachmentsSaving']['id_back'] = [
+                    'name' => $idb,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
+                $_SESSION['attachments'] = [
+                    'birth_cer_front' => $bcf,
+                    'birth_cer_back' => $bcb,
+                    'id_front' => $idf,
+                    'id_back' => $idb
+                ];
+            }
+
+
+
+            if (isset($_FILES['old_Passport']) && isset($_FILES['photo']) && isset($_FILES['id_front']) && isset($_FILES['id_back'])) {
+                $file = $_FILES['old_Passport'];
+                $oldP = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['old_Passport'] = [
+                    'name' => $oldP,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
+                $file = $_FILES['photo'];
+                $photo = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['photo'] = [
+                    'name' => $photo,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
+                $file = $_FILES['id_front'];
+                $idf = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['id_front'] = [
+                    'name' => $idf,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
+                $file = $_FILES['id_back'];
+                $idb = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['id_back'] = [
+                    'name' => $idb,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
+                $_SESSION['attachments'] = [
+                    'old_Passport' => $oldP,
+                    'photo' => $photo,
+                    'id_front' => $idf,
+                    'id_back' => $idb
+                ];
+            }
+            if (isset($_FILES['police']) && isset($_FILES['old_Passport']) && isset($_FILES['photo']) && isset($_FILES['id_front']) && isset($_FILES['id_back'])) {
+                $file = $_FILES['police'];
+                $police = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['police'] = [
+                    'name' => $police,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
+                $file = $_FILES['old_Passport'];
+                $oldP = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['old_Passport'] = [
+                    'name' => $oldP,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
+                $file = $_FILES['photo'];
+                $photo = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['photo'] = [
+                    'name' => $photo,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
+                $file = $_FILES['id_front'];
+                $idf = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['id_front'] = [
+                    'name' => $idf,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
+
+                $file = $_FILES['id_back'];
+                $idb = fileProcessing($file);
+                $_SESSION['attachmentsSaving']['id_back'] = [
+                    'name' => $idb,
+                    'tmp_name' => $file['tmp_name'] // save path for later use
+                ];
+                $_SESSION['attachments'] = [
+                    'old_Passport' => $oldP,
+                    'photo' => $photo,
+                    'id_front' => $idf,
+                    'id_back' => $idb,
+                    'police' => $police
+                ];
+            }
             $response = [
                 'success' => true,
                 'message' => 'Attachments saved successfully.',
@@ -98,6 +184,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'success' => true,
                     'message' => 'Site selection saved',
                     'data' => $_SESSION['siteData']
+                ];
+            } elseif (isset($data['serviceType'])) {
+
+                $_SESSION['serviceType'] = $data['serviceType'];
+                $response = [
+                    'success' => true,
+                    'message' => 'service type of request saved',
+                    'data' => $_SESSION['serviceType']
                 ];
             } elseif (isset($data['date'])) {
                 // Date/time form
@@ -156,6 +250,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'message' => 'Address information saved',
                     'data' => $_SESSION['addressData']
                 ];
+            } elseif (isset($data['old_passport_number'])) {
+                $_SESSION['PassportInfo'] = [
+                    'old_passport_number' => htmlspecialchars($data['old_passport_number']),
+                    'old_issue_date' => htmlspecialchars($data['old_issue_date']),
+                    'old_expiry_date' => htmlspecialchars($data['old_expiry_date']),
+                    'has_correction' => isset($data['has_correction']) ? htmlspecialchars($data['has_correction']) : null,
+                    'correction_type' => isset($data['correction_type']) ? htmlspecialchars($data['correction_type']) : null,
+                ];
+                $response = [
+                    'success' => true,
+                    'message' => 'page no requested saved',
+                    'data' => $_SESSION['PassportInfo']
+                ];
             } elseif (isset($data['mother_first_name'])) {
 
                 // Prepare family data
@@ -197,18 +304,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'message' => 'page no requested saved',
                     'data' => $_SESSION['pageNo']
                 ];
-            } elseif (isset($data['regDate'])) {
+            } elseif (isset($data['registrationDate'])) {
                 $_SESSION['Registered'] = [
-                    'regDate' => htmlspecialchars($data['regDate']),
-                    'appNo' => htmlspecialchars($data['appNo'])
+                    'regDate' => htmlspecialchars($data['registrationDate']),
+                    'applicationNumber' => htmlspecialchars($data['applicationNumber'])
                 ];
-                require 'savetodb.php';
-
-                $response = [
-                    'success' => true,
-                    'message' => 'Registered successfully',
-                    'data' => $_SESSION['Registered']
-                ];
+                require_once __DIR__ . '/../../Models/saveToDbS.php';
+                $saved = false;
+                switch ($_SESSION['category']) {
+                    case 'new':
+                        $saved = saveNewApplication($_SESSION);
+                        break;
+                    case 'lost':
+                        $saved = saveLostApplication($_SESSION);
+                        break;
+                    case 'renewal':
+                        $saved = saveRenewalApplication($_SESSION);
+                        break;
+                    case 'correction':
+                        $saved = saveCorrectionApplication($_SESSION);
+                        break;
+                }
+                if ($saved == false) {
+                    $response = [
+                        'success' => false,
+                        'message' => 'Registration Failed',
+                    ];
+                } else {
+                    $response = [
+                        'success' => true,
+                        'message' => 'Registered successfully',
+                        'data' => $_SESSION['Registered']
+                    ];
+                }
             } else {
                 throw new Exception("Unrecognized form data");
             }

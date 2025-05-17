@@ -10,51 +10,58 @@
 
 <body>
 
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <?php include __DIR__ . '/../../../../../../Front/header.html' ?>
 
   <!-- Main content -->
   <div class="container-fluid my-5 py-1">
     <div class="row">
 
       <!-- Sidebar -->
-      <aside class="col-lg-3 mb-5 shadow-sm h-100">
+      <aside class="col-md-3 mb-4 shadow-sm h-100">
         <ul class="list-group">
-          <a href="../../page1.html" class="text-decoration-none">
+          <a href="../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="../page2.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action">Site Selection</li>
+          <a href="../serviceType.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Service Type</li>
           </a>
-          <a href="../page3.html" class="text-decoration-none">
+          <a href="../page2.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Site
+              Selection</li>
+          </a>
+          <a href="../page3.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Date and Time</li>
           </a>
-          <a href="personalInfo.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action active"
-              style="background-color: #005f99; color: #eaf4f9;">Personal Information</li>
+          <a href="../Page4/personalinfo.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Personal
+              Information</li>
           </a>
-          <a href="../Page5/passportPage.html" class="text-decoration-none">
+          <a href="../Page5/pasportpage.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
       </aside>
 
       <!-- Main Content -->
-      <main class="col-md-9">
+      <main class="col-lg-9">
 
-        <!-- Navigation tabs -->
+        <!-- Sub Navigation Tabs -->
         <ul class="nav nav-tabs mb-4">
           <li class="nav-item">
-            <a class="nav-link" href="personalInfo.html" style="color: #005f99;">Personal Info.</a>
+            <a class="nav-link "
+              href="personalInfo.html">Personal Info.</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="address.html" style="background-color:#005f99; color: white; ">Address</a>
+            <a class="nav-link active" style="background-color: #005f99; color: white;" href="address.php" style="color: #005f99;">Address</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="family.html" style="color: #005f99;">Family</a>
+            <a class="nav-link" href="family.php" style="color: #005f99;">Family</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="attachment.html" style="color: #005f99;">Attachments</a>
+            <a class="nav-link" href="./passInfo.php" style="color: #005f99; ">Passport Info</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="attachment.php" style="color: #005f99;">Attachments</a>
           </li>
         </ul>
 
@@ -131,18 +138,12 @@
     </div>
   </div>
 
-  <!-- Placeholder for Footer -->
-  <div id="footer-placeholder"></div>
-
-  <!-- Script to include header and footer -->
-  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
-  </script>
+  <?php include __DIR__ . '/../../../../../../Front/footer.html' ?>
 
   <!-- script to axios -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <!-- Bootstrap Bundle JS (includes Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
 
   <script>
@@ -176,18 +177,21 @@
           .attr('role', 'alert')
           .text('Please fill out all required fields before submitting.')
           .appendTo('#alertContainer');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
         return; // Prevent submission if not all required fields are filled
       }
 
       try {
-        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php", addressData, {
+        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formcontroller.php", addressData, {
           headers: {
             'Content-Type': 'application/json'
           }
         });
         // Redirect to the next page after successful submission
-        window.location.href = "family.html";
+        window.location.href = "family.php";
       } catch (error) {
         const message = error.response?.data?.message || "Failed to submit address info. Please try again.";
         $('<div>')

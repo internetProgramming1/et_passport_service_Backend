@@ -132,7 +132,7 @@
                 <div class="main3">
                     <section>
                         <h4>Appointment Schedule</h4>
-                        <button class="button" id="normbtn" type="button" value="normal"
+                        <button class="button" id="normbtn" type="button" value="standard"
                             onclick="checkAgreement('normal/page1.php',this)">Start</button>
                     </section>
 

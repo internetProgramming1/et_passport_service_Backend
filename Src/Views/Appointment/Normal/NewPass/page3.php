@@ -8,8 +8,7 @@
 
 <body>
 
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <?php include __DIR__ . '/../../../../../Front/Header.html'; ?>
 
   <!-- Main content -->
   <div class="container-fluid py-4 my-5">
@@ -17,20 +16,20 @@
       <!-- Sidebar -->
       <aside class="col-lg-3 mb-4 shadow-sm h-100">
         <ul class="list-group">
-          <a href="../page1.html" class="text-decoration-none">
+          <a href="../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="page2.html" class="text-decoration-none">
+          <a href="page2.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Site Selection</li>
           </a>
-          <a href="page3.html" class="text-decoration-none">
+          <a href="page3.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Date and
               Time</li>
           </a>
-          <a href="Page4/personalinfo.html" class="text-decoration-none">
+          <a href="Page4/personalinfo.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Personal Information</li>
           </a>
-          <a href="Page5/passportPage.html" class="text-decoration-none">
+          <a href="Page5/passportPage.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
@@ -103,32 +102,22 @@
   </div>
 
 
-  <!-- Placeholder for Footer -->
-  <div id="footer-placeholder"></div>
-
-  <!-- Script to include header and footer -->
-  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
-  </script>
-
-
-  <!-- Bootstrap Bundle JS (includes Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <?php include __DIR__ . '/../../../../../Front/footer.html' ?>
 
   <!-- Axios   -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script>
-    document.getElementById('date').addEventListener('change', function () {
+    document.getElementById('date').addEventListener('change', function() {
       document.getElementById('selectedDate').innerText = "Date: " + this.value;
     });
 
-    document.getElementById('time').addEventListener('change', function () {
+    document.getElementById('time').addEventListener('change', function() {
       document.getElementById('selectedTime').innerText = "Time: " + this.value;
     });
   </script>
 
   <script>
-
     document.getElementById("dateTimeForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       // Clear previous errors
@@ -153,14 +142,14 @@
           time: e.target.elements.time.value
         };
         // Send data to PHP to store in session
-        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php", dateTime, {
+        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php", dateTime, {
           headers: {
             'Content-Type': 'application/json'
           },
           withCredentials: true
         });
         // Redirect to the next page
-        window.location.href = "../NewPass/page4/personalinfo.html"; // Proceed to next step
+        window.location.href = "page4/personalinfo.php"; // Proceed to next step
       } catch (error) {
         errorAlert.textContent = "Error saving data. Please try again.";
         errorAlert.classList.remove('d-none');

@@ -10,31 +10,34 @@
 
 <body>
 
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <?php include __DIR__ . '/../../../../../../Front/header.html' ?>
 
   <!-- Main content -->
   <div class="container-fluid my-5 py-1">
     <div class="row">
 
       <!-- Sidebar -->
-      <aside class="col-lg-3 mb-4">
-        <ul class="list-group shadow-sm">
-          <a href="../../page1.html" class="text-decoration-none">
+      <aside class="col-lg-3 mb-4 shadow-sm h-100">
+        <ul class="list-group">
+          <a href="../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="../page2.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action">Site Selection</li>
+          <a href="./serviceType.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Service Type</li>
           </a>
-          <a href="../page3.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action">Date and Time</li>
+          <a href="../page2.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Site
+              Selection</li>
           </a>
-          <a href="../Page4/personalinfo.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action ">Personal Information</li>
+          <a href="../page3.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Date and
+              Time</li>
           </a>
-          <a href="../Page5/passportPage.html" class="text-decoration-none">
-            <li class="list-group-item list-group-item-action" style="background-color: #005f99; color: #eaf4f9;">
-              Payment</li>
+          <a href="../Page4/passInfo.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action">Personal Information</li>
+          </a>
+          <a href="pasportpage.php" class="text-decoration-none">
+            <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Payment</li>
           </a>
         </ul>
       </aside>
@@ -116,23 +119,14 @@
     </div>
   </div>
 
-
-  <!-- Placeholder for Footer -->
-  <div id="footer-placeholder"></div>
-
-  <!-- Script to include header and footer -->
-  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
-  </script>
-
-  <!-- Bootstrap Bundle JS (includes Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <?php include __DIR__ . '/../../../../../../Front/footer.html' ?>
 
   <!-- Axios   -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
   <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
       $("#uploadForm").submit(async (e) => {
         e.preventDefault();
 
@@ -151,7 +145,9 @@
         }
 
         try {
-          const response = await axios.post('http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php', { pageNo: pageNo }, {
+          const response = await axios.post('http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php', {
+            pageNo: pageNo
+          }, {
             headers: {
               'Content-Type': 'application/json' // Required for file uploads
             },
@@ -159,7 +155,7 @@
           });
 
           if (response.data.success) {
-            window.location.href = '../page5/summary.html';
+            window.location.href = '../page5/summary.php';
           } else {
             alert('Upload failed due to server validation: ' + response.data.message);
             throw new Error(response.data.message || 'Upload failed due to server validation');

@@ -3,17 +3,17 @@
 
 <head>
   <meta charset="UTF-8">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <title>Site Selection</title>
-  <style>
-
-
-  </style>
+  >
 </head>
 
 <body>
 
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <!-- Load header -->
+
+  <?php include __DIR__ . '/../../../../../Front/Header.html'; ?>
 
   <!-- Main content -->
   <div class="container-fluid py-4 my-5">
@@ -21,20 +21,20 @@
       <!-- Sidebar Navigation -->
       <aside class="col-lg-3 mb-4 shadow-sm h-100">
         <ul class="list-group">
-          <a href="../page1.html" class="text-decoration-none">
+          <a href="../page1.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Request Appointment</li>
           </a>
-          <a href="page2.html" class="text-decoration-none">
+          <a href="page2.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action" style="color: white; background-color: #005f99;">Site
               Selection</li>
           </a>
-          <a href="page3.html" class="text-decoration-none">
+          <a href="page3.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Date and Time</li>
           </a>
-          <a href="Page4/personalinfo.html" class="text-decoration-none">
+          <a href="Page4/personalinfo.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Personal Information</li>
           </a>
-          <a href="Page5/passportPage.html" class="text-decoration-none">
+          <a href="Page5/passportPage.php" class="text-decoration-none">
             <li class="list-group-item list-group-item-action">Payment</li>
           </a>
         </ul>
@@ -113,16 +113,8 @@
     </div>
   </div>
 
+  <?php include __DIR__ . '/../../../../../Front/footer.html' ?>
 
-  <!-- Placeholder for Footer -->
-  <div id="footer-placeholder"></div>
-
-  <!-- Script to include header and footer -->
-  <script src="http://localhost/website/project/et_passport_service_backend/FrontEnd/Head_Foot/script.js">
-  </script>
-
-  <!-- Bootstrap Bundle JS (includes Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Axios   -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -169,13 +161,13 @@
           delivery: form.elements.delivery.value
         };
 
-        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/BackEnd/Appointment/formHandler.php", siteData, {
+        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php", siteData, {
           headers: {
             'Content-Type': 'application/json'
           },
           withCredentials: true
         });
-        window.location.href = "page3.html";
+        window.location.href = "page3.php";
       } catch (error) {
         errorAlert.textContent = "Error saving data. Please try again.";
         errorAlert.classList.remove('d-none');
