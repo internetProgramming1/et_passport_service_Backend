@@ -8,9 +8,9 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 // Check for required fields
 if (
-    !isset($data['tracking_id']) || empty($data['tracking_id']) ||
-    !isset($data['applicant_name']) || empty($data['applicant_name']) ||
-    !isset($data['passport_status']) || empty($data['passport_status'])
+    empty($data['tracking_id']) ||
+    empty($data['applicant_name']) ||
+    empty($data['passport_status'])
 ) {
     echo json_encode([
         "success" => false,
@@ -25,7 +25,7 @@ $passport_status = $data['passport_status'];
 
 // Database config
 $host = 'localhost';
-$dbname = 'project_et_passport_db'; // ✅ Change if yours is different
+$dbname = 'project_et_passport_db';
 $username = 'root';
 $password = ''; // Default for XAMPP
 
