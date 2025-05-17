@@ -1,27 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Checking</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Before You Apply - Passport Registration</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      padding-top: 40px;
+    }
+    .checklist {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .checklist h2 {
+      margin-bottom: 1.5rem;
+      color: #0a58ca;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: start;
+      margin-bottom: 1rem;
+    }
+    .checklist-item i {
+      color: #198754;
+      font-size: 1.3rem;
+      margin-right: 0.75rem;
+      margin-top: 2px;
+    }
+    .checklist-item p {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <div class="checklist">
+    <h2>Before You Apply</h2>
 
-  <!-- Main content -->
-  <main>
-    <h1>Welcome to My Page</h1>
-    <p>This is the main content area.</p>
-  </main>
+    <div class="checklist-item">
+      <i class="bi bi-check2-circle"></i>
+      <p>All applicants should secure an online appointment when applying for a passport.</p>
+    </div>
 
-  <!-- Placeholder for Footer -->
-  <div id="footer-placeholder"></div>
+    <div class="checklist-item">
+      <i class="bi bi-check2-circle"></i>
+      <p>Confirmed appointment is required.</p>
+    </div>
 
-  <!-- Script to include header and footer -->
-  <script src="../FrontEnd/Head_Foot/script.js">
-   
-  </script>
+    <div class="checklist-item">
+      <i class="bi bi-check2-circle"></i>
+      <p>Applicants are reminded to be on site not earlier than 30 minutes on their selected date and time of appointment at their chosen consular office.</p>
+    </div>
+
+    <div class="checklist-item">
+      <i class="bi bi-check2-circle"></i>
+      <p>Personal appearance is required for new applicants.</p>
+    </div>
+
+    <div class="checklist-item">
+      <i class="bi bi-check2-circle"></i>
+      <p>Please be warned that dealing with fixers (illegal arrangements) is at your own risk and expense.</p>
+    </div>
+
+    <div class="checklist-item">
+      <i class="bi bi-check2-circle"></i>
+      <p>Prepare all the originals and photocopies of the documentary requirements for passport application.</p>
+    </div>
+
+  </div>
 
 </body>
 </html>

@@ -1,26 +1,39 @@
-<?php
-// login.php
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f5f5; }
+        .login-form { 
+            width: 300px; 
+            margin: 100px auto; 
+            padding: 20px; 
+            background: white; 
+            border-radius: 5px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .error { color: red; margin-bottom: 15px; }
+        input { width: 100%; padding: 8px; margin: 8px 0; }
+        button { background: #007bff; color: white; border: none; padding: 10px; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="login-form">
+        <h2>Admin Login</h2>
+        
+        <?php if (!empty($error)): ?>
+            <div class="error"><?= htmlspecialchars($error) ?></div>
+        <?php endif; ?>
 
-include __DIR__ . '/../../../../FrontEnd/Head_Foot/header.html';
-?>
-
-<main>
-    <h1>Admin Login</h1>
-    <form action="/admin/login" method="POST">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br><br>
-
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
-
-        <button type="submit">Login</button>
-    </form>
-
-    <?php if (!empty($error)): ?>
-        <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
-    <?php endif; ?>
-</main>
-
-<?php
-include __DIR__ . '/../../../../FrontEnd/Head_Foot/footer.html';
-?>
+        <form method="post" action="/project/et_passport_service_Backend/Public/admin/login">
+            <label>Username:</label>
+            <input type="text" name="username" required>
+            
+            <label>Password:</label>
+            <input type="password" name="password" required>
+            
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>
