@@ -1,8 +1,6 @@
-<?php include __DIR__ . '/../../../FrontEnd/Head_Foot/header.html'; ?>
+<div class="application-dashboard">
+    <h1>New Passport Applications</h1>
 
-<main>
-    <h2>New Passport Applications</h2>
-    <p>List of new passport applications...</p>
-</main>
+    <!-- Dashboard Filters -->
 
-<?php include __DIR__ . '/../../../FrontEnd/Head_Foot/footer.html'; ?>
+</div>

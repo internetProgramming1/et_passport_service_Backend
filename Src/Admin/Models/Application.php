@@ -1,7 +1,4 @@
 <?php
-
-namespace Admin\Models;
-
 require_once __DIR__ . '/../../../config/db.php';
 
 class Application
@@ -11,18 +8,42 @@ class Application
     public function __construct()
     {
         $this->pdo = getDatabaseConnection();
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function getAllApplications()
+    public function getApplications($category, $table)
     {
-        $stmt = $this->pdo->query("SELECT * FROM applications");
-        return $stmt->fetchAll();
+        // Validate table name
+        if (!$this->isValidTable($table)) {
+            throw new InvalidArgumentException("Invalid table name");
+        }
+
+        $query = "SELECT * FROM $table";
+        $params = [];
+
+        if ($category) {
+            $query .= " WHERE category = ?";
+            $params[] = $category;
+        }
+
+        $query .= " ORDER BY created_at DESC";
+
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getApplicationsByType($type)
+    private function isValidTable($tableName)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM applications WHERE type = :type");
-        $stmt->execute(['type' => $type]);
-        return $stmt->fetchAll();
+        // Only allow specific table names
+        $validTables = [
+            'new_application',
+            'renewal_application',
+            'lost_application',
+            'correction_application'
+        ];
+
+        return in_array($tableName, $validTables);
     }
 }

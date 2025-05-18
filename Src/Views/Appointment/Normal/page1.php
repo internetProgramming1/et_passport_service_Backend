@@ -134,7 +134,7 @@
       const value = $(buttonElement).val();
 
       // Send the value to PHP backend using Axios POST
-      axios.post('http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php', {
+      axios.post('/formController', {
           category: value // we will use this in the backend 
         }, {
           headers: {

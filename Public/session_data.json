@@ -1,3 +1,6 @@
 {
-    "type": "standard"
+    "admin_id": 3,
+    "admin_type": null,
+    "type": "standard",
+    "category": "new"
 }
