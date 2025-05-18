@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../src/Admin/Controllers/LoginController.php';
-
+require_once __DIR__ . '/../src/Admin/Controllers/DashboardController.php';
 
 // Start session with secure settings
 session_start([

@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../../../../FrontEnd/Head_Foot/header.html';
+include __DIR__ . '/../../../front/header.html';
 ?>
 
 <main>
@@ -9,5 +9,5 @@ include __DIR__ . '/../../../../FrontEnd/Head_Foot/header.html';
 </main>
 
 <?php
-include __DIR__ . '/../../../../FrontEnd/Head_Foot/footer.html';
+include __DIR__ . '/../../../front/footer.html';
 ?>
