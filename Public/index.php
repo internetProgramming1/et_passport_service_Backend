@@ -23,6 +23,19 @@ try {
     die('Environment configuration error: ' . $e->getMessage());
 }
 
+$request = $_SERVER['REQUEST_URI'];
+
+// Normalize the request URI if needed
+$request = strtok($request, '?'); // remove query strings if any
+
+switch (true) {
+    case str_starts_with($request, '/start-application'):
+    case str_starts_with($request, '/standard'):
+    case str_starts_with($request, '/urgent'):
+        include __DIR__ . '/../Routes/formRoute.php';
+        break;
+}
+
 // Base path configuration
 $basePath = '/project/et_passport_service_Backend/Public';
 
@@ -43,17 +56,17 @@ if ($requestUri === '') {
 try {
     switch ($requestUri) {
         case '/':
-            include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
+            include __DIR__ . '/../Front/header.html';
             echo <<<HTML
             <main style="text-align:center; margin-top:100px;">
                 <h1>Welcome to the Passport Service</h1>
                 <p>Please choose your login type:</p>
-                <a href="$basePath/admin/login" 
+                <a href="admin/login" 
                    style="display:inline-block; margin:15px; padding:10px 20px; 
                    background-color:#007BFF; color:#fff; text-decoration:none; border-radius:5px;">
                    Admin Login
                 </a>
-                <a href="$basePath/customer/login" 
+                <a href="customer/login" 
                    style="display:inline-block; margin:15px; padding:10px 20px; 
                    background-color:#28A745; color:#fff; text-decoration:none; border-radius:5px;">
                    Customer Login
@@ -62,7 +75,12 @@ try {
 HTML;
             include __DIR__ . '/../FrontEnd/Head_Foot/footer.html';
             break;
-
+        case '/formController';
+            include __DIR__ . '/../Src/Controllers/Appointment/formController.php';
+            break;
+        case '/formControllerUrgent';
+            include __DIR__ . '/../Src/Controllers/Appointment/formControllerUrgent.php';
+            break;
         case '/admin/login':
             $controller = new LoginController();
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -134,12 +152,13 @@ HTML;
         <h1>500 - Server Error</h1>
 HTML;
     if ($_ENV['APP_ENV'] === 'development') {
-        echo '<pre style="text-align:left; max-width:800px; margin:20px auto; padding:20px; background:#f8f9fa;">' 
-             . htmlspecialchars($e->getMessage()) . '</pre>';
+        echo '<pre style="text-align:left; max-width:800px; margin:20px auto; padding:20px; background:#f8f9fa;">'
+            . htmlspecialchars($e->getMessage()) . '</pre>';
     }
-    echo <<<HTML
-        <a href="$basePath/" style="color:#007BFF;">Return to Homepage</a>
-    </main>
-HTML;
-    include __DIR__ . '/../FrontEnd/Head_Foot/footer.html';
+    //     echo <<<HTML
+    //         <a href="$basePath/" style="color:#007BFF;">Return to Homepage</a>
+    //     </main>
+    // HTML;
+    //     include __DIR__ . '/../FrontEnd/Head_Foot/footer.html';
 }
+

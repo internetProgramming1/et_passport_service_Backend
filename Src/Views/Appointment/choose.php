@@ -133,13 +133,13 @@
                     <section>
                         <h4>Appointment Schedule</h4>
                         <button class="button" id="normbtn" type="button" value="standard"
-                            onclick="checkAgreement('normal/page1.php',this)">Start</button>
+                            onclick="checkAgreement('standard/chooseCategory',this)">Start</button>
                     </section>
 
                     <section>
                         <h4>Urgent Appointment</h4>
                         <button class="button" type="button" value="urgent" id="urgentbtn"
-                            onclick="checkAgreement('urgent/page1.php',this)">Start</button>
+                            onclick="checkAgreement('urgent/page1',this)">Start</button>
                     </section>
 
                 </div>
@@ -173,9 +173,9 @@
             let url;
 
             if (value === "urgent") {
-                url = 'http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formControllerUrgent.php';
+                url = '/formControllerUrgent';
             } else {
-                url = 'http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php';
+                url = '/formController';
             }
 
             axios.post(url, {
