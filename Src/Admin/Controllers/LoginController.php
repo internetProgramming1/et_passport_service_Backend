@@ -2,6 +2,9 @@
 
 namespace Admin\Controllers;
 
+require_once __DIR__ . '/../Models/Admin.php';
+
+
 use Admin\Models\Admin;
 
 class LoginController
@@ -25,8 +28,10 @@ class LoginController
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
 
-        $admin = Admin::authenticate($username, $password);
+        // $admin = Admin::authenticate($username, $password);
 
+        $adminModel = new \Admin\Models\Admin();
+        $admin =  $adminModel->findByUsername($username);
         if ($admin) {
             $_SESSION['admin_id'] = $admin['id'];
             $_SESSION['admin_type'] = $admin['type'];
