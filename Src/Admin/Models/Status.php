@@ -1,28 +1,28 @@
 <?php
+
 namespace Admin\Models;
 
-use PDO;
+require_once __DIR__ . '/../../../config/db.php';
 
 class Status
 {
-    private static function getDB()
-    {
-        $host = $_ENV['DB_HOST'];
-        $dbname = $_ENV['DB_NAME'];
-        $user = $_ENV['DB_USER'];
-        $pass = $_ENV['DB_PASS'] ?? '';
+    private $pdo;
 
-        $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
-        return new PDO($dsn, $user, $pass, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]);
+    public function __construct()
+    {
+        $this->pdo = getDatabaseConnection();
     }
 
-    public static function getStatusesByApplicationId($applicationId)
+    public function updateStatus($applicationId, $status)
     {
-        $db = self::getDB();
-        $stmt = $db->prepare("SELECT * FROM statuses WHERE application_id = ? ORDER BY created_at ASC");
-        $stmt->execute([$applicationId]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->pdo->prepare("UPDATE applications SET status = :status WHERE id = :id");
+        return $stmt->execute(['status' => $status, 'id' => $applicationId]);
+    }
+
+    public function getStatus($applicationId)
+    {
+        $stmt = $this->pdo->prepare("SELECT status FROM applications WHERE id = :id");
+        $stmt->execute(['id' => $applicationId]);
+        return $stmt->fetchColumn();
     }
 }

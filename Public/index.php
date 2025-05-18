@@ -87,6 +87,31 @@ HTML;
             (new DashboardController())->index();
             break;
 
+        // ✅ NEW ROUTES ADDED HERE
+        case '/customer/dashboard':
+            (new \Admin\Controllers\CustomerDashboardController())->index();
+            break;
+
+        case '/admin/new':
+            (new \Admin\Controllers\NewApplicationController())->index();
+            break;
+
+        case '/admin/renewal':
+            (new \Admin\Controllers\RenewalApplicationController())->index();
+            break;
+
+        case '/admin/lost':
+            (new \Admin\Controllers\LostApplicationController())->index();
+            break;
+
+        case '/admin/correction':
+            (new \Admin\Controllers\CorrectionController())->index();
+            break;
+
+        case '/admin/status':
+            (new \Admin\Controllers\ApplicationStatusController())->index();
+            break;
+
         default:
             http_response_code(404);
             include __DIR__ . '/../FrontEnd/Head_Foot/header.html';

@@ -1,25 +1,22 @@
 <?php
+
 namespace Admin\Models;
+
+require_once __DIR__ . '/../../../config/db.php';
 
 class Admin
 {
-    public static function authenticate($username, $password)
+    private $pdo;
+
+    public function __construct()
     {
-        // Temporary hardcoded admin - replace with database later
-        $admins = [
-            'admin' => [
-                'id' => 1,
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-                'type' => 'super'
-            ]
-        ];
+        $this->pdo = getDatabaseConnection();
+    }
 
-        if (isset($admins[$username])) {
-            if (password_verify($password, $admins[$username]['password'])) {
-                return $admins[$username];
-            }
-        }
-
-        return false;
+    public function findByUsername($username)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM admins WHERE username = :username");
+        $stmt->execute(['username' => $username]);
+        return $stmt->fetch();
     }
 }
