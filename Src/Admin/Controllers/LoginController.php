@@ -38,7 +38,7 @@ class LoginController
             $this->redirect('/admin/dashboard');
         } else {
             $error = "Invalid username or password";
-            include __DIR__ . '/../../Views/auth/login.php';
+            include __DIR__ . '/../Views/auth/login.php';
         }
     }
 
@@ -50,8 +50,7 @@ class LoginController
 
     private function redirect($path)
     {
-        $base = '/project/et_passport_service_Backend/Public';
-        header("Location: $base$path");
+        header("Location: $path");
         exit;
     }
 }
