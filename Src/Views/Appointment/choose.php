@@ -139,7 +139,7 @@
                     <section>
                         <h4>Urgent Appointment</h4>
                         <button class="button" type="button" value="urgent" id="urgentbtn"
-                            onclick="checkAgreement('urgent/page1',this)">Start</button>
+                            onclick="checkAgreement('urgent/chooseCategory',this)">Start</button>
                     </section>
 
                 </div>

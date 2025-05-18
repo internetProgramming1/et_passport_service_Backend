@@ -41,7 +41,7 @@
                 </p>
 
                 <button class="btn btn-outline-primary mt-2" type="button" value="new" id="new"
-                  onclick="T('NewPass/urgency.php',this)">Schedule
+                  onclick="T('NewPass/urgencyType',this)">Schedule
                   Appointment</button>
 
 
@@ -64,7 +64,7 @@
                   Print the last page which has your appointment date and time.
                 </p>
                 <button class="btn btn-outline-success mt-2" type="button" value="renewal" id="renewal"
-                  onclick="T('RenewalPass/urgency.php',this)">Schedule Renewal</button>
+                  onclick="T('RenewalPass/urgencyType',this)">Schedule Renewal</button>
 
 
               </div>
@@ -86,7 +86,7 @@
                   your appointment date and time.
                 </p>
                 <button class="btn btn-outline-danger mt-2" type="button" value="lost" id="lost"
-                  onclick="T('LostPass/urgency.php',this)">Report & Schedule</button>
+                  onclick="T('LostPass/urgencyType',this)">Report & Schedule</button>
               </div>
             </div>
           </div>
@@ -105,7 +105,7 @@
                   confirmation.
                 </p>
                 <button class="btn btn-outline-warning mt-2" type="button" value="correction" id="correction"
-                  onclick="T('Correction/urgency.php',this)">Request Correction</button>
+                  onclick="T('Correction/Correction',this)">Request Correction</button>
 
               </div>
             </div>

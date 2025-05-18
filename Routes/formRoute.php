@@ -4,24 +4,47 @@ $request = $_SERVER['REQUEST_URI'];
 $request = strtok($request, '?');
 
 switch ($request) {
+    // choose.php
     case '/start-application':
         include __DIR__ . '/../Src/Views/Appointment/choose.php';
         break;
-
-    case '/standard/page1':
+    // choose the category
+    case '/standard/chooseCategory':
         include __DIR__ . '/../Src/Views/Appointment/Normal/page1.php';
         break;
-
-    case '/normal/page2':
+    case '/urgent/chooseCategory':
+        include __DIR__ . '/../Src/Views/Appointment/Normal/page1.php';
+        break;
+    // from the category choose the service type from normal 
+    case '/normal/site':
         include __DIR__ . '/../Src/Views/Appointment/Normal/page2.php';
         break;
-    case '/normal/page2':
+    case '/RENEWAL/serviceType':
+        include __DIR__ . '/../Src/Views/Appointment/Normal/page2.php';
+        break;
+    case '/LostPass/site':
+        include __DIR__ . '/../Src/Views/Appointment/Normal/page2.php';
+        break;
+    case '/normal/site':
+        include __DIR__ . '/../Src/Views/Appointment/Normal/page2.php';
+        break;
+    // from the category choose the service type from urgent 
+    case '/NewPass/urgencyType':
+        include __DIR__ . '/../Src/Views/Appointment/Normal/page2.php';
+        break;
+    case '/RenewalPass/urgencyType':
+        include __DIR__ . '/../Src/Views/Appointment/Normal/page2.php';
+        break;
+    case '/LostPass/urgencyType':
         include __DIR__ . '/../Src/Views/Appointment/Normal/page3.php';
         break;
-
-    case '/urgent/page1':
-        include __DIR__ . '/../Src/Views/Appointment/Urgent/page1.php';
+    case '/Correction/urgencyType':
+        include __DIR__ . '/../Src/Views/Appointment/Urgent/correction/urgency.php';
         break;
+
+
+
+
 
     // Add more cases for each form step
 
