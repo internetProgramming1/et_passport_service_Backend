@@ -4,6 +4,8 @@ header("Content-Type: application/json");
 
 // Allow requests from http://127.0.0.1:5500
 header("Access-Control-Allow-Origin: http://127.0.0.1:5500");
+// Allow requests from http://127.0.0.1:3000
+header("Access-Control-Allow-Origin: http://127.0.0.1:3000");
 
 // Allow specific HTTP methods (e.g., GET, POST, OPTIONS)
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
