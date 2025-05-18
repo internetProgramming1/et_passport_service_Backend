@@ -117,6 +117,19 @@ HTML;
             (new DashboardController())->index();
             break;
 
+           case '/track-status':
+                $controller = new \Controllers\StatusTrackingController();
+                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                    $controller->showForm();
+                } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $controller->checkStatus();
+                } else {
+                    http_response_code(405);
+                    echo "Method Not Allowed";
+                }
+                break;
+
+
             //         default:
             //             http_response_code(404);
             //             include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
