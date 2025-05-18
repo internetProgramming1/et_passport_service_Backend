@@ -3,6 +3,12 @@
 require_once __DIR__ . '/../src/Admin/Controllers/LoginController.php';
 require_once __DIR__ . '/../src/Admin/Controllers/DashboardController.php';
 
+require_once __DIR__ . '/../Src/Admin/Controllers/CorrectionController.php';
+require_once __DIR__ . '/../Src/Admin/Controllers/NewApplicationController.php';
+require_once __DIR__ . '/../src/Admin/Controllers/RenewalApplicationController.php';
+require_once __DIR__ . '/../Src/Admin/Controllers/LostApplicationController.php';
+
+
 // Start session with secure settings
 session_start([
     'cookie_lifetime' => 86400,
@@ -14,9 +20,11 @@ session_start([
 // Autoload dependencies
 require_once __DIR__ . '/../vendor/autoload.php';
 
+
 use Dotenv\Dotenv;
 use Admin\Controllers\LoginController;
-use Admin\Controllers\DashboardController;
+
+// use Admin\Controllers\DashboardController;
 
 // Load environment variables
 try {
@@ -61,7 +69,7 @@ if ($requestUri === '') {
 // Router
 try {
     switch ($requestUri) {
-        case '/':
+        case '/login':
             include __DIR__ . '/../Front/header.html';
             echo <<<HTML
             <main style="text-align:center; margin-top:100px;">
@@ -75,7 +83,7 @@ try {
                 <a href="customer/login" 
                    style="display:inline-block; margin:15px; padding:10px 20px; 
                    background-color:#28A745; color:#fff; text-decoration:none; border-radius:5px;">
-                   Customer Login
+                   Application Login
                 </a>
             </main>
 HTML;
@@ -117,6 +125,18 @@ HTML;
             (new DashboardController())->index();
             break;
 
+        case '/application/new':
+            (new NewApplicationController())->index();
+            break;
+        case '/application/renewal':
+            (new RenewalApplicationController())->index();
+            break;
+        case '/application/lost':
+            (new LostApplicationController())->index();
+            break;
+        case '/application/correction':
+            (new CorrectionController())->index();
+            break;
         default:
             http_response_code(404);
             include __DIR__ . '/../FrontEnd/Head_Foot/header.html';

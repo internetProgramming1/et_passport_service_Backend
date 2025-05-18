@@ -13,10 +13,10 @@ switch ($request) {
         include __DIR__ . '/../Src/Views/Appointment/Normal/page1.php';
         break;
     case '/urgent/chooseCategory':
-        include __DIR__ . '/../Src/Views/Appointment/Normal/page1.php';
+        include __DIR__ . '/../Src/Views/Appointment/urgent/page1.php';
         break;
     // from the category choose the service type from normal 
-    case '/normal/site':
+    case '/standard/NewPass/site':
         include __DIR__ . '/../Src/Views/Appointment/Normal/page2.php';
         break;
     case '/RENEWAL/serviceType':
