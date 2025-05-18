@@ -1,4 +1,8 @@
 <?php
+
+require_once __DIR__ . '/../src/Admin/Controllers/LoginController.php';
+
+
 // Start session with secure settings
 session_start([
     'cookie_lifetime' => 86400,
@@ -40,7 +44,9 @@ switch (true) {
 $basePath = '/project/et_passport_service_Backend/Public';
 
 // Get the request URI and normalize it
-$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+// $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+$requestUri = $_SERVER['REQUEST_URI'];
 
 // Remove base path if present
 if (strpos($requestUri, $basePath) === 0) {
@@ -82,8 +88,13 @@ HTML;
         case '/formControllerUrgent';
             include __DIR__ . '/../Src/Controllers/Appointment/formControllerUrgent.php';
             break;
+
+
+
+
         case '/admin/login':
-            $controller = new LoginController();
+            // $controller = new LoginController();
+            $controller = new \Admin\Controllers\LoginController();
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $controller->showLoginForm();
             } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -123,10 +134,10 @@ HTML;
     http_response_code(500);
     error_log('Application Error: ' . $e->getMessage());
     include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
-    echo <<<HTML
-    <main style="text-align:center; margin-top:100px;">
-        <h1>500 - Server Error</h1>
-HTML;
+    echo "<h1>500 - Server Error</h1>";
+    echo "<p>Error details:</p>";
+    echo "<pre>" . htmlspecialchars($e->getMessage()) . "</pre>";
+    echo "<pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
     if ($_ENV['APP_ENV'] === 'development') {
         echo '<pre style="text-align:left; max-width:800px; margin:20px auto; padding:20px; background:#f8f9fa;">'
             . htmlspecialchars($e->getMessage()) . '</pre>';

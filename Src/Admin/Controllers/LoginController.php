@@ -1,4 +1,5 @@
 <?php
+
 namespace Admin\Controllers;
 
 use Admin\Models\Admin;
@@ -11,8 +12,8 @@ class LoginController
         if (!empty($_SESSION['admin_id'])) {
             $this->redirect('/admin/dashboard');
         }
-        
-        include __DIR__ . '/../../Views/auth/login.php';
+
+        include __DIR__ . '/../Views/auth/login.php';
     }
 
     public function login()
