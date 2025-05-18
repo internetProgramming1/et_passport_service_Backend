@@ -117,18 +117,18 @@ HTML;
             (new DashboardController())->index();
             break;
 
-            //         default:
-            //             http_response_code(404);
-            //             include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
-            //             echo <<<HTML
-            //             <main style="text-align:center; margin-top:100px;">
-            //                 <h1>404 - Page Not Found</h1>
-            //                 <p>The requested URL was not found on this server.</p>
-            //                 <a href="$basePath/" style="color:#007BFF;">Return to Homepage</a>
-            //             </main>
-            // HTML;
-            //             include __DIR__ . '/../FrontEnd/Head_Foot/footer.html';
-            //             break;
+        default:
+            http_response_code(404);
+            include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
+            echo <<<HTML
+                        <main style="text-align:center; margin-top:100px;">
+                            <h1>404 - Page Not Found</h1>
+                            <p>The requested URL was not found on this server.</p>
+                            <a href="$basePath/" style="color:#007BFF;">Return to Homepage</a>
+                        </main>
+            HTML;
+            include __DIR__ . '/../FrontEnd/Head_Foot/footer.html';
+            break;
     }
 } catch (Throwable $e) {
     http_response_code(500);

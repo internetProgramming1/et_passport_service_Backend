@@ -35,6 +35,7 @@ class LoginController
         if ($admin) {
             $_SESSION['admin_id'] = $admin['id'];
             $_SESSION['admin_type'] = $admin['type'];
+
             $this->redirect('/admin/dashboard');
         } else {
             $error = "Invalid username or password";
