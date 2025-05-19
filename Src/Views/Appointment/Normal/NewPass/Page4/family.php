@@ -193,7 +193,7 @@
           };
 
           // Send data to server
-          const response = await axios.post('http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php', familyInfo, {
+          const response = await axios.post('/formController', familyInfo, {
             headers: {
               'Content-Type': 'application/json'
             },
@@ -201,7 +201,7 @@
           });
 
           if (response.data.success) {
-            window.location.href = "attachment.php";
+            window.location.href = "/standard/NewPass/attachments";
           } else {
             throw new Error(response.data.message || 'Form submission failed');
           }

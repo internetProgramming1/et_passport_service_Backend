@@ -228,14 +228,14 @@
       }
 
       try {
-        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php", personalInfo, {
+        await axios.post("/formController", personalInfo, {
           headers: {
             'Content-Type': 'application/json'
           }
         });
 
         // Redirect on success
-        window.location.href = "address.php";
+        window.location.href = "/standard/NewPass/address";
 
       } catch (error) {
         const errorMessage = error.response?.data?.message || "Error saving data. Please try again.";

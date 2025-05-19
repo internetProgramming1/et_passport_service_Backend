@@ -7,47 +7,33 @@ class DashboardController
 
     public function __construct()
     {
-        $this->model = new Application();
+        $this->model = new ApplicationModel();
     }
 
     public function index()
     {
-        // Check authentication
-        session_start();
-        if (empty($_SESSION['admin_id'])) {
-            header("Location: /admin/login");
-            exit;
-        }
+        // Get status counts for all tables
+        $statusCounts = $this->model->getStatusCounts();
 
-        // Validate and sanitize input
-        $category = $this->validateCategory($_GET['category'] ?? null);
-        $tablename = $this->getTableName($category);
+        // List of application tables
+        $tables = [
+            'renewal_application',
+            'urgent_renewal_application',
+            'new_application',
+            'urgent_new_application',
+            'lost_application',
+            'urgent_lost_application',
+            'correction_application',
+            'urgent_correction_application'
+        ];
 
-        // Get applications data
+        // Get applications for each table
         $applications = [];
-        if ($tablename) {
-            try {
-                $applications = $this->model->getApplications($category, $tablename);
-            } catch (PDOException $e) {
-                error_log("Database error: " . $e->getMessage());
-                $error = "Failed to load applications. Please try again.";
-            }
+        foreach ($tables as $table) {
+            $applications[$table] = $this->model->getApplications($table, null, 5);
         }
 
-        // Display view
-        include __DIR__ . '/../Views/dashboard_admin.php';
-    }
-
-    private function validateCategory($category)
-    {
-        $validCategories = ['new', 'renewal', 'lost', 'correction'];
-        return in_array($category, $validCategories) ? $category : null;
-    }
-
-    private function getTableName($category)
-    {
-        if (!$category) return null;
-
-        return $category . '_application';
+        // Load the view
+        require __DIR__ . '/../Views/dashboard_admin.php';
     }
 }

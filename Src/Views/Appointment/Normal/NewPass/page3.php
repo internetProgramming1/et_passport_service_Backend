@@ -142,14 +142,14 @@
           time: e.target.elements.time.value
         };
         // Send data to PHP to store in session
-        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php", dateTime, {
+        await axios.post("/formController", dateTime, {
           headers: {
             'Content-Type': 'application/json'
           },
           withCredentials: true
         });
         // Redirect to the next page
-        window.location.href = "page4/personalinfo.php"; // Proceed to next step
+        window.location.href = "/standard/NewPass/PersonalInfo"; // Proceed to next step
       } catch (error) {
         errorAlert.textContent = "Error saving data. Please try again.";
         errorAlert.classList.remove('d-none');

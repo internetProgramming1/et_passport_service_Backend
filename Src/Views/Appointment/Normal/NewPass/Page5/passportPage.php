@@ -140,7 +140,7 @@
         }
 
         try {
-          const response = await axios.post('http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php', {
+          const response = await axios.post('/formController', {
             pageNo: pageNo
           }, {
             headers: {
@@ -150,7 +150,7 @@
           });
 
           if (response.data.success) {
-            window.location.href = 'summary.php';
+            window.location.href = '/standard/NewPass/summary';
           } else {
             alert('Upload failed due to server validation: ' + response.data.message);
             throw new Error(response.data.message || 'Upload failed due to server validation');

@@ -90,11 +90,11 @@
         }
 
         .urgent-badge {
-            background-color: #dc3545;
+            background-color: rgb(225, 98, 111);
         }
 
         .normal-badge {
-            background-color: #17a2b8;
+            background-color: rgb(60, 182, 200);
         }
 
         /* Details View */
@@ -168,13 +168,11 @@
     <!-- Header -->
     <header class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/home">
                 <img src="/Images/passport-1.webp" class="logo-img" alt="logo">
             </a>
 
-            <button class="navbar-toggler sidebar-toggle d-lg-none" type="button">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
@@ -186,6 +184,9 @@
                     </li>
                 </ul>
             </div>
+            <button class="navbar-toggler sidebar-toggle d-lg-none" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
     </header>
 

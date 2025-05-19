@@ -1,4 +1,18 @@
 <?php
+// Allow from any origin (for development only — restrict in production)
+header("Access-Control-Allow-Origin: *");
+
+// Allow specific methods
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+
+// Allow specific headers
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+// If it's a preflight request, return early
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 require_once __DIR__ . '/../src/Admin/Controllers/LoginController.php';
 require_once __DIR__ . '/../src/Admin/Controllers/DashboardController.php';
@@ -8,6 +22,8 @@ require_once __DIR__ . '/../Src/Admin/Controllers/NewApplicationController.php';
 require_once __DIR__ . '/../src/Admin/Controllers/RenewalApplicationController.php';
 require_once __DIR__ . '/../Src/Admin/Controllers/LostApplicationController.php';
 
+
+require_once __DIR__ . '/../Src/Controllers/statusController.php';
 
 // Start session with secure settings
 session_start([
@@ -68,15 +84,16 @@ try {
             include __DIR__ . '/../Src/Admin/Views/loginChoose.php';
             break;
         case '/home':
-            include __DIR__ . '/../Src/Admin/Views/loginChoose.php';
+            include __DIR__ . '/../Src/Views/FrontPage/FronPage.php';
             break;
         case '/requirement':
-            include __DIR__ . '/../Src/Admin/Views/loginChoose.php';
+            include __DIR__ . '/../Src/Views/FrontPage/requirement.php';
             break;
-        case '/aboutus':
-            include __DIR__ . '/../Src/Admin/Views/loginChoose.php';
             break;
         case '/faqs':
+            include __DIR__ . '/../Src/Views/FAQ/faq.php';
+            break;
+        case '/statusChecking':
             include __DIR__ . '/../Src/Views/FAQ/faq.php';
             break;
 
@@ -88,18 +105,28 @@ try {
             break;
 
 
+        case '/status/check':
+            (new StatusController)->showForm();
+        case '/status/result':
+            (new StatusController)->checkStatus();
+
 
 
         case '/admin/login':
-            // $controller = new LoginController();
-            $controller = new \Admin\Controllers\LoginController();
-            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                $controller->showLoginForm();
-            } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $controller->login();
-            } else {
-                http_response_code(405);
-                die('Method Not Allowed');
+            $controller = new LoginController();
+            switch ($_SERVER['REQUEST_METHOD']) {
+                case 'GET':
+                    $controller->showLoginForm();
+                    break;
+
+                case 'POST':
+                    $controller->login();
+                    break;
+
+                default:
+                    http_response_code(405);
+                    require_once __DIR__ . '/../Src/Views/errors/405.php'; // Optional: custom 405 page
+                    exit;
             }
             break;
 

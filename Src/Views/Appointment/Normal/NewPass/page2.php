@@ -161,13 +161,13 @@
           delivery: form.elements.delivery.value
         };
 
-        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php", siteData, {
+        await axios.post("/formController", siteData, {
           headers: {
             'Content-Type': 'application/json'
           },
           withCredentials: true
         });
-        window.location.href = "page3.php";
+        window.location.href = "/standard/NewPass/dateTime";
       } catch (error) {
         errorAlert.textContent = "Error saving data. Please try again.";
         errorAlert.classList.remove('d-none');
