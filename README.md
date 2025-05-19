@@ -6,13 +6,9 @@ Main Features (What It Does)
 Citizens can fill out an application for:
 
 -New passport
-
 -Renewal
-
 -Correction
-
 -Lost passport replacement
-
 -Urgent request 
 
 They enter personal info (name, ID, birth details, etc.), upload required documents, and submit it.
@@ -22,7 +18,6 @@ They enter personal info (name, ID, birth details, etc.), upload required docume
 Applicants can choose between:
 
 -Regular processing
-
 -Urgent processing (fast-track)
 
 Each type has its own dedicated form and logic.
@@ -31,21 +26,16 @@ Each type has its own dedicated form and logic.
 Applicants can:
 
 -Submit their tracking ID
-
 -See the current status of their application 
 
 4. 👤 User Accounts
 -Users can sign up and log in
-
 -Their information is stored and reused for appointments and tracking
 
 5. Admin Dashboard
 Admins can:
-
 -View, edit, and update submitted applications
-
 -Manage lost, corrected, renewed, and urgent applications
-
 -Monitor application statuses and handle data securely
 
 ## Technologies Used 🛠️
