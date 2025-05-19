@@ -205,7 +205,7 @@
                 <div class="card bg-primary shadow-sm h-100 text-white">
                   <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-person-check-fill me-2"></i>Registered Users</h5>
-                    <p class="card-text">2,354</p>
+                 <p class="card-text" id="registeredCount">0</p>
                   </div>
                 </div>
               </div>
@@ -221,7 +221,7 @@
                 <div class="card bg-success shadow-sm h-100 text-white">
                   <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-check-circle-fill me-2"></i>Approved</h5>
-                    <p class="card-text">1,422</p>
+                   <p class="card-text" id="approvedCount">0</p>
                   </div>
                 </div>
               </div>
@@ -230,7 +230,7 @@
                 <div class="card bg-danger shadow-sm h-100 text-white">
                   <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-x-circle-fill me-2"></i>Rejected</h5>
-                    <p class="card-text">74</p>
+                 <p class="card-text" id="rejectedCount">0</p>
                   </div>
                 </div>
               </div>
@@ -267,43 +267,68 @@
     });
 
     // Chart.js with muted pastel colors
-    const ctx = document.getElementById('applicationChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Registered', 'Pending', 'Approved', 'Rejected', 'Waiting'],
-        datasets: [{
-          label: 'Applications',
-          data: [2354, 648, 1422, 74, 210],
-          backgroundColor: [
-            '#a0b9f7', // muted blue
-            '#d3d3d3', // soft grey
-            '#a0f7b3', // muted green
-            '#f7a0a0', // muted red
-            '#cfcfcf'  // muted light grey
-          ],
-          borderRadius: 6,
-          borderSkipped: false
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              precision: 0
-            }
-          }
-        },
-        plugins: {
-          legend: {
-            display: false
-          }
+   // Chart.js with muted pastel colors
+const ctx = document.getElementById('applicationChart').getContext('2d');
+const applicationChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Registered', 'Approved', 'Rejected'],
+    datasets: [{
+      label: 'Applications',
+      data: [0, 0, 0], // Will be updated dynamically
+      backgroundColor: [
+        '#a0b9f7', // Registered
+        '#a0f7b3', // Approved
+        '#f7a0a0'  // Rejected
+      ],
+      borderRadius: 6,
+      borderSkipped: false
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          precision: 0
         }
       }
-    });
+    },
+    plugins: {
+      legend: {
+        display: false
+      }
+    }
+  }
+});
+
+// Fetch data from backend and update cards/chart
+async function updateDashboard() {
+  try {
+    const res = await fetch('../BackEnd/api/dashboard_stats.php');
+    const stats = await res.json();
+
+    // Update cards
+    document.getElementById('registeredCount').textContent = stats.registered;
+    document.getElementById('approvedCount').textContent = stats.approved;
+    document.getElementById('rejectedCount').textContent = stats.rejected;
+
+    // Update chart
+    applicationChart.data.datasets[0].data = [
+      stats.registered,
+      stats.approved,
+      stats.rejected
+    ];
+    applicationChart.update();
+  } catch (err) {
+    console.error('Failed to fetch dashboard stats:', err);
+  }
+}
+
+// Call on page load
+updateDashboard();
   </script>
 </body>
 </html>
