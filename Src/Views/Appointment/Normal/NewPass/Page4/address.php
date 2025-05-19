@@ -176,13 +176,13 @@
       }
 
       try {
-        await axios.post("http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php", addressData, {
+        await axios.post("/formController", addressData, {
           headers: {
             'Content-Type': 'application/json'
           }
         });
         // Redirect to the next page after successful submission
-        window.location.href = "family.php";
+        window.location.href = "/standard/NewPass/family";
       } catch (error) {
         const message = error.response?.data?.message || "Failed to submit address info. Please try again.";
         $('<div>')

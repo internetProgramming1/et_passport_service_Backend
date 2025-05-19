@@ -1,43 +1,80 @@
 {
     "type": "standard",
     "category": "new",
-    "serviceType": "Expire",
     "siteData": {
-        "site": "Bahir Dar",
-        "city": "Addis Ababa",
+        "site": "Addis Ababa",
+        "city": "Mekelle",
         "office": "ICS Main Office",
         "delivery": "ICS Main Office"
     },
     "dateTime": {
-        "date": "2025-05-24",
-        "time": "08:00AM-09:00AM"
+        "date": "2025-05-30",
+        "time": "10:00AM-11:00AM"
     },
     "personalInfo": {
-        "firstname": "1",
-        "middlename": "2",
-        "lastname": "3",
+        "firstname": "Selam",
+        "middlename": "Teshome",
+        "lastname": "Isayas",
         "phone": "0900000000",
-        "email": "abebe@gmail.com",
+        "email": "selam@gmail.com",
         "gender": "female",
-        "dob": "2025-05-10",
+        "dob": "2025-05-15",
         "under18": "above18",
-        "birthplace": "Addis Ababa",
+        "birthplace": "BahirDar",
         "adopted": "notAdopted",
-        "birth_certificate": "1234567",
+        "birth_certificate": "0987654321",
         "nationality": "ethiopia",
         "marital_status": "married",
-        "occupation": "student"
+        "occupation": "Worker"
     },
-    "PassportInfo": {
-        "old_passport_number": "123456",
-        "old_issue_date": "2025-05-30",
-        "old_expiry_date": "2025-05-10",
-        "has_correction": "1",
-        "correction_type": "Name"
+    "addressData": {
+        "region": "afar",
+        "city": "dire",
+        "subcity": "Bole",
+        "woreda": "11",
+        "kebele": "jegol",
+        "house_no": "Addis",
+        "id_no": "123456"
     },
-    "pageNo": "32",
-    "Registered": {
-        "regDate": "2025-05-17",
-        "applicationNumber": "PSA7087419101"
+    "family": {
+        "mother": {
+            "first_name": "Abebech",
+            "father_name": "Gobena",
+            "grandfather_name": "Derese"
+        },
+        "father": {
+            "first_name": "Kebede",
+            "father_name": "Solomon",
+            "grandfather_name": "Megeresa"
+        },
+        "spouse": {
+            "first_name": "",
+            "father_name": "",
+            "grandfather_name": ""
+        }
+    },
+    "attachmentsSaving": {
+        "birth_certificate_front": {
+            "name": "682b7533078fd_pngegg (17).png",
+            "tmp_name": "C:\\xampp\\tmp\\phpB92C.tmp"
+        },
+        "birth_certificate_back": {
+            "name": "682b7533083dc_pngegg (18).png",
+            "tmp_name": "C:\\xampp\\tmp\\phpB95C.tmp"
+        },
+        "id_front": {
+            "name": "682b753308f22_pngegg (13).png",
+            "tmp_name": "C:\\xampp\\tmp\\phpB96D.tmp"
+        },
+        "id_back": {
+            "name": "682b75330fd4c_pngegg (18).png",
+            "tmp_name": "C:\\xampp\\tmp\\phpB99D.tmp"
+        }
+    },
+    "attachments": {
+        "birth_cer_front": "682b7533078fd_pngegg (17).png",
+        "birth_cer_back": "682b7533083dc_pngegg (18).png",
+        "id_front": "682b753308f22_pngegg (13).png",
+        "id_back": "682b75330fd4c_pngegg (18).png"
     }
 }

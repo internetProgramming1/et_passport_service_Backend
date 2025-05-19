@@ -148,7 +148,7 @@
 
       try {
         const response = await axios.post(
-          'http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php',
+          '/formController',
           formData, {
             headers: {
               'Content-Type': 'multipart/form-data' // Required for file uploads
@@ -157,7 +157,7 @@
           });
 
         if (response.data.success) {
-          window.location.href = '../page5/passportPage.php';
+          window.location.href = '/standard/NewPass/passportpage';
         } else {
           throw new Error(response.data.message || 'Upload failed due to server validation');
         }

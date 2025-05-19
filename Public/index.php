@@ -1,4 +1,18 @@
 <?php
+// Allow from any origin (for development only — restrict in production)
+header("Access-Control-Allow-Origin: *");
+
+// Allow specific methods
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+
+// Allow specific headers
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+// If it's a preflight request, return early
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 require_once __DIR__ . '/../src/Admin/Controllers/LoginController.php';
 require_once __DIR__ . '/../src/Admin/Controllers/DashboardController.php';

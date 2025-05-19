@@ -113,7 +113,7 @@
         async function loadApplicationData() {
             try {
                 const response = await axios.get(
-                    'http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php', {
+                    '/formController', {
                         withCredentials: true
                     }
                 );
@@ -349,7 +349,7 @@
 
             try {
                 const response = await axios.post(
-                    'http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php', {
+                    '/formController', {
 
                         registrationDate: new Date().toISOString().split('T')[0],
                         applicationNumber: generateAppNo()
