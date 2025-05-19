@@ -41,7 +41,7 @@
                 </p>
 
                 <button class="btn btn-outline-primary mt-2" type="button" value="new" id="new"
-                  onclick="checkAgreement('NewPass/page2.php',this)">Schedule
+                  onclick="checkAgreement('NewPass/site',this)">Schedule
                   Appointment</button>
 
 
@@ -64,7 +64,7 @@
                   Print the last page which has your appointment date and time.
                 </p>
                 <button class="btn btn-outline-success mt-2" type="button" value="renewal" id="renewal"
-                  onclick="checkAgreement('RENEWAL/serviceType.php',this)">Schedule Renewal</button>
+                  onclick="checkAgreement('RENEWAL/serviceType',this)">Schedule Renewal</button>
 
 
               </div>
@@ -86,7 +86,7 @@
                   your appointment date and time.
                 </p>
                 <button class="btn btn-outline-danger mt-2" type="button" value="lost" id="lost"
-                  onclick="checkAgreement('LostPass/page2.php',this)">Report & Schedule</button>
+                  onclick="checkAgreement('LostPass/site',this)">Report & Schedule</button>
               </div>
             </div>
           </div>
@@ -105,7 +105,7 @@
                   confirmation.
                 </p>
                 <button class="btn btn-outline-warning mt-2" type="button" value="correction" id="correction"
-                  onclick="checkAgreement('correction/page2.php',this)">Request Correction</button>
+                  onclick="checkAgreement('correction/site',this)">Request Correction</button>
 
               </div>
             </div>
@@ -134,7 +134,7 @@
       const value = $(buttonElement).val();
 
       // Send the value to PHP backend using Axios POST
-      axios.post('http://localhost/Website/Project/et_passport_service_Backend/src/Controllers/Appointment/formController.php', {
+      axios.post('/formController', {
           category: value // we will use this in the backend 
         }, {
           headers: {

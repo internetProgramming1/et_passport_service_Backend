@@ -1,5 +1,9 @@
 <?php
+
 namespace Admin\Controllers;
+
+require_once __DIR__ . '/../Models/Admin.php';
+
 
 use Admin\Models\Admin;
 
@@ -11,8 +15,8 @@ class LoginController
         if (!empty($_SESSION['admin_id'])) {
             $this->redirect('/admin/dashboard');
         }
-        
-        include __DIR__ . '/../../Views/auth/login.php';
+
+        include __DIR__ . '/../Views/auth/login.php';
     }
 
     public function login()
@@ -24,15 +28,18 @@ class LoginController
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
 
-        $admin = Admin::authenticate($username, $password);
+        // $admin = Admin::authenticate($username, $password);
 
+        $adminModel = new \Admin\Models\Admin();
+        $admin =  $adminModel->findByUsername($username);
         if ($admin) {
             $_SESSION['admin_id'] = $admin['id'];
             $_SESSION['admin_type'] = $admin['type'];
+
             $this->redirect('/admin/dashboard');
         } else {
             $error = "Invalid username or password";
-            include __DIR__ . '/../../Views/auth/login.php';
+            include __DIR__ . '/../Views/auth/login.php';
         }
     }
 
@@ -44,8 +51,7 @@ class LoginController
 
     private function redirect($path)
     {
-        $base = '/project/et_passport_service_Backend/Public';
-        header("Location: $base$path");
+        header("Location: $path");
         exit;
     }
 }

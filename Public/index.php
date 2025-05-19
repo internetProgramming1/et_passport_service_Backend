@@ -1,4 +1,14 @@
 <?php
+
+require_once __DIR__ . '/../src/Admin/Controllers/LoginController.php';
+require_once __DIR__ . '/../src/Admin/Controllers/DashboardController.php';
+
+require_once __DIR__ . '/../Src/Admin/Controllers/CorrectionController.php';
+require_once __DIR__ . '/../Src/Admin/Controllers/NewApplicationController.php';
+require_once __DIR__ . '/../src/Admin/Controllers/RenewalApplicationController.php';
+require_once __DIR__ . '/../Src/Admin/Controllers/LostApplicationController.php';
+
+
 // Start session with secure settings
 session_start([
     'cookie_lifetime' => 86400,
@@ -10,9 +20,11 @@ session_start([
 // Autoload dependencies
 require_once __DIR__ . '/../vendor/autoload.php';
 
+
 use Dotenv\Dotenv;
 use Admin\Controllers\LoginController;
-use Admin\Controllers\DashboardController;
+
+// use Admin\Controllers\DashboardController;
 
 // Load environment variables
 try {
@@ -40,7 +52,9 @@ switch (true) {
 $basePath = '/project/et_passport_service_Backend/Public';
 
 // Get the request URI and normalize it
-$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+// $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+$requestUri = $_SERVER['REQUEST_URI'];
 
 // Remove base path if present
 if (strpos($requestUri, $basePath) === 0) {
@@ -55,7 +69,7 @@ if ($requestUri === '') {
 // Router
 try {
     switch ($requestUri) {
-        case '/':
+        case '/login':
             include __DIR__ . '/../Front/header.html';
             echo <<<HTML
             <main style="text-align:center; margin-top:100px;">
@@ -69,20 +83,26 @@ try {
                 <a href="customer/login" 
                    style="display:inline-block; margin:15px; padding:10px 20px; 
                    background-color:#28A745; color:#fff; text-decoration:none; border-radius:5px;">
-                   Customer Login
+                   Application Login
                 </a>
             </main>
 HTML;
             include __DIR__ . '/../FrontEnd/Head_Foot/footer.html';
             break;
+
         case '/formController';
             include __DIR__ . '/../Src/Controllers/Appointment/formController.php';
             break;
         case '/formControllerUrgent';
             include __DIR__ . '/../Src/Controllers/Appointment/formControllerUrgent.php';
             break;
+
+
+
+
         case '/admin/login':
-            $controller = new LoginController();
+            // $controller = new LoginController();
+            $controller = new \Admin\Controllers\LoginController();
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $controller->showLoginForm();
             } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -105,16 +125,28 @@ HTML;
             (new DashboardController())->index();
             break;
 
+        case '/application/new':
+            (new NewApplicationController())->index();
+            break;
+        case '/application/renewal':
+            (new RenewalApplicationController())->index();
+            break;
+        case '/application/lost':
+            (new LostApplicationController())->index();
+            break;
+        case '/application/correction':
+            (new CorrectionController())->index();
+            break;
         default:
             http_response_code(404);
             include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
             echo <<<HTML
-            <main style="text-align:center; margin-top:100px;">
-                <h1>404 - Page Not Found</h1>
-                <p>The requested URL was not found on this server.</p>
-                <a href="$basePath/" style="color:#007BFF;">Return to Homepage</a>
-            </main>
-HTML;
+                        <main style="text-align:center; margin-top:100px;">
+                            <h1>404 - Page Not Found</h1>
+                            <p>The requested URL was not found on this server.</p>
+                            <a href="$basePath/" style="color:#007BFF;">Return to Homepage</a>
+                        </main>
+            HTML;
             include __DIR__ . '/../FrontEnd/Head_Foot/footer.html';
             break;
     }
@@ -122,10 +154,10 @@ HTML;
     http_response_code(500);
     error_log('Application Error: ' . $e->getMessage());
     include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
-    echo <<<HTML
-    <main style="text-align:center; margin-top:100px;">
-        <h1>500 - Server Error</h1>
-HTML;
+    echo "<h1>500 - Server Error</h1>";
+    echo "<p>Error details:</p>";
+    echo "<pre>" . htmlspecialchars($e->getMessage()) . "</pre>";
+    echo "<pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
     if ($_ENV['APP_ENV'] === 'development') {
         echo '<pre style="text-align:left; max-width:800px; margin:20px auto; padding:20px; background:#f8f9fa;">'
             . htmlspecialchars($e->getMessage()) . '</pre>';
