@@ -56,6 +56,11 @@ $request = $_SERVER['REQUEST_URI'];
 // Normalize the request URI if needed
 $request = strtok($request, '?'); // remove query strings if any
 
+// Check if the request starts with '/auth'
+if (str_starts_with($request, '/auth')) {
+    include __DIR__ . '/../Routes/authRoute.php';
+}
+
 switch (true) {
     case str_starts_with($request, '/start-application'):
     case str_starts_with($request, '/standard'):
@@ -111,6 +116,13 @@ try {
             (new StatusController)->checkStatus();
 
 
+         
+        case '/signup':
+            include __DIR__ . '/../Src/Views/Auth/signup.php';
+            break;
+        case '/user/login':
+            include __DIR__ . '/../Src/Views/Auth/login.php';
+            break;      
 
         case '/admin/login':
             $controller = new LoginController();
@@ -154,6 +166,9 @@ try {
         case '/application/correction':
             (new CorrectionController())->index();
             break;
+
+           
+            
             // default:
             //     http_response_code(404);
             //     include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
