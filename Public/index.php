@@ -61,33 +61,23 @@ if (strpos($requestUri, $basePath) === 0) {
     $requestUri = substr($requestUri, strlen($basePath));
 }
 
-// Ensure empty path becomes root
-if ($requestUri === '') {
-    $requestUri = '/';
-}
-
 // Router
 try {
     switch ($requestUri) {
         case '/login':
-            include __DIR__ . '/../Front/header.html';
-            echo <<<HTML
-            <main style="text-align:center; margin-top:100px;">
-                <h1>Welcome to the Passport Service</h1>
-                <p>Please choose your login type:</p>
-                <a href="admin/login" 
-                   style="display:inline-block; margin:15px; padding:10px 20px; 
-                   background-color:#007BFF; color:#fff; text-decoration:none; border-radius:5px;">
-                   Admin Login
-                </a>
-                <a href="customer/login" 
-                   style="display:inline-block; margin:15px; padding:10px 20px; 
-                   background-color:#28A745; color:#fff; text-decoration:none; border-radius:5px;">
-                   Application Login
-                </a>
-            </main>
-HTML;
-            include __DIR__ . '/../FrontEnd/Head_Foot/footer.html';
+            include __DIR__ . '/../Src/Admin/Views/loginChoose.php';
+            break;
+        case '/home':
+            include __DIR__ . '/../Src/Admin/Views/loginChoose.php';
+            break;
+        case '/requirement':
+            include __DIR__ . '/../Src/Admin/Views/loginChoose.php';
+            break;
+        case '/aboutus':
+            include __DIR__ . '/../Src/Admin/Views/loginChoose.php';
+            break;
+        case '/faqs':
+            include __DIR__ . '/../Src/Views/FAQ/faq.php';
             break;
 
         case '/formController';
@@ -137,18 +127,18 @@ HTML;
         case '/application/correction':
             (new CorrectionController())->index();
             break;
-        default:
-            http_response_code(404);
-            include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
-            echo <<<HTML
-                        <main style="text-align:center; margin-top:100px;">
-                            <h1>404 - Page Not Found</h1>
-                            <p>The requested URL was not found on this server.</p>
-                            <a href="$basePath/" style="color:#007BFF;">Return to Homepage</a>
-                        </main>
-            HTML;
-            include __DIR__ . '/../FrontEnd/Head_Foot/footer.html';
-            break;
+            // default:
+            //     http_response_code(404);
+            //     include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
+            //     echo <<<HTML
+            //                 <main style="text-align:center; margin-top:100px;">
+            //                     <h1>404 - Page Not Found</h1>
+            //                     <p>The requested URL was not found on this server.</p>
+            //                     <a href="$basePath/" style="color:#007BFF;">Return to Homepage</a>
+            //                 </main>
+            //     HTML;
+            //     include __DIR__ . '/../FrontEnd/Head_Foot/footer.html';
+            //     break;
     }
 } catch (Throwable $e) {
     http_response_code(500);

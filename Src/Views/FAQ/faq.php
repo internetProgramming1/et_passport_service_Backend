@@ -39,8 +39,10 @@
 
 <body>
 
-  <!-- Placeholder for Header -->
-  <div id="header-placeholder"></div>
+  <!-- Load header -->
+
+  <?php include __DIR__ . '/../../../Front/Header.html'; ?>
+
 
   <!-- Main content -->
   <main>
@@ -139,13 +141,14 @@
   </main>
 
 
-  <div id="footer-placeholder"></div>
-  <script src="../Head_Foot/script.js"></script>
+  <?php include __DIR__ . '/../../../Front/footer.html' ?>
+
+
 
   <!-- Script to include header and footer -->
   <script>
-    $(document).ready(function () {
-      $(".faq-question").click(function () {
+    $(document).ready(function() {
+      $(".faq-question").click(function() {
         $(this).next(".faq-answer").slideToggle(300);
       });
     });
