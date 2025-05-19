@@ -153,6 +153,7 @@
 
       formData.append('old_Passport', $('#old_Passport')[0].files[0]);
       formData.append('photo', $('#photo')[0].files[0]);
+      formData.append('police', $('#police')[0].files[0]);
       formData.append('id_front', $('#id_front')[0].files[0]);
       formData.append('id_back', $('#id_back')[0].files[0]);
 
