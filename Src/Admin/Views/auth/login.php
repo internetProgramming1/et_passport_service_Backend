@@ -8,19 +8,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+
         body {
             background-color: #f5f5f5;
-            font-family: Arial, sans-serif;
+            font-family: "Noto Serif", serif;
         }
 
-        .navbar {
-            border-bottom: 2px solid #005f99;
-        }
-
-        .navbar-brand img {
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
             height: 80px;
-            /* Increased logo size */
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
         }
+
+        .logo-img {
+            height: 60px;
+            object-fit: contain;
+        }
+
 
         .login-form {
             max-width: 400px;
@@ -51,15 +60,20 @@
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white px-4">
-        <a class="navbar-brand" href="/">
-            <img src="/Images/passport-1.webp" alt="logo">
-        </a>
-        <div class="ms-auto">
-            <a href="/" class="btn btn-outline-primary">← Back to Home</a>
+
+    <!-- Header -->
+    <header class="navbar navbar-expand-lg navbar-light bg-white ">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/home">
+                <img src="/Images/passport-1.webp" alt="Logo" class="logo-img">
+            </a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item me-3"><a href="/home" class="btn btn-outline-primary">← Back to Home</a></li>
+
+            </ul>
+
         </div>
-    </nav>
+    </header>
 
     <!-- Login Form -->
     <div class="login-form shadow">
@@ -84,8 +98,6 @@
         </form>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

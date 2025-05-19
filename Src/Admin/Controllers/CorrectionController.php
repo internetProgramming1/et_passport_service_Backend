@@ -33,7 +33,7 @@ class CorrectionController
             // echo "</pre>";
 
             // Include view file - variables will be available in the view
-            include __DIR__ . '/../Views/new_application.php';
+            include __DIR__ . '/../Views/correction_applications.php';
         } catch (Exception $e) {
             error_log("Error fetching applications: " . $e->getMessage());
             echo "<p style='color:red;'>There was an error loading applications. Please try again.</p>";
