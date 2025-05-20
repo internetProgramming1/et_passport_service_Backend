@@ -56,6 +56,11 @@ $request = $_SERVER['REQUEST_URI'];
 // Normalize the request URI if needed
 $request = strtok($request, '?'); // remove query strings if any
 
+// Check if the request starts with '/auth'
+if (str_starts_with($request, '/auth')) {
+    include __DIR__ . '/../Routes/authRoute.php';
+}
+
 switch (true) {
     case str_starts_with($request, '/start-application'):
     case str_starts_with($request, '/standard'):
