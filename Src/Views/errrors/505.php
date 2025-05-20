@@ -24,7 +24,7 @@
         <h1 class="display-1 text-danger">500</h1>
         <h2 class="mb-3">Internal Server Error</h2>
         <p class="lead">Oops! Something went wrong on our end. Please try again later.</p>
-        <a href="/" class="btn btn-outline-danger">Go Home</a>
+        <a href="/home" class="btn btn-outline-danger">Go Home</a>
     </div>
 </body>
 

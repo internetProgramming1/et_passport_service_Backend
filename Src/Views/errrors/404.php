@@ -24,7 +24,7 @@
         <h1 class="display-1 text-danger">404</h1>
         <h2 class="mb-3">Page Not Found</h2>
         <p class="lead">Sorry, the page you’re looking for doesn’t exist.</p>
-        <a href="/" class="btn btn-outline-primary">Go Home</a>
+        <a href="/home" class="btn btn-outline-primary">Go Home</a>
     </div>
 </body>
 

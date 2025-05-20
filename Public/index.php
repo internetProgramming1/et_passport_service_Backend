@@ -93,9 +93,6 @@ try {
         case '/faqs':
             include __DIR__ . '/../Src/Views/FAQ/faq.php';
             break;
-        case '/statusChecking':
-            include __DIR__ . '/../Src/Views/FAQ/faq.php';
-            break;
 
         case '/formController';
             include __DIR__ . '/../Src/Controllers/Appointment/formController.php';
@@ -154,27 +151,14 @@ try {
         case '/application/correction':
             (new CorrectionController())->index();
             break;
-            // default:
-            //     http_response_code(404);
-            //     include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
-            //     echo <<<HTML
-            //                 <main style="text-align:center; margin-top:100px;">
-            //                     <h1>404 - Page Not Found</h1>
-            //                     <p>The requested URL was not found on this server.</p>
-            //                     <a href="$basePath/" style="color:#007BFF;">Return to Homepage</a>
-            //                 </main>
-            //     HTML;
-            //     include __DIR__ . '/../FrontEnd/Head_Foot/footer.html';
-            //     break;
+        default:
+            http_response_code(404);
+            include __DIR__ . "/../Src/Views/errrors/404.php";
+            break;
     }
 } catch (Throwable $e) {
     http_response_code(500);
-    error_log('Application Error: ' . $e->getMessage());
-    include __DIR__ . '/../FrontEnd/Head_Foot/header.html';
-    echo "<h1>500 - Server Error</h1>";
-    echo "<p>Error details:</p>";
-    echo "<pre>" . htmlspecialchars($e->getMessage()) . "</pre>";
-    echo "<pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+    include __DIR__ . "/../Src/Views/errrors/505.php";
     if ($_ENV['APP_ENV'] === 'development') {
         echo '<pre style="text-align:left; max-width:800px; margin:20px auto; padding:20px; background:#f8f9fa;">'
             . htmlspecialchars($e->getMessage()) . '</pre>';
