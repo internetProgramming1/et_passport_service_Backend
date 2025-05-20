@@ -158,7 +158,7 @@ try {
             break;
         default:
             http_response_code(404);
-            include __DIR__ . "/../Src/Views/errrors/404.php";
+            // include __DIR__ . "/../Src/Views/errrors/404.php";
             break;
     }
 } catch (Throwable $e) {

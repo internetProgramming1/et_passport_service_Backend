@@ -17,14 +17,10 @@ class StatusController
     public function checkStatus()
     {
         $appNo = $_POST['application_no'] ?? '';
-        if (!$appNo) {
-            $error = "Application number is required.";
-            require __DIR__ . '/../Views/Track/check_form.php';
-            return;
+        if ($appNo) {
+            $model = new StatusModel();
+            $result = $model->findStatus($appNo);
+            require __DIR__ . '/../Views/Track/result.php';
         }
-
-        $model = new StatusModel();
-        $result = $model->findStatus($appNo);
-        require __DIR__ . '/../Views/Track/result.php';
     }
 }
